@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<link th:href="@{/css/leader/viewallreport.css}" rel="stylesheet"></link>
+<title>Leader Top</title>
+
+</head>
+<body>
+	<div th:replace="layout/userheader :: headerAll(imgVal=${profilePhoto})"></div>
+	
+	<main >
+		
+		<form th:action="@{/view/leader/}">
+		 
+			 <div th:replace="layout/userheader :: 
+			mainHeader(headerTitle='All Reports',backBtnName='home')"></div>
+		
+		</form>
+		
+     
+		  <form th:action="@{/view/leader/viewallreports}"
+		  method="post" th:object="${viewAllReportWebDto}" 
+		  class="flex-common--columns__start form-toggle view-all__report-nav">
+		  	<input type="hidden" th:value="*{page}" name="page">
+		   	<input type="hidden" th:value="*{isChanged ? pageLimit2 : pageLimit1}" name="pageLimit" >
+		  	<label for="member-list" 
+		  	class="font-common--1 
+		  	font-color--common__2
+		  	">Member's List</label>
+		  	<select name="userIdPk" 
+		  	onchange="this.form.submit()" 
+		  	class="font-common--1 
+			font-common--2 
+			font-color--common__2">
+		  		<option th:value="0" th:selected="${selected == 0}">All Report</option>			  		
+		  		<option th:each="user : *{userReportObj}" 
+		  		th:value="${user.userIdPk}"  
+		  		th:text="${user.firstName + ' '+ user.lastName}"
+		  		th:selected="${user.userIdPk == selected}"
+		  		></option>	
+		  	</select>
+		  </form>
+		  
+		  
+		 
+		</div>
+		
+		<div class="view-all__report-container">
+			<div class="
+				
+				report-header
+				padding-common--2
+				report-category">
+				<div class="report-header__item">Title</div>
+				 <div class="report-header__item">Date</div>
+				 <div class="report-header__item">Evaluator's Rate</div>
+			</div>
+		
+			 <div th:object="${viewAllReportWebDto}" 
+				class="view-all__report-content">
+				
+				
+					<form th:action="@{/view/leader/final-evaluated/}"
+				method="post" 
+				 th:each="report : *{!isChanged ? allReports:specReports}"
+				 class="view-all__report-items ">
+				      <div class="view-all__report-item report-target">
+				      	<aside>
+				      		<input type="hidden" th:value="${report.reportIdPk}"
+				      		name="reportIdPk" >
+				      		
+				      		<input type="hidden" th:value="${report.reportDate}"
+				      		name="reportDate" >
+				      		
+				      		<input type="hidden" th:value="${report.userIdPk}"
+				      		name="userIdPk" >
+				      		
+				      		<input type="submit" 
+				      		class="btn-reset font-common--1 
+				      		font-common--3 
+				      		font-size--common-3
+				      		text-color--common__2" name="report" th:value="${report.target}">
+				      	</aside>
+				      </div>
+				      
+				      <div th:text="${report.reportDate}"
+				      class="font-common--1 font-common--3
+				      view-all__report-item report-date"></div>
+				      
+				      <div th:text="${report.finalRating}"
+				      class="font-common--1 font-common--3
+				      view-all__report-item report-rate"></div>
+				 
+				 </form>
+			
+			 </div>
+		 
+		</div>
+		
+		
+		<div class="page-controller">
+			<form th:action="@{/view/leader/viewallreports}"
+			  method="post"
+			  th:object="${viewAllReportWebDto}" >
+		  	<input type="hidden" th:value="*{isChanged ? pageLimit2 : pageLimit1}" name="pageLimit">
+		  	<input type="hidden" th:value="*{page}" name="page" data-value="page">
+			<input type="hidden" th:value="*{userIdPk}" name="userIdPk">
+			
+			 <input value="Prev" name="pageController" 
+			 type="submit" th:disabled="*{page ==1}" >
+	
+		  </form>
+
+		  <form th:action="@{/view/leader/viewallreports}"
+			  method="post"
+			  th:object="${viewAllReportWebDto}" >
+			  <input type="hidden" th:value="*{isChanged ? pageLimit2 : pageLimit1}" name="pageLimit">
+		  	<input type="hidden" th:value="*{page}" name="page" data-value="page">
+			<input type="hidden" th:value="*{userIdPk}" name="userIdPk">
+			  <select name="pageselect"
+			 onchange="this.form.submit()" 
+		  	class="font-common--1 
+			font-common--2 
+			font-color--common__2">
+				 <option th:each="item : *{isChanged ? pageNumbers2 : pageNumbers1}"
+				 th:value="${item}"
+				 th:text="${item}"
+				 th:selected="${item==pageNumber} "></option>
+			 </select>
+			  
+		  </form>
+		  
+		  <form th:action="@{/view/leader/viewallreports}"
+			  method="post"
+			  th:object="${viewAllReportWebDto}" >
+		  	<input type="hidden" th:value="*{isChanged ? pageLimit2 : pageLimit1}" name="pageLimit">
+		  	<input type="hidden" th:value="*{page}" name="page" data-value="page">
+			<input type="hidden" th:value="*{userIdPk}" name="userIdPk">
+			
+			 <input value="Next" name="pageController" 
+			 type="submit" th:disabled="*{isChanged ? 
+			 pageLimit2 == page : pageLimit1 ==page}">
+			 
+		  </form>
+		  
+		</div>
+			
+		  
+
+	</main>
+	
+</body>
+</html>

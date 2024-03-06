@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+<link th:href="@{/css/admin/top.css}" rel="stylesheet"></link>
+<link th:href="@{/css/admin/adminheader.css}" rel="stylesheet"></link>
+<link th:href="@{/css/admin/common.css}" rel="stylesheet"></link>
+
+<link th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" rel="stylesheet"></link>
+<script th:src="@{/webjars/jquery/3.6.4/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+<title>Admin</title>
+</head>
+<body>
+<!-- group landing page 
+@author christian
+20231006 -->
+	<div th:replace="layout/adminheader :: headerAll"></div>
+
+	<main th:object="${groupCreationWebDto}">
+		<div class="top">
+			<div class="first">ADMIN</div>
+			<span class="success" th:text="${successMsg}"></span>
+			<div class="second"></div>
+		</div>
+		
+		<div class="lowerbox">
+			<div class="tbl">
+				<div class="tbl-head">
+					<div class="container-1">
+						GROUP LIST:
+					</div>
+					
+					<div class="container-2">
+						LEADERS:
+					</div>
+					
+					<div class="container-2">
+						AVAILABILITY:
+					</div>
+					
+					<form th:action="@{/admin/creategroup}" method="GET">
+						<button>CREATE NEW GROUP</button>
+					</form>
+				</div>
+				
+				<div class="tbl-body" th:each="group : *{groupList2}">
+					<div class="container-1" id="group-name">
+						<form th:action="@{/admin/groupconfiguration}" method="POST">
+							<input type="hidden" th:value="${group.idPk}" name="groupIdPk">
+							<button th:text="${group.groupName}" class="btn btn-link center-button"></button>
+						</form>
+					</div>
+					
+					<div class="container-3" id="leader-list">
+						<ul th:each="leader : *{users}" th:if="${group.idPk} == ${leader.groupIdPk}">
+							<li>
+								<span th:if="${leader.role == 'LEADER'}" 
+									th:text="${leader.firstName} + ' ' + ${leader.lastName}"
+								>
+								</span>
+							</li>
+						</ul>
+					</div>
+					
+					<div th:class="${group.groupDeleteFlg} ? 'error container-4' : 'success container-4'"
+						th:text="${group.groupDeleteFlg} ? 'UNAVAILABLE' : 'AVAILABLE'">
+					</div>
+					
+					<div class="container-5">
+						<button th:if="${!group.groupDeleteFlg}"
+							class="btn-danger archive"
+							th:text="ARCHIVE"
+							th:value="${group.idPk}"
+							th:disabled="${group.isAbleToDelete} ? 'false' : 'true'">
+						</button>
+						
+						<button th:if="${group.groupDeleteFlg}"
+							class="btn-success archive"
+							th:text="ACTIVATE"
+							th:value="${group.idPk}">
+						</button>
+					</div>
+					
+					<!-- confirmation modal -->
+					<div class="modal archive-modal">
+						<div class="modal-content">
+							<button class="close-archive">
+								<svg xmlns="http://www.w3.org/2000/svg" width="10" height="11" viewBox="0 0 10 11" fill="none">
+									<path d="M10 1.50714L8.99286 0.5L5 4.49286L1.00714 0.5L0 1.50714L3.99286 5.5L0 9.49286L1.00714 10.5L5 6.50714L8.99286 10.5L10 9.49286L6.00714 5.5L10 1.50714Z" fill="#52526B"/>
+								</svg>
+							</button>
+							
+							<div class="modal-content-1">
+								<span>Are you sure you want to <span th:text="${!group.groupDeleteFlg} ? 'Archive' : 'Activate'" th:class="${!group.groupDeleteFlg} ? 'error' : 'success'"></span> this group?</span>
+							</div>
+							
+							<div class="box">
+								<div class="modal-content-2">
+									<div class="modal-container" th:text="${group.groupName}"></div>
+									
+									<div th:class="${group.groupDeleteFlg} ? 'error modal-container' : 'success modal-container'"
+										th:text="${group.groupDeleteFlg} ? 'UNAVAILABLE' : 'AVAILABLE'">
+									</div>
+								</div>
+								
+								<div class="modal-content-3">
+									<ul th:each="leader : *{users}" th:if="${group.idPk} == ${leader.groupIdPk}">
+										<li>
+											<span th:if="${leader.role == 'LEADER'}" 
+												th:text="${leader.firstName} + ' ' + ${leader.lastName}">
+											</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+							
+							<div class="modal-btn">
+								<button class="close-btn__archive">CANCEL</button>
+								
+								<form th:action="@{/admin/deletegroup}" method="POST">
+									<input type="hidden" th:value="${group.idPk}" name="groupIdPk">
+									<button th:name="${!group.groupDeleteFlg} ? 'delete' : 'activate'">
+										SUBMIT
+									</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="page">
+				<button onclick="submitPrev()"id="prev">PREV</button>
+				
+			    <form th:action="@{/admin}" method="GET" id="paginationForm">
+				    <select name="page" id="pageSelect" onchange="submitForm()">
+						<option th:each="pageNumber : ${#numbers.sequence(1, groupCreationWebDto.groupList2.totalPages)}" 
+							th:value="${pageNumber}" 
+							th:text="${pageNumber}"
+							th:selected="${pageNumber}"
+							id="page-number">1</option>
+					</select>
+				</form>
+				
+				<button onclick="submitNext()" id="next">NEXT</button>
+			</div>
+			
+		</div>
+	</main>
+	
+	<script th:inline="javascript">
+	    var archiveBtns = document.querySelectorAll('.archive');
+	    var removeModals = document.querySelectorAll('.archive-modal');
+	
+	    archiveBtns.forEach(function (archiveBtn, index) {
+	        archiveBtn.onclick = function () {
+	            // Check if the index is valid
+		        if (index < removeModals.length) {
+		            removeModals[index].style.display = "block";
+		        } else {
+		            console.error("Invalid index for removeModals");
+		        }
+	        }
+	    });
+	
+	    // Add event listeners for closing modals
+	    var closeArchiveBtns = document.querySelectorAll('.close-archive');
+	    var closeBtnArchiveeBtns = document.querySelectorAll('.close-btn__archive');
+	
+	    closeArchiveBtns.forEach(function (closeArchiveBtn, index) {
+	        closeArchiveBtn.onclick = function () {
+	            removeModals[index].style.display = "none";
+	        }
+	    });
+	
+	    closeBtnArchiveeBtns.forEach(function (closeBtnArchiveeBtn, index) {
+	        closeBtnArchiveeBtn.onclick = function () {
+				removeModals[index].style.display = "none";
+	        }
+	    });
+	    
+	    // display the current page
+	    const pageSelect = document.getElementById("pageSelect");
+	    
+	    // Retrieve the selected page number from local storage if available
+	    const selectedPage = localStorage.getItem("selectedPage");
+	    
+	    // Check if the page was accessed via a fresh visit
+	    const urlParams = new URLSearchParams(window.location.search);
+	    const freshVisit = urlParams.get('freshVisit');
+	    
+	    if(freshVisit === 'true') {
+			pageSelect.value = 1;
+			localStorage.setItem("selectedPage", 1);
+		} else {
+			if (selectedPage) {
+				pageSelect.value = selectedPage;
+		    }
+		}
+	    
+	    function submitForm() {
+			var pageNumber = pageSelect.value;
+	    	
+			var form = document.getElementById("paginationForm");
+			form.action = form.action + "?page=" + pageNumber;
+			
+			// Store the selected page number in local storage
+        	localStorage.setItem("selectedPage", pageNumber);
+			
+			form.submit();
+		}
+		
+		var maxPageNumber = parseInt(pageSelect.options[pageSelect.options.length - 1].value);
+		
+		// previous page
+		function submitPrev() {
+			var previousPageNumber = parseInt(pageSelect.value) - 1;
+			
+			if(previousPageNumber >= 1) {
+				pageSelect.value = previousPageNumber;
+				submitForm();
+			}
+		}
+		
+		// next page
+		function submitNext() {
+			var nextPageNumber = parseInt(pageSelect.value) + 1;
+	
+	        if (nextPageNumber <= maxPageNumber) {
+				pageSelect.value = nextPageNumber;
+	            submitForm();
+	        }
+		}
+		
+		var nextBtn = document.getElementById("next");
+		var prevBtn = document.getElementById("prev");
+		
+		if (pageSelect.value == maxPageNumber) {
+			nextBtn.disabled = true;
+		} else {
+			nextBtn.disabled = false;
+		}
+		
+		if(pageSelect.value == 1) {
+			prevBtn.disabled = true;
+		} else {
+			prevBtn.disabled = false;
+		}
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link th:href="@{/css/leader/top.css}" rel="stylesheet"></link>
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<title>Leader Top</title>
+
+</head>
+<body>
+	<div th:replace="layout/userheader :: headerAll(imgVal=${profilePhoto})"></div>
+	
+	<main>
+		<div class="heading-section">
+			<p th:text="${groupName}" 
+			class="group-name font-common--1 font-size--common-1
+			text-color--common__2">
+			</p>
+			
+			<p th:text="${successMsg}" 
+			class="message success-message font-common--1"></p>
+			
+		</div>
+		<div class="content-section">
+			<div class="sub-section group-section">
+				<div class="group-section__nav navbar-list">
+				      <div class="list-nav 
+				      list-nav__group
+				      special-header 
+				      font-common--1
+				      group-section__nav-item"
+				       data-listname="group">
+				      		Group
+				      </div>
+				      <div class="list-nav 
+				      list-nav__member
+				      special-header 
+				      font-common--1
+				      group-section__nav-item" 
+				      	data-listname="member">
+				      		Members 	
+					  </div>
+					  
+					<div class="font-common--1
+					font-variant--common__1
+					font-size--common-3
+					text-color--common__2
+					group-section__nav-item
+					">
+						 <form th:action="@{/view/leader/}" method="post" > 
+							<button type="submit" 
+							class="special-header font-common--1"
+							name="create"> 
+							add member
+							<span><svg xmlns="http://www.w3.org/2000/svg" width="5" height="6" viewBox="0 0 5 6" fill="none">
+								<path d="M5 3.35714H2.85714V5.5H2.14286V3.35714H0V2.64286H2.14286V0.5H2.85714V2.64286H5V3.35714Z" fill="#555555"/>
+							</svg></span>
+						  </form>
+					 </div>		
+			
+				</div>
+				
+			<div class="group-list list-main">
+					
+					<div class="list-main__container">
+						<div th:each="group : ${groupListOfLeader}" class="group-item__selection">
+						<form method="post" th:action="@{/view/leader}" 
+						th:if="${#lists.size(groupListOfLeader) >0}"
+						class="flex-common--2">
+							<input type="hidden" th:value="${group.idPk}"
+							name="groupId">
+							
+							<button
+						 	type="submit" 
+						 	id="modal-btn"
+						 	name="groupconfigure">
+							 	<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+									<path d="M5.46667 10H4.53333C4.38074 9.99986 4.23348 9.94382 4.11939 9.84248C4.00531 9.74114 3.9323 9.60151 3.91417 9.45L3.81458 8.66833C3.61782 8.60447 3.42639 8.52519 3.24208 8.43125L2.61958 8.915C2.49939 9.00948 2.34859 9.05636 2.19602 9.04667C2.04344 9.03699 1.89978 8.97142 1.7925 8.8625L1.13625 8.20625C1.02792 8.09907 0.962861 7.95576 0.953484 7.80366C0.944108 7.65156 0.991074 7.50134 1.08542 7.38167L1.56917 6.75875C1.47487 6.5746 1.39559 6.38315 1.33208 6.18625L0.54875 6.08667C0.397427 6.06798 0.258144 5.99465 0.157089 5.88047C0.0560351 5.7663 0.000170617 5.61914 0 5.46667L0 4.53333C0 4.21792 0.23625 3.95167 0.55 3.91417L1.33167 3.81458C1.39553 3.61782 1.47481 3.42639 1.56875 3.24208L1.08542 2.61958C0.990695 2.49938 0.943708 2.34843 0.953474 2.1957C0.963241 2.04298 1.02907 1.89924 1.13833 1.79208L1.79458 1.13583C1.90181 1.02759 2.04511 0.962584 2.19718 0.953209C2.34926 0.943834 2.49946 0.990745 2.61917 1.085L3.24167 1.56917C3.42609 1.47515 3.61766 1.39587 3.81458 1.33208L3.91417 0.54875C3.95167 0.23625 4.21792 0 4.53333 0H5.46667C5.78208 0 6.04833 0.23625 6.08583 0.55L6.18542 1.33167C6.38458 1.39625 6.57625 1.47583 6.75833 1.56875L7.38083 1.085C7.50101 0.990396 7.65187 0.943479 7.8045 0.953244C7.95713 0.963009 8.10078 1.02877 8.20792 1.13792L8.86417 1.79417C9.08792 2.01125 9.11042 2.36667 8.915 2.61875L8.43125 3.24167C8.52458 3.42375 8.60417 3.61542 8.66833 3.81417L9.45167 3.91375C9.60288 3.93244 9.74206 4.00572 9.84303 4.11982C9.94401 4.23392 9.99983 4.38097 10 4.53333V5.46667C10 5.78208 9.76375 6.04833 9.45 6.08583L8.66833 6.18542C8.60447 6.38218 8.52519 6.57361 8.43125 6.75792L8.915 7.38042C9.0096 7.50059 9.05652 7.65145 9.04676 7.80408C9.03699 7.95671 8.97123 8.10036 8.86208 8.2075L8.20583 8.86375C8.0987 8.97216 7.95537 9.03728 7.80325 9.04666C7.65113 9.05604 7.50088 9.00901 7.38125 8.91458L6.75833 8.43083C6.57419 8.52513 6.38273 8.60441 6.18583 8.66792L6.08625 9.45125C6.06765 9.60254 5.99441 9.74181 5.88031 9.84288C5.7662 9.94394 5.61909 9.99982 5.46667 10ZM3.22083 7.975C3.25542 7.975 3.29083 7.98375 3.3225 8.00125C3.55634 8.13142 3.80435 8.23431 4.06167 8.30792C4.10078 8.31914 4.13575 8.34158 4.16226 8.37246C4.18877 8.40334 4.20566 8.4413 4.21083 8.48167L4.3275 9.39833C4.34 9.50292 4.43042 9.58333 4.53333 9.58333H5.46667C5.51718 9.58265 5.56576 9.56378 5.60349 9.53019C5.64122 9.49659 5.66557 9.45052 5.67208 9.40042L5.78917 8.48208C5.79434 8.44172 5.81123 8.40375 5.83774 8.37288C5.86424 8.342 5.89922 8.31956 5.93833 8.30833C6.19564 8.23473 6.44366 8.13184 6.6775 8.00167C6.71319 7.98173 6.75396 7.97276 6.79472 7.97587C6.83548 7.97899 6.87442 7.99404 6.90667 8.01917L7.63583 8.58583C7.67511 8.61744 7.72465 8.63347 7.775 8.63086C7.82534 8.62825 7.87296 8.60717 7.90875 8.57167L8.56917 7.91125C8.60529 7.87547 8.62694 7.82762 8.62993 7.77686C8.63293 7.7261 8.61708 7.67603 8.58542 7.63625L8.01875 6.90708C7.99368 6.87481 7.97865 6.83588 7.97554 6.79513C7.97243 6.75438 7.98137 6.71362 8.00125 6.67792C8.13142 6.44407 8.23431 6.19606 8.30792 5.93875C8.31914 5.89963 8.34158 5.86466 8.37246 5.83815C8.40334 5.81164 8.4413 5.79476 8.48167 5.78958L9.39833 5.67292C9.44884 5.6666 9.49538 5.64225 9.52937 5.60436C9.56336 5.56646 9.58252 5.51757 9.58333 5.46667V4.53333C9.58265 4.48282 9.56378 4.43424 9.53019 4.39651C9.49659 4.35878 9.45052 4.33443 9.40042 4.32792L8.48208 4.21083C8.44172 4.20566 8.40375 4.18877 8.37288 4.16226C8.342 4.13575 8.31956 4.10078 8.30833 4.06167C8.23473 3.80435 8.13184 3.55634 8.00167 3.3225C7.98163 3.28684 7.97259 3.24605 7.97571 3.20527C7.97882 3.16448 7.99394 3.12553 8.01917 3.09333L8.58583 2.36417C8.61756 2.32505 8.6337 2.27558 8.63116 2.22528C8.62862 2.17498 8.60758 2.12739 8.57208 2.09167L7.91167 1.43125C7.87603 1.39487 7.82814 1.37305 7.7773 1.37005C7.72647 1.36704 7.67633 1.38307 7.63667 1.415L6.9075 1.98167C6.87519 2.00682 6.83618 2.0219 6.79535 2.02501C6.75451 2.02813 6.71367 2.01914 6.67792 1.99917C6.44413 1.86888 6.1961 1.76598 5.93875 1.6925C5.89963 1.68127 5.86466 1.65884 5.83815 1.62796C5.81164 1.59708 5.79476 1.55912 5.78958 1.51875L5.67292 0.602083C5.66669 0.551496 5.64238 0.504865 5.60448 0.470789C5.56658 0.436714 5.51763 0.417491 5.46667 0.416667H4.53333C4.48282 0.417348 4.43424 0.436217 4.39651 0.469815C4.35878 0.503412 4.33443 0.549484 4.32792 0.599583L4.21083 1.51792C4.20563 1.55832 4.18874 1.59632 4.16224 1.62726C4.13575 1.6582 4.10079 1.68073 4.06167 1.69208C3.80433 1.76542 3.5563 1.86818 3.3225 1.99833C3.28679 2.01836 3.24597 2.02742 3.20513 2.02438C3.1643 2.02135 3.12527 2.00634 3.09292 1.98125L2.36375 1.41458C2.32463 1.38286 2.27517 1.36672 2.22487 1.36926C2.17457 1.37179 2.12698 1.39283 2.09125 1.42833L1.43083 2.08917C1.39471 2.12494 1.37306 2.1728 1.37006 2.22356C1.36707 2.27431 1.38292 2.32439 1.41458 2.36417L1.98125 3.09333C2.00632 3.1256 2.02135 3.16454 2.02446 3.20529C2.02757 3.24603 2.01863 3.2868 1.99875 3.3225C1.86841 3.55626 1.7655 3.80429 1.69208 4.06167C1.68086 4.10078 1.65842 4.13575 1.62754 4.16226C1.59666 4.18877 1.5587 4.20566 1.51833 4.21083L0.601667 4.3275C0.551155 4.33364 0.504579 4.35788 0.470565 4.39572C0.436551 4.43357 0.417403 4.48245 0.416667 4.53333V5.46667C0.416667 5.56958 0.497083 5.66 0.599583 5.67208L1.51792 5.78917C1.55828 5.79434 1.59625 5.81123 1.62712 5.83774C1.658 5.86424 1.68044 5.89922 1.69167 5.93833C1.76667 6.19917 1.87 6.44792 1.99833 6.6775C2.01837 6.71316 2.02741 6.75395 2.02429 6.79473C2.02118 6.83552 2.00606 6.87447 1.98083 6.90667L1.41417 7.63583C1.38244 7.67495 1.3663 7.72442 1.36884 7.77472C1.37138 7.82502 1.39242 7.87261 1.42792 7.90833L2.08833 8.56875C2.12406 8.60496 2.17193 8.62666 2.22271 8.62966C2.2735 8.63266 2.32359 8.61675 2.36333 8.585L3.0925 8.01833C3.12948 7.99041 3.1745 7.97521 3.22083 7.975Z" fill="#555555"/>
+									<path d="M5.00033 7.08366C3.85158 7.08366 2.91699 6.14908 2.91699 5.00033C2.91699 3.85158 3.85158 2.91699 5.00033 2.91699C6.14908 2.91699 7.08366 3.85158 7.08366 5.00033C7.08366 6.14908 6.14908 7.08366 5.00033 7.08366ZM5.00033 3.33366C4.08116 3.33366 3.33366 4.08116 3.33366 5.00033C3.33366 5.91949 4.08116 6.66699 5.00033 6.66699C5.91949 6.66699 6.66699 5.91949 6.66699 5.00033C6.66699 4.08116 5.91949 3.33366 5.00033 3.33366Z" fill="#555555"/>
+								</svg>
+						  	</button>	
+						  	
+							<button type="submit" 
+							class="btn-reset 
+							some-title 
+							font-common--1
+							font-size--common-3" 
+							th:text="${group.groupName}"
+							name="group-picked"></button>
+							
+							<button class="add-icon">
+								<svg xmlns="http://www.w3.org/2000/svg" width="9" height="10" viewBox="0 0 9 10" fill="none">
+									<path d="M4.60547 0C3.15158 0 1.96875 1.18283 1.96875 2.63672C1.96875 4.09061 3.15158 5.27344 4.60547 5.27344C6.05936 5.27344 7.24219 4.09061 7.24219 2.63672C7.24219 1.18283 6.05936 0 4.60547 0ZM7.88605 6.996C7.16418 6.26303 6.20721 5.85938 5.19141 5.85938H4.01953C3.00375 5.85938 2.04676 6.26303 1.32488 6.996C0.606543 7.72537 0.210938 8.68814 0.210938 9.70703C0.210938 9.86883 0.342109 10 0.503906 10H8.70703C8.86883 10 9 9.86883 9 9.70703C9 8.68814 8.60439 7.72537 7.88605 6.996Z" fill="#555555"/>
+								</svg>
+								
+								<svg xmlns="http://www.w3.org/2000/svg" width="7" height="8" viewBox="0 0 7 8" fill="none">
+								  <path d="M7 4.5H4V7.5H3V4.5H0V3.5H3V0.5H4V3.5H7V4.5Z" fill="#555555"/>
+								</svg>
+							</button>
+						</form>
+						
+						
+					</div>
+					
+					<p th:if="${#lists.size(groupListOfLeader) ==0}">
+						 No Groups Yet
+						</p>
+					</div>
+		
+			 </div>
+				 
+			 <div class="member-list list-main">
+				 <div class="list-main__container">
+					 	<div th:if="${#arrays.length(groupMembers) == 0}">
+					 		<p class="group-item ">No Members for this group</p>
+					 	</div>
+					 	
+						<div th:each="groupMember : ${groupMembers}" 
+						th:unless="${#arrays.length(groupMembers) == 0}">
+							<p th:text="${groupMember.firstName+ ' '+ groupMember.lastName}"
+						
+							 class="font-common--1
+							 font-common--3
+							 font-color--common__2">
+							</p>
+							
+						</div>
+				 </div>
+			 
+			 </div>
+			 
+			</div>
+			
+			<div class="sub-section report-section">
+				<div class="report-section__form">
+					<form th:action="@{/view/leader/viewallreports}" 
+					method="post" th:object="${viewAllReportWebDto}" class="flex-common--1">
+						<p 
+						class="
+						font-common--3
+						font-common--1
+						font-variant--common__1
+						text-color--common__2">Unevaluated Reports:</p>
+						<input type="hidden" value="1" name="page">
+						<button 
+						type="submit" 
+						class="
+						font-common--1 
+						text-color--common__2
+						font-variant--common__1
+						letter-spacing--commont__1
+						padding-common--3"
+						name="viewallreports">
+						View All Reports 
+						<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+							<path d="M5.59982 0V0.8H6.63982L3.31982 4.12L3.87982 4.68L7.19982 1.36V2.4H7.99982V0H5.59982Z" fill="#555555"/>
+							<path d="M6.39951 7.20029H0.799512V1.60029H4.39951V0.800293H-0.000488281V8.00029H7.19951V3.60029H6.39951V7.20029Z" fill="#555555"/>
+						</svg>
+						
+						</button>
+					</form>
+				</div>
+				
+				<div class="report-section__list">
+					
+		        	<div th:each="userInfo : ${unEvaluatedReportsDetails}" >
+			        	<form class="flex-common--columns__space-around" th:action="@{/view/leader/evaluate-report}" method="post" th:object="${reportWebDto}" th:data-date="${userInfo.reportDate}" data-formtarget="unevaluated-report__form">
+				         		<input type="hidden" th:value="${userInfo.idPk}" name="userIdPk">
+				                <button  class="btn-reset font-common--1 font-common--3 text-color--common__2"  th:text="${userInfo.firstName + ' ' + userInfo.lastName}" th:value="${userInfo.reportDate}" name="reportDate">
+				                 </button>
+				       
+				        </form>
+			       </div>
+				    
+				  
+				</div>
+		
+			</div>
+			
+		</div>
+		
+		<section class="report-container">
+			<div class="sub-display">
+				<div class="report-category">
+				      <div 
+				      class="report-list__nav
+				      daily-report__list-nav 
+				      font-common--1 
+				      font-common--3
+				      flex-common--header__text
+				      font-variant--common__1
+				      text-color--common__1" 
+				     data-name="daily-report"
+				     data-category="category">
+				      		Daily
+				      </div>
+				
+				      <div class="
+				      report-list__nav
+				      weekly-report__list-nav 
+				      flex-common--header__text
+				      font-common--1 
+				      font-common--3
+				      font-variant--common__1" 
+				      	 data-name="weekly-report"
+				      	 data-category="category">
+				      		Weekly
+						</div>
+				</div>
+						
+				<div class="daily-report__list report-list" >
+					
+					<div class="daily-report__header">
+						<p th:text="${dateToday + ' '+ '('+ day + ')'}" 
+							class="
+							flex-common--header__text 
+							font-common--1 
+							font-common--3 
+							font-color--common__3"></p>
+					</div>
+					
+					<div class="header flex-common--columns__space-around">
+						<div >
+						Submitter:
+						</div>
+						<div>
+						Evaluator:
+						</div>
+						<div>
+						Rating:
+						</div>
+					</div>
+					
+					<div class="daily-report__list-content">
+						<div th:each="reportDetail : ${dailyEvaluatedReports}" class="header flex-common--columns__space-around">
+							<div>
+								<form method="post" 
+							      	th:action="@{/view/leader/final-evaluated/}"
+							      	class="row align-items-center">
+							      		<input type="hidden" th:value="${reportDetail.reportIdPk}"
+							      		name="reportIdPk" >
+							      		<input type="hidden" th:value="${reportDetail.reportDate}"
+							      		name="reportDate" >
+							      		
+							      		<input type="hidden" th:value="${reportDetail.userIdPk}"
+							      		name="userIdPk" >
+										<button type="submit"
+										class="btn-reset"
+										name="edit"
+										th:text="${reportDetail.firstName + '
+							      		 ' + reportDetail.lastName}">
+										</button>
+							      		
+							      	</form>
+							</div>
+							
+							<div th:text="${reportDetail.leaderFirstName + ' ' + reportDetail.leaderLastName}">
+							</div>
+							
+							<div th:text="${reportDetail.finalRating}">
+							</div>
+						</div>
+					</div>
+		
+				</div>
+				
+				
+				<div class="weekly-report__list report-list">
+					<div class="
+					weekly-report__header 
+					flex-common--columns__space-between ">
+						<p th:text="${weeksMondayDate + ' - ' +weeksFridayDate}"
+						class="
+						flex-common--header__text 
+						font-common--1 
+						font-common--3 
+						font-color--common__3"></p>
+						<form th:action="@{/view/leader/generate-report/}"
+						method="post">
+							<input type="hidden" th:value="${groupIdSelected}" name="groupIdPk">
+							<input type="hidden" th:value="${randomUserIdPk}" name="randomUserIdPk">
+							<button type="submit" 
+							class="
+							font-common--1 
+							font-common--3
+							font-variant--common__1
+							padding-common--4"
+							name="biweekly-report"> Generate Weekly Reports </button>
+						</form >
+						
+							<p data-name="group"
+							class="
+							font-common--1 
+							font-common--3 
+							font-color--common__3"
+							th:text="${groupName}">
+							</p>
+					
+					
+						
+					</div>
+					
+					<div class="header flex-common--columns__space-around">
+						<div>
+						Submitter:
+						</div>
+						<div>
+						Evaluator:
+						</div>
+						<div>
+						Rating:	
+						</div>
+					</div>
+					
+					<div class="weekly-report__list-content ">
+						<div th:each="reportDetail : ${weeklyEvaluatedReports}" class="header flex-common--columns__space-around">
+						
+							<div th:text="${reportDetail.firstName + ' '+reportDetail.lastName}"></div>
+							<div th:text="${reportDetail.averageSelfRatedEvaluation}"></div>
+							<div th:text="${reportDetail.averageFinalRatedEvaluation}"></div>
+						
+						</div>
+					</div>
+			
+				</div>
+				
+				
+			</div>
+			
+			
+		</section>
+
+	</main>
+	
+	
+	<!-- Script for manipulating the group list and member list -->
+	<script>
+	
+		//getting all elements necessary for implementing toggle between group and member
+		const listName = document.querySelectorAll(".list-main");
+		const listNav = document.querySelectorAll(".list-nav");
+		const navbarList = document.querySelector(".navbar-list");
+
+		
+		listName[1].style.display = "none";
+		listNav[0].classList.add("list-nav__active");
+	
+		navbarList.addEventListener("click",(e)=>{
+			const target = e.target.closest(".list-nav");
+			if(!target) return;
+			const dataAttr = target.dataset.listname;
+			
+			
+			listName.forEach(val=>{
+				val.style.display = "none"
+				val.classList.remove("bg-primary")
+			});
+			
+			listNav.forEach(val=>{
+				val.classList.remove("list-nav__active")
+			});
+			
+			
+			document.querySelector(`.${dataAttr}-list`).style.display = "block";
+			document.querySelector(`.list-nav__${dataAttr}`).classList.add("list-nav__active");
+		})
+		
+
+		const listReport = document.querySelectorAll(".report-list");
+		const listReportNav = document.querySelectorAll(".report-list__nav");
+		const subDisplayContainer = document.querySelector(".sub-display");
+		listReport[1].style.display = "none";
+		listReportNav[0].classList.add("report-list__nav-active");
+		
+		
+		
+		subDisplayContainer.addEventListener("click",(e)=>{
+			const target = e.target.closest(".report-list__nav");
+			if(!target) return;
+			const dataAttr = target.dataset.name;
+			
+			
+			listReport.forEach(val=>{
+				val.style.display = "none"
+				val.classList.remove("bg-primary")
+			});
+			
+			listReportNav.forEach(val=>{
+				val.classList.remove("report-list__nav-active");
+				val.classList.add("report-list__nav-inactive");
+			});
+			
+			document.querySelector(`.${dataAttr}__list`).style.display = "block";
+			document.querySelector(`.${dataAttr}__list-nav`).classList.add("report-list__nav-active");
+			document.querySelector(`.${dataAttr}__list-nav`).classList.remove("report-list__nav-inactive");
+		});
+		
+		
+		
+	</script>
+
+</body>
+</html>

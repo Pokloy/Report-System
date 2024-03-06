@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<!-- <html xmlns:th="http://www.thymeleaf.org" -->
+<!--  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" -->
+<!--  layout:decorate="~{layout/layout}"> -->
+
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<meta charset="UTF-8">
+<!-- BOOOTSRAO LINK -->
+
+<!--CSS LINKS  -->
+<link th:href="@{/css/user/createReport.css}" rel="stylesheet"></link>
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<!-- GOOGLE FONTS LINKS -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
+<!-- ICONS -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<title>Create Report</title>
+</head>
+<body>
+	<div th:replace="layout/userheader :: headerAll (imgVal=${profilePhoto})"></div>
+	<main>
+		<form th:action="@{/create-report}" enctype="multipart/form-data" method="post" th:object="${reportWebDto}" id="report-form">
+	   <div id="first-div">
+      	  <div id="create-label">
+  			<div>Create Report:</div>     
+            <input  type="date" id="inputDate" name="inputDate" th:value="*{inputDate}">                   
+          </div>
+           <div class="error-message">		
+       		 <div th:if="*{errMsg != null}" th:text="*{errMsg}"></div>
+       	     <div th:if="*{inputDate != null}"  th:errors="*{inputDate}"></div>      	    
+          </div>
+          <div class="create-report__nav">
+		    <a  th:href="@{__${cid == 'TOP' ? '/userTop' : '/view-reports'}__}">
+		       <i class="fa fa-long-arrow-left" ></i>			
+				<span>BACK</span>
+		    </a>	
+		    	    
+		    <a href="/userTop" >
+		    	<span>
+		    		HOME
+		    	</span>
+		    	 <i class="fa fa-home w3-tiny"></i>     
+		    </a>
+		</div>	
+      </div>
+	
+	<div class="general-container">	
+              <div class="grid-container">
+              
+	                 <div class="form-group " >
+	               		<div  class="target">
+	               			<div>Target:</div>
+	                   		<div  class="error-message scroll" th:errors="*{target}"></div>
+	               		</div>    
+	                   <div><textarea placeholder="Enter target.." class=" preserve-line-breaks " id="target" name="target" th:text="${param.editedTarget} ?: *{target}" th:attr="data-whitespace-nowrap='true'"></textarea></div>              
+	                </div>  
+ 	                                
+	                  <div class="form-group ">
+	               		<div class="comments" >
+	               			<div>Actual:</div>
+	               			 <div  class="error-message scroll"  th:if="${#fields.hasErrors('comments')}" th:errors="*{comments}"></div>
+	               		</div>                  
+	                  	<div><textarea placeholder="Enter actual.." class="preserve-line-breaks " id="comments" name="comments" th:text ="${param.editedComments} ?: *{comments}" ></textarea></div>               
+	                </div>                
+	                <div class="form-group">
+	                    <div class="form-group">
+	                        <div  class="rating">Rating</div>
+	                        <select id="numberSelect" name="number" th:field="*{ratings}">
+	                            <option value="1">1</option>
+	                            <option value="2">2</option>
+	                            <option value="3">3</option>
+	                            <option value="4">4</option>
+	                            <option value="5">5</option>
+	                        </select>
+	                        <div th:errors="*{ratings}"></div>
+	                    </div> 
+	                       <label for="image" class="custom-file-upload">
+	    					<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+							  <path d="M35.5 20.5H20.5V35.5H15.5V20.5H0.5V15.5H15.5V0.5H20.5V15.5H35.5V20.5Z" fill="#CCCCCC"/>
+							</svg>
+		    				 <input class="form-control" type="file" id="image" th:field="*{images}" accept="image/jpeg, image/png" multiple>
+	   					</label>       				   
+	               	</div>             		 
+               		
+	
+                </div>
+                	
+                	<div id="image-container__parent" class="image-grid images image ">
+			           	<div  class="image-container"> 				 
+						    <div th:each="image, iterStat : *{encodedImages}">
+						    <th:block th:if="${not #strings.isEmpty(image)}"> 
+						        <img th:src="${'data:image/jpeg;base64,' + image}" height="100" data-report="image"/>
+						    </th:block>				
+						    
+						    </div>	 
+						</div>							           
+			    	</div>
+			    	<div class="error-message">		
+		        		 <div th:if="*{errMsgForFile != null}" th:text="*{errMsgForFile}"></div>	        	       	    
+		          </div>
+               
+                	<div class=" btn-container"> 
+                		<a class="cancel" href="/userTop" >
+					    	<span>
+					    		CANCEL
+					    	</span>    
+					    </a>             		                           			    	                
+                  		<input class="submit" type="submit" value="CONFIRM">        
+               		 </div>
+               <input type="hidden" th:field="*{stringImages}" th:value="*{stringImages}"> 
+               <input type="hidden" th:field="*{encodedImages}" th:value="*{encodedImages}"> 
+                                 
+       </div>
+	   </form>           
+	 					      
+</main>
+	
+			 <!-- SCRIPT FOR DISPLAYING THE IMAGE -->
+    <script th:inline ="javascript">
+    
+   
+	         const image = document.querySelector("#image");
+	     	let imageContainer = document.querySelector(".image-container");
+	        const imageContainerParent = document.querySelector("#image-container__parent");
+	         var allImage = document.querySelectorAll("[data-report='image']");
+	         let storedFiles = [];
+        
+	         for(let imagesss of allImage){
+		        const deleteElement = document.createElement('span');
+		        deleteElement.setAttribute('class', 'delete');
+		        imagesss.parentElement.appendChild(deleteElement); 
+            	imagesss.parentElement.addEventListener('mouseover', function() {
+            	deleteElement.style.display = 'inline-block';
+            });   
+            imagesss.parentElement.addEventListener('mouseleave', function() {
+            	deleteElement.style.display = 'none';
+            });
+            deleteElement.addEventListener('click', function(e) {      	
+            	imagesss.parentElement.remove();
+            	const imageId = imagesss.src; 
+		        // Remove 'data:' + 'image/jpeg' + ';base64,' from imageId
+		        const cleanImageId = imageId.replace(/^data:image\/\w+;base64,/, '');
+		        console.log(cleanImageId);  	  
+         	   // Create a hidden input element
+         	    const hiddenInput = document.createElement('input');
+         	    hiddenInput.type = 'hidden';
+         	    hiddenInput.name = 'deletedImages';
+         	    hiddenInput.value = cleanImageId;
+	         	const parentForm = document.getElementById('report-form');
+         	    parentForm.appendChild(hiddenInput);
+            	   
+         	   const newChildArr = creatingNewArrBasedOnImageContainer(imageContainer.childNodes);
+          	   	imageContainerParentChildCheckHandler(newChildArr.length);
+            })
+        }
+        
+	         image.addEventListener("change", (e) => {
+	        	 const files = e.target.files;
+	        	 
+	        	 if((imageContainer === null || 
+	            			imageContainer === undefined)
+	            			&& files.length> 0){
+	            		const imageContainerClone = document.createElement('div');
+	            		
+	            		imageContainerClone.classList.add("image-grid","image-container","listOfImages");
+	        
+	            		
+	            		imageContainer = imageContainerClone;
+	            		imageContainerParent.appendChild(imageContainerClone);
+	            	}
+	        	 
+	            
+	             for (let i = 0; i < files.length; i++) {
+	             	const div = document.createElement('div');
+	             	div.setAttribute('class', 'image');
+	             	imageContainer.appendChild(div);
+	             	
+	            	const newChildArr = creatingNewArrBasedOnImageContainer(imageContainer.childNodes);
+	           	   	imageContainerParentChildCheckHandler(newChildArr.length);
+	                 const file = files[i];
+	                 const imageUrl = URL.createObjectURL(file);
+	                 const imageElement = document.createElement("img");          
+	                 imageElement.src = imageUrl;
+	                 imageElement.width = 100;
+	                 imageElement.height = 100;
+	                 imageElement.setAttribute("data-report","image");
+	                 div.appendChild(imageElement);
+	               
+	                 const deleteElement = document.createElement('span');
+	                 deleteElement.setAttribute('class', 'delete');
+	         
+	                 div.appendChild(deleteElement);
+	                       
+	                 div.addEventListener('mouseover', function() {
+	                 	deleteElement.style.display = 'inline-block';
+	                 });
+	                 
+	                 div.addEventListener('mouseleave', function() {
+	                 	deleteElement.style.display = 'none';
+	                 });
+	                 console.log(imageContainer.childNodes);
+	                 deleteElement.addEventListener('click', function() {
+	                     
+	                 	let nodes = Array.prototype.slice.call(document.getElementsByClassName('image'));
+	                 	
+	                 	let indexOfImg = nodes.indexOf(div);
+	                 
+	                 	const dt = new DataTransfer();
+	                 	
+	                 	const ambot = Array.from(image.files);
+	                 	ambot.splice(indexOfImg, 1);
+	                 	storedFiles.splice(indexOfImg, 1);
+	                 	
+	                 	for (let j = 0; j < ambot.length; j++) {
+	                 		console.log(ambot[j])
+	                 		dt.items.add(ambot[j]);
+	                 	}
+	             	
+	                 	image.files = dt.files;            	
+	                 	div.remove();
+	                 	
+	                 	const newChildArr = creatingNewArrBasedOnImageContainer(imageContainer?.childNodes);
+	               	   	imageContainerParentChildCheckHandler(newChildArr.length);
+	                 })
+	             }
+	         });
+	         
+	 		image.addEventListener('change', function(e) {
+	 			const files = e.target.files;
+	 			const filesArr = Array.prototype.slice.call(files);
+	 			
+	 			const dt = new DataTransfer();
+	 			
+	 			filesArr.forEach(function(f) {
+	 				storedFiles.push(f);
+	 			});	
+	 			storedFiles.forEach(function(f) {
+	 				dt.items.add(f);
+	 			});		
+	 			image.files = dt.files;
+	 		}); 
+	 		
+	 		
+
+			document.addEventListener("DOMContentLoaded",()=>{
+			
+				const newChildArr = creatingNewArrBasedOnImageContainer(imageContainer?.childNodes);
+				console.log(newChildArr)
+				imageContainerParentChildCheckHandler(newChildArr.length);
+				
+			})
+	 		
+	 		function imageContainerParentChildCheckHandler(x){
+				console.log(x)
+	 			
+				if(x ===0){
+					imageContainerParent.classList.remove("images");
+					imageContainerParent.style.display = "none";
+					//inline css
+				}else {
+					imageContainerParent.classList.add("images");
+					imageContainerParent.style.removeProperty("display");
+					//remove inline css
+				}
+				
+			}
+	 		
+	 		function creatingNewArrBasedOnImageContainer(childArr) {
+	 		
+				let newChildArr = [];
+	        	
+				childArr?.forEach(val=>{
+	        		if(val?.nodeName.toLowerCase() === "div"){
+	        			return newChildArr.push(val);
+	        		}
+	        	});
+
+				return newChildArr;
+			}  
+	 		
+	 		
+	 		
+	 		
+	 		
+	 	 /*    // Get URL parameters
+		    const urlParams = new URLSearchParams(window.location.search);
+		    const editedRatings = urlParams.get('editedRatings');
+		    const editedInputDate = urlParams.get('editedInputDate');
+		
+		    // Set the values of ratings and input date
+		    const ratingsField = document.querySelector('#numberSelect');
+		    if (editedRatings) {
+		        ratingsField.value = editedRatings;
+		    }
+		
+		    const inputDateField = document.querySelector('#inputDate');
+		    if (editedInputDate) {
+		        inputDateField.value = editedInputDate;
+		    } */
+    </script>
+   
+   
+						
+</body>
+</html>

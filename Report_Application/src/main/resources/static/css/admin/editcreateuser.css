@@ -1,0 +1,217 @@
+@charset "UTF-8";
+
+/* create-edit confirmation */
+main.create {
+	margin: auto;
+	margin-top: 2.8125rem;
+	max-width: 43.75rem; /*700px - 43.75rem*/
+}
+
+a#home {
+	color: #333333;
+}
+
+button.main {
+	width: 4.375rem; /*70px - 4.375rem*/
+	height: 1.5625rem; /*25px - 1.5625rem*/
+	font-size: 0.625rem; /*10px - 0.625rem*/
+	justify-content: center;
+	align-items: center;
+	gap: 0.3125rem; /*5px - 0.3125rem*/
+	border-radius: 0.125rem; /*2px - 0.125rem*/
+	border: 1px solid #CCC;
+	background: #FFF;
+	box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+}
+
+button#submit {
+	margin-left: 1.25rem; /*20px - 1.25rem*/
+	color: white;
+	background: #00355B;
+	width: 6.875rem; /*110px - 6.875rem*/ 
+}
+
+button#cancel {
+	width: 6.875rem; /*110px - 6.875rem*/ 
+}
+
+.upperbox {
+	height: 2.5rem; /*40px - 2.5rem*/
+	border-bottom: 1px solid rgba(0, 74, 128, 1);
+}
+
+.upperbox > .first {
+	padding: 0.625rem 0; /*10px - 0.625rem*/
+}
+
+.upperbox > .second {
+	padding: 0.4688rem 0; /*7.5px - 0.4688rem*/
+}
+
+.upperbox > div {
+	display: inline-flex;
+}
+
+.upperbox > div > p {
+	font-size: 1rem; /*16px - 1rem*/
+	margin: 0;
+	margin-left: 1.25rem; /*20px - 1.25rem*/
+	letter-spacing: 0.8px;
+}
+
+.upperbox > .second {
+	float: right;
+	margin-right: 0.625rem; /*10px - 0.625rem*/
+	padding: 0.4688rem auto; /*7.5px - 0.4688rem*/
+}
+
+.upperbox > .second > button {
+	margin-left: 0.3125rem; /*5px - 0.3125rem*/
+}
+
+.midbox {
+	height: 8.75rem; /*140px - 8.75rem*/
+	border: 1px solid #CCC;
+	margin: 0.625rem 0.625rem 0 0.625rem; /*10px - 0.625rem*/
+	background: #FBFBFB;
+	position: relative;
+	border-bottom: none;
+}
+
+.midbox > div > p#fullname {
+	font-size: 0.75rem; /*12px - 0.75rem*/
+	text-align: center;
+	margin: auto;
+	padding-top: 6.7188rem; /*107.5px - 6.7188rem*/
+}
+
+.img-container {
+	width: 5rem; /*80px - 5rem*/
+	height: 5rem;
+	border-radius: 100%;
+	background-color: white;
+	position: absolute;
+	transform: translate(-50%,50%);
+	top: -10%;
+	left: 50%;
+	margin-bottom: 0.625rem; /*10px - 0.625rem*/
+}
+
+div.img-container#editleader {
+	top: -20%
+}
+
+button[name="profile-button"] svg,
+button[name="profile-button"]{
+	position: absolute;
+}
+
+button[name="profile-button"] svg{
+	left: 0.1875rem; /*3px - 0.1875rem*/
+	top: 0.1875rem;
+	background-color: black;
+	width: 0.9375rem; /*15px - 0.9375rem*/
+	height: 0.9375rem;
+	border-radius: 50%;
+}
+
+button[name="profile-button"]{
+	top: 65%;
+	left: 53%;
+}
+
+button[name="profile-button"]#edit {
+	top: 55%;
+	left: 53%;
+}
+
+img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.remove {
+	height: 1.5rem; /*24px - 1.5rem*/
+	width: 1.5rem;
+	font-size: 0.9rem; /*14.4px - 0.9rem*/
+	border-radius: 50%;
+	border: none;
+	color: red;
+	position:absolute;
+	top:0;
+	left: 80%;
+}
+
+form[enctype="multipart/form-data"] {
+	width: calc(100%) ; /*9.92px - 0.62rem*/
+	height: calc(100% - 0.62rem);
+	margin: auto;
+
+}
+
+.lowerbox {
+	border: 1px solid #CCC;
+	border-top: none;
+	margin: 0 0.625rem 0 0.625rem; /*10px - 0.625rem*/
+	padding: 1.25rem; /*20px - 1.25rem*/
+}
+
+.lowerbox > div {
+	display: inline-block;
+	width: 48%;
+}
+
+.lowerbox > div#first {
+	margin-right: 1.25rem; /*20px - 1.25rem*/
+}
+
+.lowerbox > div#second {
+	float: right;
+}
+
+.lowerbox > div > .group {
+	margin-bottom: 1.25rem; /*20px - 1.25rem*/
+}
+
+.lowerbox > div > .group > p {
+	margin-bottom: 0;
+	font-size: 0.75rem; /*12px - 0.75rem*/
+}
+
+p.input {
+	border-bottom: 1px solid #EFEFEF;
+	border-top-style: none;
+	border-right-style: none;
+	border-left-style: none;
+	background: #FBFBFB;
+	outline: none;
+	height: 1.25rem; /*20px - 1.25rem*/
+}
+
+.lowerbox > div > .group > p + input {
+	font-size: 0.75rem; /*12px - 0.75rem*/
+	font-style: none;
+	display: block;
+	width: 100%;
+}
+
+.lowerbox > div >.group > input {
+	border-bottom: 1px solid #EFEFEF;
+	border-top-style: none;
+	border-right-style: none;
+	border-left-style: none;
+	outline: none;
+	height: 1.25rem; /*20px - 1.25rem*/
+}
+
+.lowerbox > div > .group > div > p {
+	font-size: 0.625rem; /*10px - 0.625rem*/
+	color: red;
+	margin: 0;
+}
+
+.lowerbox > #third {
+	width: 100%;
+}

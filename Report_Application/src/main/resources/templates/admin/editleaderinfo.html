@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+<link th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" rel="stylesheet"></link>
+
+<link th:href="@{/css/admin/adminheader.css}" rel="stylesheet"></link>
+<link th:href="@{/css/admin/common.css}" rel="stylesheet"></link>
+<link th:href="@{/css/admin/editcreateuser.css}" rel="stylesheet"></link>
+
+<script th:src="@{/webjars/jquery/3.6.4/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+<title>Edit Leader Information</title>
+</head>
+<body>
+<!-- Edit Leader Information
+@author Christian
+20231027 -->
+	<div th:replace="layout/adminheader :: headerAll"></div>
+	
+	<main class="panel panel-default create" th:object="${userWebDto1}">
+		<div class="upperbox">
+			<div class="first">
+				<p>EDIT LEADER</p>
+			</div>
+			
+			<div class="second">
+				<form th:action="@{/admin/groupconfiguration}" method="POST" id="groupback">
+					<button class="main">
+						<svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none" class="arrow">
+						  <path d="M9.40001 3.60009H1.42037L4.47591 0.689745C4.51396 0.653514 4.54449 0.610145 4.56577 0.562113C4.58705 0.514081 4.59867 0.462328 4.59995 0.409809C4.60123 0.357289 4.59216 0.305031 4.57324 0.256019C4.55433 0.207006 4.52594 0.162199 4.48971 0.124156C4.45348 0.086113 4.41011 0.0555786 4.36208 0.0342963C4.31405 0.013014 4.2623 0.00140045 4.20978 0.00011903C4.15726 -0.00116239 4.105 0.0079133 4.05599 0.0268279C4.00697 0.0457424 3.96217 0.0741254 3.92412 0.110356L0.434593 3.43429C0.360083 3.50844 0.301005 3.59661 0.260773 3.69373C0.220541 3.79084 0.199953 3.89496 0.200197 4.00008C0.200197 4.21367 0.283596 4.41467 0.441593 4.57247L3.92432 7.8896C4.00172 7.9634 4.10092 8 4.20012 8C4.28011 8.00012 4.35829 7.97624 4.42456 7.93145C4.49083 7.88666 4.54215 7.82302 4.57187 7.74876C4.60159 7.6745 4.60835 7.59303 4.59128 7.51489C4.57421 7.43674 4.53409 7.36552 4.47611 7.31041L1.40777 4.40007H9.40001C9.5061 4.40007 9.60784 4.35793 9.68285 4.28292C9.75786 4.2079 9.80001 4.10616 9.80001 4.00008C9.80001 3.89399 9.75786 3.79225 9.68285 3.71724C9.60784 3.64223 9.5061 3.60009 9.40001 3.60009Z" fill="#555555"/>
+						</svg>
+						<span>BACK</span>
+					</button>
+					<input type="hidden" th:value="${groupIdPk}" name="groupIdPk">
+				</form>
+				
+				<button class="main">
+					<a th:href="@{/admin?page=1&freshVisit=true}" id="home">HOME</a>
+					<svg xmlns="http://www.w3.org/2000/svg" width="12" height="10" viewBox="0 0 12 10" fill="none" class="home">
+					  <path d="M10.2869 3.29762V0.778159H8.20335V1.69476L6.00031 0L0.0195312 4.60094L1.27256 6.22973L1.88608 5.75776V10H5.42595V6.89173H6.71441V10H10.1147V5.75776L10.7282 6.22973L11.9811 4.60097L10.2869 3.29762ZM9.41295 9.29831H7.41608V6.19004H4.72423V9.29831H2.58775V5.21795L6.00034 2.59284L9.41292 5.21795L9.41295 9.29831ZM10.5998 5.24573L6.00034 1.70738L1.40084 5.24573L1.00354 4.72928L6.00034 0.885299L8.90507 3.11988V1.47985H9.58524V3.64313L10.9971 4.72928L10.5998 5.24573Z" fill="#555555"/>
+					</svg>
+				</button>
+			</div>
+		</div>
+		
+		<form th:action="@{/admin/groupconfiguration/editleader}" method="POST" enctype="multipart/form-data" id="editleader">	
+			<div class="midbox">
+				<div class="img-container" id="editleader">
+					
+					<img th:src="${!isDefault} ? ${photo} : @{${photo}}">
+					
+				</div>
+				
+				<button type="button" name="profile-button" id="edit">
+					<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+						<path d="M9.60714 3.96429C9.07143 3.42857 8.21429 3.42857 7.67857 3.96429L4.03571 7.60714C4 7.64286 3.96429 7.71429 3.92857 7.78571L3.57143 9.57143C3.53571 9.67857 3.57143 9.82143 3.67857 9.89286C3.75 9.96429 3.89286 10 4 10L5.78571 9.64286C5.85714 9.64286 5.92857 9.60714 5.96429 9.53572L9.60714 5.89286C10.1429 5.35714 10.1429 4.5 9.60714 3.96429ZM5.53571 8.96429L4.39286 9.17857L4.60714 8.03571L7.5 5.14286L8.42857 6.07143L5.53571 8.96429ZM9.10714 5.39286L8.92857 5.57143L8 4.64286L8.17857 4.46429C8.42857 4.21429 8.85714 4.21429 9.10714 4.46429C9.35714 4.71429 9.35714 5.14286 9.10714 5.39286ZM5.82143 4.53571C5.96429 4.67857 6.17857 4.67857 6.32143 4.53571C6.46429 4.39286 6.46429 4.17857 6.32143 4.03571L5.60714 3.32143C5.46429 3.17857 5.25 3.17857 5.10714 3.32143L3.21429 5.21429L2.39286 4.39286C2.25 4.25 2.03571 4.25 1.89286 4.39286L0.714286 5.57143V1.07143C0.714286 0.857143 0.857143 0.714286 1.07143 0.714286H7.5C7.71429 0.714286 7.85714 0.857143 7.85714 1.07143V2.5C7.85714 2.71429 8 2.85714 8.21429 2.85714C8.42857 2.85714 8.57143 2.71429 8.57143 2.5V1.07143C8.57143 0.464286 8.10714 0 7.5 0H1.07143C0.464286 0 0 0.464286 0 1.07143V7.5C0 8.10714 0.464286 8.57143 1.07143 8.57143H2.85714C3.07143 8.57143 3.21429 8.42857 3.21429 8.21429C3.21429 8 3.07143 7.85714 2.85714 7.85714H1.07143C0.857143 7.85714 0.714286 7.71429 0.714286 7.5V6.57143L2.14286 5.14286L2.96429 5.96429C3.10714 6.10714 3.32143 6.10714 3.46429 5.96429L5.35714 4.07143L5.82143 4.53571Z" fill="white"/>
+						<path d="M2.14258 2.4999C2.14258 3.10704 2.60686 3.57132 3.21401 3.57132C3.82115 3.57132 4.28544 3.10704 4.28544 2.4999C4.28544 1.89275 3.82115 1.42847 3.21401 1.42847C2.60686 1.42847 2.14258 1.89275 2.14258 2.4999ZM3.57115 2.4999C3.57115 2.71418 3.42829 2.85704 3.21401 2.85704C2.99972 2.85704 2.85686 2.71418 2.85686 2.4999C2.85686 2.28561 2.99972 2.14275 3.21401 2.14275C3.42829 2.14275 3.57115 2.28561 3.57115 2.4999Z" fill="white"/>
+					</svg>
+				</button>
+				
+				<input type="hidden"  th:value="*{displayPicture}"  name="displayPicture">
+				<div hidden>
+					<input type="file" id="image-file" name="imageFile" accept="image/jpeg, image/png">
+				</div>
+				
+				<div id="midlast">
+					<p th:text="${leaderInfo.firstName + ' ' + leaderInfo.lastName}" id="fullname"></p>
+				</div>
+			</div>
+			
+			<div class="lowerbox">
+				<div id="first">
+					<div class="group">
+						<p>First Name:</p>
+						<!--<input type="text" id="firstName" name="firstName" th:value="${!isFromConfirm} ? *{firstName} : ${firstName}" tabindex="1">-->
+						<input type="text" id="firstName" name="firstName" th:value="${!isFromConfirm} ? ${leaderInfo.firstName} : ${firstName}" tabindex="1">
+						<div class="invalid-feedback">
+							<p th:errors="*{firstName}"></p>
+							<p th:text="${errorFirstName}"></p>
+						</div>
+					</div>
+					
+					<div class="group">
+						<p>Username:</p>
+						<!--<input type="text" id="username" name="username" th:value="${!isFromConfirm}? *{username} : ${username}" tabindex="3">-->
+						<input type="text" id="username" name="username" th:value="${!isFromConfirm} ? ${leaderInfo.username} : ${username}" tabindex="3">
+						<div class="invalid-feedback">
+							<p th:errors="*{username}"></p>
+							<p th:text="${errorUsername}"></p>
+						</div>
+					</div>
+					
+					<div class="group">
+						<p>Password:</p>
+						<input type="password" id="password" name="newPassword" tabindex="5">
+						<div class="invalid-feedback">
+							<p th:errors="*{password}"></p>
+							<p th:text="${errorPassword}"></p>
+						</div>
+					</div>
+				</div>
+				
+				<div id="second">
+					<div class="group">
+						<p>Last Name:</p>
+						<!--<input type="text" id="lastName" name="lastName" th:value="${!isFromConfirm} ? *{lastName} : ${lastName}" tabindex="2">-->
+						<input type="text" id="lastName" name="lastName" th:value="${!isFromConfirm} ? ${leaderInfo.lastName} : ${lastName}" tabindex="2">
+						<div class="invalid-feedback">
+							<p th:errors="*{lastName}"></p>
+							<p th:text="${errorLastName}"></p>
+						</div>
+					</div>
+					
+					<div class="group">
+						<p>Email:</p>
+						<!--<input type="text" id="mailAddress" name="mailAddress" th:value="${!isFromConfirm} ? *{mailAddress} : ${mailAddress}" tabindex="4">-->
+						<input type="text" id="mailAddress" name="mailAddress" th:value="${!isFromConfirm} ? ${leaderInfo.mailAddress} : ${mailAddress}" tabindex="4">
+						<div class="invalid-feedback">
+							<p th:errors="*{mailAddress}"></p>
+							<p th:text="${errorEmail}"></p>
+						</div>
+					</div>
+					
+					<div class="group">
+						<p>Confirm Password:</p>
+						<input type="password" id="confirm-password" name="confirmNewPassword" tabindex="6">
+						<div class="invalid-feedback">
+							<p th:errors="*{confirmPassword}"></p>
+							<p th:text="${errorCp}"></p>
+						</div>
+					</div>
+				</div>
+				
+				<input type="hidden" th:value="${leaderInfo.idPk}" name="leaderIdPk">
+				
+				<div id="third" class="text-center">
+					<button class="main" name="refresh">
+						<span>CLEAR</span>
+						<svg xmlns="http://www.w3.org/2000/svg" width="11" height="13" viewBox="0 0 11 13" fill="none">
+							<path fill-rule="evenodd" clip-rule="evenodd" d="M9.98574 0.65128C9.66782 0.486606 9.29752 0.454955 8.95627 0.563288C8.61502 0.671621 8.33078 0.911066 8.16606 1.22896L6.66829 4.12075C6.66037 4.13603 6.65342 4.1518 6.64748 4.16796C5.9139 4.1428 5.18714 4.46689 4.69705 5.04053C4.11938 5.71635 3.40893 6.45398 2.8019 6.83055C1.93632 7.36754 1.22075 7.56103 0.776308 7.62967C0.653394 7.64845 0.536918 7.69694 0.436983 7.77092C0.337048 7.84491 0.256672 7.94215 0.202825 8.05423C0.0953645 8.28095 0.103439 8.57787 0.312148 8.80769C0.765593 9.30742 1.64965 10.1258 3.27119 11.1572C4.39424 11.8716 5.40113 12.2665 5.94309 12.4495C6.35849 12.5898 6.80231 12.4293 7.04052 12.0725C7.34178 11.6212 7.87101 10.7702 8.32539 9.73477C8.66143 8.96888 8.95089 8.17924 9.22808 7.39115C9.46179 6.7262 9.35666 6.02491 9.00136 5.47053L10.5622 2.4736C10.6442 2.31613 10.6943 2.14404 10.7097 1.96718C10.7251 1.79031 10.7055 1.61215 10.6519 1.44288C10.5984 1.27361 10.512 1.11657 10.3977 0.980732C10.2834 0.844898 10.1434 0.732945 9.98574 0.65128ZM8.41266 4.85279L9.84598 2.10059C9.88069 2.03722 9.90239 1.96755 9.90981 1.89567C9.91723 1.82379 9.91021 1.75116 9.88918 1.68202C9.86815 1.61289 9.83352 1.54866 9.78732 1.4931C9.74113 1.43753 9.6843 1.39175 9.62017 1.35845C9.55604 1.32514 9.48591 1.30498 9.41389 1.29915C9.34186 1.29332 9.2694 1.30193 9.20075 1.32448C9.1321 1.34704 9.06865 1.38308 9.01411 1.43049C8.95958 1.47789 8.91507 1.53572 8.88318 1.60056L7.46011 4.34732C7.50779 4.36751 7.555 4.3894 7.60189 4.41316L8.1218 4.67684C8.22429 4.72871 8.32119 4.78757 8.4125 4.85263L8.41266 4.85279ZM8.46623 7.12327C8.40878 7.28695 8.34821 7.45714 8.28516 7.63045L5.00856 5.91077C5.11416 5.79322 5.2151 5.67722 5.31106 5.5651C5.79867 4.99426 6.59934 4.81024 7.23696 5.13355L7.75687 5.39723C8.39744 5.72194 8.70041 6.45786 8.46654 7.12327H8.46623ZM3.22755 7.51677C3.62602 7.26955 4.04173 6.90835 4.43182 6.52013L4.4371 6.52292L8.00099 8.39307C7.87038 8.73526 7.73203 9.07445 7.58605 9.41037C7.15699 10.3881 6.65478 11.1962 6.36921 11.624C6.32852 11.685 6.26237 11.7049 6.20149 11.6846C5.8671 11.5705 5.53853 11.4401 5.21696 11.2937C5.40533 11.0949 5.67863 10.7704 5.94045 10.3241C6.05366 10.1314 5.98828 9.88664 5.79448 9.77748C5.60068 9.66831 5.35175 9.73633 5.23854 9.92904C5.02797 10.2878 4.77097 10.6409 4.45573 10.9164C4.20018 10.7785 3.94964 10.6316 3.7046 10.4758C3.50539 10.3492 3.30815 10.2196 3.11295 10.087C3.22226 10.013 3.32715 9.93266 3.4271 9.84642C3.59683 9.70092 3.61375 9.44904 3.46468 9.28428C3.3156 9.11952 3.05735 9.10368 2.88747 9.24934C2.63745 9.46364 2.46306 9.54516 2.39256 9.57265C1.74966 9.0897 1.31889 8.69294 1.04014 8.40379C1.58024 8.30332 2.34302 8.06541 3.22755 7.51677Z" fill="#555555"/>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</form>
+			
+		<div class="col-md-auto text-center panel-body">
+			<button class="main" name="back" id="cancel" form="groupback">CANCEL</button>
+			<button name="confirm" class="main" id="submit" form="editleader">CONFIRM</button>
+		</div>
+	</main>
+	
+	<script>
+		function clearImage() {
+        	location.reload(true);
+	    } 
+	    
+		// Get references to the password and confirm password input fieldsconst displayPictureFile = document.querySelector("#image-file");
+		const displayPictureFile = document.querySelector("#image-file");
+		const profileButton = document.querySelector("button[name='profile-button']");
+		const imgContainer = document.querySelector(".img-container");
+		const displayPictureSession = document.querySelector("input[name='displayPicture']");
+		
+		profileButton.addEventListener("click",function(){
+			displayPictureFile.click();
+		})
+		
+		displayPictureFile.addEventListener('change',function(e){
+			
+			const file = e.target.files;
+			
+			if(file.length>0){
+				
+				imgContainer.innerHTML = "";
+				const imgUrl = URL.createObjectURL(file[0]);
+				
+				const btnClose = document.createElement("button");
+				
+				
+				const img = document.createElement("img");
+				
+				img.setAttribute("name","show-picture");
+				img.setAttribute("alt","This is a profile Picture");
+				
+				btnClose.setAttribute("type","button");
+				btnClose.classList.add("remove");
+				btnClose.innerHTML = "&times;";
+				
+				imgContainer.appendChild(img);
+			
+				imgContainer.appendChild(btnClose);
+				img.src = imgUrl;
+				img.alt = "This is your Profile Picture";
+				
+				btnClose.addEventListener("click",	(e)=>{
+					const imageFile = document.getElementById("image-file");
+					const showPicture = document.querySelector("[name='show-picture']");
+					
+					imageFile.value ="";
+					displayPictureSession.value = "";
+					showPicture.remove();
+					btnClose.remove();
+				})
+			}
+		})
+    </script>
+
+</body>
+</html>

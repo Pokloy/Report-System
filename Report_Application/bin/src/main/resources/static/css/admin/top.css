@@ -1,0 +1,344 @@
+main {
+	display: flex;
+	width: 800px;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 4px;
+	border: 1px solid #CCC;
+	background: #FFF;
+	margin: auto;
+	color: #555;
+	margin-top: 2.8125rem;
+}
+
+.top {
+	display: flex;
+	height: 40px;
+	padding: 0px 10px 0px 20px;
+	justify-items: space-between;
+	align-items: center;
+	align-self: stretch;
+	font-size: 16px;
+	letter-spacing: 0.8px;
+	border-bottom: 1px solid #004A80;
+}
+
+.top > .first {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	flex: 1 0 0;
+	align-self: stretch;
+}
+
+.top > .second { 
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 5px;
+	flex: 1 0 0;
+	align-self: stretch;
+}
+
+.top > p {
+	margin: 0;
+}
+
+.top > span {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	flex: 1 0 0;
+	font-size: 14px;
+	text-align: center;
+}
+
+.lowerbox {
+	display: flex;
+	padding: 10px;
+	flex-direction: column;
+	align-items: flex-start;
+	align-self: stretch;
+	overflow: auto;
+	max-height: 500px;
+}
+
+.tbl {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	align-self: stretch;
+	border: 1px solid #CCC;
+	background: #FFF;
+}
+
+.tbl-head {
+	display: flex;
+	height: 30px;
+	padding: 5px 5px 5px 10px;
+	justify-content: space-between;
+	align-items: center;
+	align-self: stretch;
+	border-bottom: 1px solid #CCC;
+	background: #FFF;
+	box-shadow: 0px 1px 1px 0px rgba(204, 204, 204, 0.25);
+	font-size: 12px;
+	letter-spacing: 0.6px;
+}
+
+.container-1 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	flex: 1 0 0;
+}
+
+.container-2 {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex: 1 0 0;
+}
+
+.tbl-head > form > button {
+	display: flex;
+	height: 20px;
+	padding: 0px 10px;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+	border-radius: 2px;
+	border: 1px solid rgba(0, 0, 0, 0.25);
+	background: #FFF;
+	box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+}
+
+.tbl-body {
+	display: flex;
+	padding: 5px 5px 5px 0px;
+	flex-direction: row;
+	align-items: center;
+	gap: 5px;
+	align-self: stretch;
+	border-bottom: 1px solid #EFEFEF;
+	font-size: 12px;
+}
+
+.tbl-body:hover {
+	background: #FBFBFB;
+}
+
+.container-3 {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	flex: 1 0 0;
+}
+
+.container-3 > ul {
+	list-style-type: none;
+	margin: 0;
+}
+
+.container-4 {
+	display: flex;
+	padding-right: 20px;
+	align-items: center;
+	flex: 1 0 0;
+}
+
+.container-5 {
+	display: flex;
+	width: 110px;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 10px;
+	align-self: stretch;
+}
+
+.container-5 > button {
+	display: flex;
+	width: 65px;
+	height: 36px;
+	padding: 0px 10px;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+	flex-shrink: 0;
+	border-radius: 2px;
+	box-shadow: 0.7px 0.7px 1px 0px rgba(0, 0, 0, 0.25);
+	color: white;
+	border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.container-5 > button:disabled {
+	opacity: 0.6;
+}
+
+.success {
+	color: #52D452;
+}
+
+.error {
+	color: #F33;
+}
+
+/* The Modal (background) */
+.modal {
+  	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	border-radius: unset;
+}
+
+/* Modal Content */
+.modal-content {
+	display: flex;
+	width: 400px;
+	padding: 20px 0px 15px 0px;
+	flex-direction: column;
+	align-items: center;
+	gap: 15px;
+	flex-shrink: 0;
+	margin: auto;
+}
+
+.modal-content-1 {
+	display: flex;
+	padding: 0px 10px;
+	flex-direction: column;
+	align-items: center;
+	align-self: stretch;
+}
+
+.box {
+	display: flex;
+	min-height: 20px;
+	padding-bottom: 5px;
+	flex-direction: column;
+	align-items: center;
+	align-self: stretch;
+	border-top: 0.5px solid #CCC;
+}
+
+.modal-content-2 {
+	display: flex;
+	padding: 5px 20px;
+	justify-content: space-between;
+	align-items: flex-start;
+	align-self: stretch;
+	border-bottom: 0.5px solid #CCC;
+}
+
+.modal-content-3 {
+	display: flex;
+	padding: 5px 0px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-self: stretch;
+	border-bottom: 0.5px solid #CCC;
+}
+
+.modal-content-3 > ul {
+	list-style-type: none;
+	margin: 0;
+}
+
+.modal-container {
+	display: flex;
+	width: 150px;
+	align-items: center;
+}
+
+.modal-container:last-child {
+	display: flex;
+	width: 150px;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.modal-content > button {
+	float: right;
+	width: 10px;
+	height: 10px;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	border: none;
+	box-shadow: unset;
+	background-color: transparent;
+}
+
+.modal-content > .modal-btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+	align-self: stretch;
+	flex-direction: row;
+}
+
+.modal-content > .modal-btn > button {
+	display: flex;
+	width: 110px;
+	justify-content: space-around;
+	height: 25px;
+	align-items: center;
+	font-size: 10px;
+	border-radius: 2px;
+	border: 1px solid #CCC;
+	background: #FFF;
+	box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+}
+
+.modal-content > .modal-btn > form > button{
+	display: flex;
+	width: 110px;
+	justify-content: space-around;
+	height: 25px;
+	align-items: center;
+	font-size: 10px;
+	background: #00355B;
+	color: white;
+	border-radius: 2px;
+	box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+	border-bottom: 0.5px solid #CCC;
+}
+
+.close:hover,
+.close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.page {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-top: 10px;
+	align-self: stretch;
+	margin: 10px auto 0;
+	gap: 15px;
+}

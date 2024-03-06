@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<meta charset="UTF-8">
+<!-- GOOGLE FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
+<!--CSS  LINK-->
+<link th:href="@{/css/user/todayAndYesterdayReport.css}" rel="stylesheet"></link>
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<!-- ICONS -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<head>
+    <title>Daily Report</title>
+</head>
+<body>
+	<div th:replace="layout/userheader :: headerAll"></div>
+	 <div class="first-div borders">
+	       <span  th:text="${'View Report:' + formattedReportDateYesterday }"></span>
+	       	<div id="icons-tab">
+			    <div id="back-div">	               		 
+				   <button type="submit" class="btn-home"  id="back" onclick="window.location.href='/userTop'">
+			            <i class="fa fa-long-arrow-left"></i> BACK
+			        </button>							       
+			    </div>
+			    <div id="home-div">
+			        <button class="btn-home" id="home" onclick="window.location.href='/userTop'">
+			            HOME <i class="fa fa-home w3-tiny"></i>
+			        </button>
+			    </div>
+			</div>
+	  </div>
+    <div class="general-container">
+    			    
+				<div th:if="${reportDetails2 != null}">	 	
+				 <div class="grid-container">
+			 		<div class="text-container item1">
+			 			<div class= "borders box">Target:</div>
+				 		<p class= "borders label target scroll" id="target" th:text="${reportDetails2.target}"></p>
+				 	</div>
+				 		<div class="text-container item2">
+				 		<div class= "borders box">Self Comment:</div>
+				 		<p class= "borders label target scroll" id="target" th:text="${reportDetails2.selfComment}"></p>
+				 	</div>
+				    <div class="item3">
+		              	 <p class="rating-label borders">Self Rating:</p>
+			             <p class="rating borders" id="selfRating" th:text="${reportDetails2.selfRating}" ></p>
+	                </div>	
+	                <div th:if="${reportWebDto.encodedImages != null and not reportWebDto.encodedImages.isEmpty()}"  class="listOfImages images item4">
+				 		<div  th:if="${#strings.length(encodedImage) > 'data:image/jpeg;base64,'.length()}"  th:each="encodedImage : ${reportWebDto.encodedImages}">
+							<img th:src="'data:image/jpeg;base64,' + ${encodedImage}" alt="Image" height="200">
+						 </div>
+			 		</div>		
+				 </div>	
+				 <div  class="grid-container2"  th:if="${reportDetails2.finalRating != 0}" >
+		 			  <div  class="text-container item5 ">
+		                  	<div class= "evaluation-label borders box">Evaluation:</div>
+		                  	<div class= "borders label evaluation scroll"  th:text="${reportDetails2.leaderComment}" ></div>
+		              </div>              
+		              <div class="item6" >
+		              	 <p class="rating-label borders"  th:if="${reportDetails2.finalRating != 0}" >Final Rating:</p>
+			             <p class="rating borders"  th:text="${reportDetails2.finalRating}" th:unless="${reportWebDto.finalRating = 0}" ></p>
+		              </div>   
+	          	 </div> 
+	  
+		 		<div >
+			 		
+	
+					<div th:if="${reportWebDto.encodedImagesLeader != null and not reportWebDto.encodedImagesLeader.isEmpty()}" class="listOfImages images">
+						<div th:if="${#strings.length(encodedImage) > 'data:image/jpeg;base64,'.length()}" th:each="encodedImage : ${reportWebDto.encodedImagesLeader}">
+							<img th:src="'data:image/jpeg;base64,' + ${encodedImage}" alt="Image" height="200">
+						 </div>
+					</div>
+			 	</div>
+			</div>
+    </div>   
+    <div th:unless="${reportDetails2 != null}">
+        <p>No report available for today.</p>
+    </div>
+    
+      
+<!-- 	<!-- Scripts for Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" >
+
+<meta charset="UTF-8">
+<title>View Weekly Report</title>
+
+</head>
+<body>
+	<div class="container">
+			<div>
+		<div th:if="${#lists.size(getReports) ==0}">
+			<p>No Reports for the said User</p>
+		</div>
+		
+		<div th:if="${#lists.size(getReports) > 0}">
+			<div th:each="report : ${getReports}">
+				<p th:text="${report.reportDate}"></p>
+				<p th:text="${report.selfRating}"></p>
+				
+			</div>
+		</div>
+		
+		<div th:unless="${#lists.size(getReports) == 0}">
+			<div>
+				<h5>Actual</h5>
+				<p th:text="${ratings.averageSelfRatedEvaluation}"></p>
+			</div>
+			
+			<div>
+				<h5>Final</h5>
+				<p th:text="${ratings.averageFinalRatedEvaluation}"></p>
+			</div>
+		</div>
+	</div>
+	
+	<div>
+		
+		 <div class="row">
+	      	<div class="col-md-4 p-4 mt-4 ">		
+				<a th:href="@{/userTop}" class="btn btn-success btn-block">Back</a><br>	      	      
+	        </div>
+		 </div>
+	</div>
+	</div>
+	
+	
+	<!-- 	<!-- Scripts for Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<head>
+<meta charset="UTF-8">
+<!--CSS LINKS  -->
+<link th:href="@{/css/user/reportConfirmation.css}" rel="stylesheet"></link>
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<!-- GOOGLE FONTS LINKS -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
+<!-- ICONS -->
+<!-- ICONS -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Create Report Confirmation</title>
+</head>
+<body>
+
+<div th:replace="layout/userheader :: headerAll (imgVal=${profilePhoto})"></div>
+
+ 
+       <div id="first-div">
+		    <div id="create-label">
+		        <div>Confirmation: <span th:text="${formattedDate}"></span></div>		        	       
+		    </div>		   
+		    <div class="create-report__nav">
+		   
+			<form th:action="@{/create-report}" method="post"  th:object="${reportWebDto}">
+			   	<input type="hidden" id="target"  name="target" th:value="*{target}">
+	            <input type="hidden" id="comments" name="comments" th:value="*{comments}">
+	            <input type="hidden" id="ratings" name="ratings" th:value="*{ratings}">
+	            <input type="hidden" id="inputDate" name="inputDate" th:value="*{inputDate}"> 
+	            <input type="hidden" name="" th:value = "reportWebDto.imageName">
+			   	<button id="back"  type="submit" name="back" > <i class="fa fa-long-arrow-left"></i>
+			    <span>BACK</span>				   
+			   	</button>
+		   </form>  
+		        <a href="/userTop">
+		            <span>HOME</span>
+		            <i class="fa fa-home w3-tiny"></i>
+		        </a>
+		    </div>
+		</div>
+		 <form method="post" th:action="@{/submit}"  th:object="${reportWebDto}">
+		 <div class="general-container">	
+              <div class="grid-container">            
+               <div class="form-group item1" >
+               		<div  class="target">
+               			<div>Target:</div>
+               		</div>    
+                   <div><p class=" preserve-line-breaks scroll"  id="target" th:text="*{target}" th:attr="data-whitespace-nowrap='true'"></p></div>              
+               </div>                   
+               <div class="form-group item2">
+               		<div class="comments" >
+               			<div>Actual:</div>        			 
+               		</div>                  
+                  	<div><p class="preserve-line-breaks scroll" id="comments" th:text="*{comments}" ></p></div>               
+                </div>               
+                <div class="item3">
+                    <div class="form-group">
+                        <div  class="rating">Rating</div>
+                        <p id="numberSelect" th:text="*{ratings}">                          
+                        </p>
+                    </div>       				   
+               		 </div> 
+               		 </div>             		 
+               		 	<div th:if="${reportWebDto.encodedImages != null and not reportWebDto.encodedImages.isEmpty()}"  class=" images item6">   	       				
+						  <div  class=" image-container listOfImages">
+				           	<div th:each="image, iterStat : *{encodedImages}">
+							    <th:block th:if="${not #strings.isEmpty(image)}"> 
+							        <img th:src="${'data:image/jpeg;base64,' + image}" height="100" />
+							    </th:block>
+							</div>							           
+					    </div>	    							
+						</div>			
+                	          
+                	<div class=" btn-container"> 
+                		<a class="cancel" href="/userTop" >
+					    	<span>
+					    		CANCEL
+					    	</span>    
+					    </a>             		                           			    	                
+                  		<input class="submit" type="submit" value="SUBMIT">                       
+               		 </div>
+               <input type="hidden" th:field="*{stringImages}" th:value="*{stringImages}"> 
+               <input type="hidden" th:field="*{encodedImages}" th:value="*{encodedImages}">  
+                <input type="hidden" id="target"  name="target" th:value="*{target}">
+                <input type="hidden" id="comments" name="comments" th:value="*{comments}">
+                <input type="hidden" id="ratings" name="ratings" th:value="*{ratings}">
+                <input type="hidden" id="inputDate" name="inputDate" th:value="*{inputDate}">                       
+       </div>                
+ </form>
+                
+	 			
+     
+   
+
+	 
+
+    <!-- SCRIPT FOR DISPLAING THE RATINGS INPUT DATE AND IMAGES FOR THE BACK BUTTON -->
+    <script>
+
+     /*    // Add an event listener to the back button
+        const backButton = document.getElementById('backButton');
+        backButton.addEventListener('click', function() {
+            // You can redirect the user to the previous page here if needed
+        }); */
+             
+</script>
+    
+
+
+    
+</body>
+</html>

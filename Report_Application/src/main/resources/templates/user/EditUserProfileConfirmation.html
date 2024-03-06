@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+
+<!-- <html xmlns:th="http://www.thymeleaf.org" -->
+<!--  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" -->
+<!--  layout:decorate="~{layout/layout}"> -->
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<head>
+<meta charset="UTF-8">
+   <!-- GOOGLE FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
+<!--CSS  LINK-->
+<link th:href="@{/css/user/userProfile.css}" rel="stylesheet"></link>
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<!-- ICONS -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<head>
+<meta charset="UTF-8">
+<title>Edit Report Confirmation</title>
+</head>
+<body>
+	<div th:replace="layout/userheader :: headerAll (imgVal=${image})"></div>
+	 <div class="first-div borders">
+	       <span  th:text="CONFIRMATION"></span>
+	       	<div id="icons-tab">
+			    <div id="back-div">	
+			    <form  method="post" th:action="@{/profile}" th:object ="${userProfileWebDto}">
+	        		<button type="submit" class="btn-home"  id="back" name="returnprofile">
+			        <i class="fa fa-long-arrow-left"></i> BACK
+			        </button>
+			        <button class="btn-home" id="home" name="cancel" type="submit">
+			            HOME <i class="fa fa-home w3-tiny"></i>
+			        </button>
+	        	 	<input type="hidden" name ="firstName" th:value="*{firstName}">
+			    	<input type="hidden" name ="lastName" th:value="*{lastName}">
+			    	<input type="hidden" name ="username" th:value="*{username}">
+			    	<input type="hidden" name = "mailAddress" th:value="*{mailAddress}" id="password">
+			    	<input type="hidden" name= "password" th:value="*{newPassword}">
+			    	<input type="hidden" name="fromConfirm" th:value="*{fromConfirm}">
+			    	<input name="mainurl" type="hidden" th:value="${mainurl}">    	
+	        	</form>               		   							       
+			    </div>
+			   
+			</div>
+	  </div>
+	  <div class="general-container">	
+		 <form method="post" th:action="@{/profile}" enctype="multipart/form-data" th:object ="${userProfileWebDto}">			
+		<div>
+			<div class="center parent">
+				<div> 
+					<img id="image-source" th:src="${image}" alt="image" height="200">
+               	</div>
+               
+               	<div class="center-d--flex__column" th:if="${role == 'USER'}">
+				   <p th:text="*{firstName + ' ' + lastName}"></p>
+				   <label for="lastReport">Last Report:</label>
+				   <p id="lastReport" th:text="${formattedReportDate}"></p>
+				</div>				 			         		
+			</div>				  
+		</div>		
+	   	 <div class="center" >
+            <div class="grid-container">    
+                <div class="item1">              	 
+	              	<p >First Name:<p>
+	              	<p th:text="*{firstName}" class="input"></p>
+	              	<input type="hidden" id="firstName"  name="firstName" th:value="*{firstName}">
+                </div> 
+                  
+                <div class="item2">
+                	<p>Last Name:</p>
+                	<p th:text="*{lastName}" class="input"></p>
+              	 	<input type="hidden" id="lastName"  name="lastName" th:value="*{lastName}">             
+                </div> 
+                  
+                  <div class="item3">
+                     <p>Username:</p>
+                     <p th:text="*{username}" class="input"></p>
+                     <input type="hidden" id="username" name="username" th:value="*{username}">
+                  </div>                
+                  <div class="item4">
+                  	<p>Email:</p>
+                  	<p th:text="*{mailAddress}" class="input"></p>
+                 	<input type="hidden" id="mailAddress" name="mailAddress" th:value="*{mailAddress}">			
+                  </div>                  
+                  <div class="item5" th:if="${newPassword}">
+                   	<p>Password:</p>
+                   	<p id="passwordAsterisks" class="input"></p>
+				    <input type="hidden" id="new-password" name="newPassword" class="form-control" th:value="*{newPassword}">	
+				    <input type="hidden" name= "password" th:value="*{password}"> 
+                  </div>
+	
+	    		  <div class="item6  " th:if="${role == 'USER'}">
+                   	<label for="groupName">Group:</label>
+                   	<p  class="input"  th:text="${groupName}"></p>				
+                  </div> 
+                        
+            </div> 
+          </div> 
+				<div class=" btn-container"> 
+                		<button 
+                		name="profile" 
+                		class="btn-reset 
+					    font-common--1 
+            			font-size--common-4
+            			letter-spacing--commont__1"
+            			data-button="cancel" 
+                		type="submit">CANCEL</button>		                           			    	                
+                  		<button 
+                  		name="submit" 
+                  		class="btn-reset 
+						    font-common--1 
+                			font-size--common-4
+                			letter-spacing--commont__1
+                			text-color--common__1	" type="submit">SUBMIT</button>	
+                  		      
+               	</div>  
+               	<input name="mainurl" type="hidden" th:value="${mainurl}">  
+		     <!-- <h4><strong th:if="${newPassword}">New Password: <span id="passwordAsterisks"></span></strong></h4>	 -->      	
+		    	<!-- <input type="hidden" name ="firstName" th:value="*{firstName}">
+		    	<input type="hidden" name ="lastName" th:value="*{lastName}"> -->
+		    <!-- 	<input type="hidden" name ="username" th:value="*{username}">
+		    	<input type="hidden" name = "mailAddress" th:value="*{mailAddress}" >
+		    	<input type="hidden" name= "newPassword" th:value="*{newPassword}"> -->
+		    	
+		    	<input type="hidden" id="display-picture" name="display-picture" th:field="*{displayPicture}">
+		    	<input type="hidden" id="image-name" name="image-name" th:field="*{imageName}">
+		    	
+		    </form>
+	  
+	</div>
+	
+	   <!-- 	<!-- Scripts for Bootstrap --> 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+<script type="text/javascript">
+   
+
+    // SCRIPT FOR DISPLAYING THE IMAGE -->
+//     const image = document.querySelector("#image");
+//     const imageSource = document.querySelector("#image-source");
+
+//     image.addEventListener("change", (e) => {
+//         const file = e.target.files;
+//         if (file.length > 0) {
+//             const imageUrl = URL.createObjectURL(file[0]);
+//             imageSource.src = imageUrl;
+//         }
+//     })
+    
+    
+		const passwordValueOutput = document.getElementById("passwordAsterisks");
+		const passwordValueInput = document.querySelector("input[name='newPassword']");
+		console.log("Password Input Element:", passwordValueInput);
+		console.log("Password Value:", passwordValueInput.value);
+
+	   	let p="";
+		hideValueForInputs(passwordValueInput.value.length, p ,passwordValueOutput);
+		
+		function hideValueForInputs(valueLength, payloadVariable,targetEl){
+			for(let i = 0; i< valueLength; i++){
+				payloadVariable+="*"
+				
+			}
+			targetEl.innerHTML = payloadVariable;
+		}
+</script>
+
+
+
+    
+</body>
+</html>

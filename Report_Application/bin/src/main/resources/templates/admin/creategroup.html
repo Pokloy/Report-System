@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+<link th:href="@{/css/admin/adminheader.css}" rel="stylesheet"></link>
+<link th:href="@{/css/admin/common.css}" rel="stylesheet"></link>
+<link th:href="@{/css/admin/groupcreate.css}" rel="stylesheet"></link>
+
+<link th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" rel="stylesheet"></link>
+<script th:src="@{/webjars/jquery/3.6.4/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+<title>Admin</title>
+</head>
+<body>
+<!-- group creation interface
+@author Christian
+20231004
+ -->
+ 
+	<div th:replace="layout/adminheader :: headerAll"></div>
+
+	<main>
+		<div class="upperbox">
+			<div class="first">
+				CREATE GROUP
+			</div>
+			
+			<div class="second">
+				<button class="main" onclick="history.back()">
+					<svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none" class="arrow">
+					  <path d="M9.40001 3.60009H1.42037L4.47591 0.689745C4.51396 0.653514 4.54449 0.610145 4.56577 0.562113C4.58705 0.514081 4.59867 0.462328 4.59995 0.409809C4.60123 0.357289 4.59216 0.305031 4.57324 0.256019C4.55433 0.207006 4.52594 0.162199 4.48971 0.124156C4.45348 0.086113 4.41011 0.0555786 4.36208 0.0342963C4.31405 0.013014 4.2623 0.00140045 4.20978 0.00011903C4.15726 -0.00116239 4.105 0.0079133 4.05599 0.0268279C4.00697 0.0457424 3.96217 0.0741254 3.92412 0.110356L0.434593 3.43429C0.360083 3.50844 0.301005 3.59661 0.260773 3.69373C0.220541 3.79084 0.199953 3.89496 0.200197 4.00008C0.200197 4.21367 0.283596 4.41467 0.441593 4.57247L3.92432 7.8896C4.00172 7.9634 4.10092 8 4.20012 8C4.28011 8.00012 4.35829 7.97624 4.42456 7.93145C4.49083 7.88666 4.54215 7.82302 4.57187 7.74876C4.60159 7.6745 4.60835 7.59303 4.59128 7.51489C4.57421 7.43674 4.53409 7.36552 4.47611 7.31041L1.40777 4.40007H9.40001C9.5061 4.40007 9.60784 4.35793 9.68285 4.28292C9.75786 4.2079 9.80001 4.10616 9.80001 4.00008C9.80001 3.89399 9.75786 3.79225 9.68285 3.71724C9.60784 3.64223 9.5061 3.60009 9.40001 3.60009Z" fill="#555555"/>
+					</svg>
+					<span>BACK</span>
+				</button>
+				
+				<button class="main">
+					<a th:href="@{/admin}" id="home">HOME</a>
+					<svg xmlns="http://www.w3.org/2000/svg" width="12" height="10" viewBox="0 0 12 10" fill="none" class="home">
+					  <path d="M10.2869 3.29762V0.778159H8.20335V1.69476L6.00031 0L0.0195312 4.60094L1.27256 6.22973L1.88608 5.75776V10H5.42595V6.89173H6.71441V10H10.1147V5.75776L10.7282 6.22973L11.9811 4.60097L10.2869 3.29762ZM9.41295 9.29831H7.41608V6.19004H4.72423V9.29831H2.58775V5.21795L6.00034 2.59284L9.41292 5.21795L9.41295 9.29831ZM10.5998 5.24573L6.00034 1.70738L1.40084 5.24573L1.00354 4.72928L6.00034 0.885299L8.90507 3.11988V1.47985H9.58524V3.64313L10.9971 4.72928L10.5998 5.24573Z" fill="#555555"/>
+					</svg>
+				</button>
+			</div>
+		</div>
+		
+		<form th:action="@{/admin/creategroup}" method="POST" th:object="${groupCreationWebDto}" enctype="multipart/form-data" id="creategroup">
+			<div class="midbox">
+				<div class="img-container">
+					<th:block th:if="${selectedImage} != null">
+						<img th:src="${selectedImage}" onerror="this.onerror=null; this.style.display='none';">
+					</th:block>
+				</div>
+				
+				<button type="button" name="banner-button">
+					<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+						<path d="M9.60714 3.96429C9.07143 3.42857 8.21429 3.42857 7.67857 3.96429L4.03571 7.60714C4 7.64286 3.96429 7.71429 3.92857 7.78571L3.57143 9.57143C3.53571 9.67857 3.57143 9.82143 3.67857 9.89286C3.75 9.96429 3.89286 10 4 10L5.78571 9.64286C5.85714 9.64286 5.92857 9.60714 5.96429 9.53572L9.60714 5.89286C10.1429 5.35714 10.1429 4.5 9.60714 3.96429ZM5.53571 8.96429L4.39286 9.17857L4.60714 8.03571L7.5 5.14286L8.42857 6.07143L5.53571 8.96429ZM9.10714 5.39286L8.92857 5.57143L8 4.64286L8.17857 4.46429C8.42857 4.21429 8.85714 4.21429 9.10714 4.46429C9.35714 4.71429 9.35714 5.14286 9.10714 5.39286ZM5.82143 4.53571C5.96429 4.67857 6.17857 4.67857 6.32143 4.53571C6.46429 4.39286 6.46429 4.17857 6.32143 4.03571L5.60714 3.32143C5.46429 3.17857 5.25 3.17857 5.10714 3.32143L3.21429 5.21429L2.39286 4.39286C2.25 4.25 2.03571 4.25 1.89286 4.39286L0.714286 5.57143V1.07143C0.714286 0.857143 0.857143 0.714286 1.07143 0.714286H7.5C7.71429 0.714286 7.85714 0.857143 7.85714 1.07143V2.5C7.85714 2.71429 8 2.85714 8.21429 2.85714C8.42857 2.85714 8.57143 2.71429 8.57143 2.5V1.07143C8.57143 0.464286 8.10714 0 7.5 0H1.07143C0.464286 0 0 0.464286 0 1.07143V7.5C0 8.10714 0.464286 8.57143 1.07143 8.57143H2.85714C3.07143 8.57143 3.21429 8.42857 3.21429 8.21429C3.21429 8 3.07143 7.85714 2.85714 7.85714H1.07143C0.857143 7.85714 0.714286 7.71429 0.714286 7.5V6.57143L2.14286 5.14286L2.96429 5.96429C3.10714 6.10714 3.32143 6.10714 3.46429 5.96429L5.35714 4.07143L5.82143 4.53571Z" fill="white"/>
+						<path d="M2.14258 2.4999C2.14258 3.10704 2.60686 3.57132 3.21401 3.57132C3.82115 3.57132 4.28544 3.10704 4.28544 2.4999C4.28544 1.89275 3.82115 1.42847 3.21401 1.42847C2.60686 1.42847 2.14258 1.89275 2.14258 2.4999ZM3.57115 2.4999C3.57115 2.71418 3.42829 2.85704 3.21401 2.85704C2.99972 2.85704 2.85686 2.71418 2.85686 2.4999C2.85686 2.28561 2.99972 2.14275 3.21401 2.14275C3.42829 2.14275 3.57115 2.28561 3.57115 2.4999Z" fill="white"/>
+					</svg>
+				</button>
+				
+				<input type="hidden"  th:value="*{displayPicture}"  name="displayPicture">
+				<div hidden>
+					<input type="file" class="form-control" id="image-file" th:src="*{imageFile}" th:field="*{imageFile}" name="display-picture" accept="image/jpeg, image/jpg, image/png">
+				</div>
+			</div>
+			
+			<div class="lowerbox">
+				<P>GROUP NAME:</P>
+				<input type="text" name="group" th:field="*{group}" id="group-name" placeholder="Enter group name...">
+			</div>
+			
+			<div class="invalid-feedback">
+				<p th:errors="*{group}"></p>
+			</div>
+		</form>
+		
+		<div class="buttons">
+			<button id="cancel" name="back">
+				<a th:href="@{/admin}" id="home">CANCEL</a>
+			</button>
+			<button id="submit" form="creategroup" name="confirm">CONFIRM</button>
+		</div>
+	</main>
+	
+	<script type="text/javascript">
+		const displayPictureFile = document.querySelector("#image-file");
+		const profileButton = document.querySelector("button[name='banner-button']");
+		
+		const imgContainer = document.querySelector(".img-container");
+		
+		const displayPictureSession = document.querySelector("input[name='displayPicture']");
+		
+		profileButton.addEventListener("click",function(){
+			displayPictureFile.click();
+		})
+		
+		displayPictureFile.addEventListener('change',function(e){
+			
+			const file = e.target.files;
+			
+			if(file.length>0){
+				
+				imgContainer.innerHTML = "";
+				const imgUrl = URL.createObjectURL(file[0]);
+				
+				const btnClose = document.createElement("button");
+				
+				
+				const img = document.createElement("img");
+				
+				img.setAttribute("name","show-picture");
+				img.setAttribute("alt","This is a profile Picture");
+				
+				btnClose.setAttribute("type","button");
+				btnClose.classList.add("remove");
+				btnClose.innerHTML = "&times;";
+				
+				imgContainer.appendChild(img);
+			
+				imgContainer.appendChild(btnClose);
+				img.src = imgUrl;
+				img.alt = "This is your Profile Picture";
+				
+				btnClose.addEventListener("click",	(e)=>{
+					const imageFile = document.getElementById("image-file");
+					const showPicture = document.querySelector("[name='show-picture']");
+					
+					imageFile.value ="";
+					displayPictureSession.value = "";
+					showPicture.remove();
+					btnClose.remove();
+				})
+			}
+		})
+		
+		window.addEventListener("load",()=>{
+			let newVal ="";
+			
+			if(displayPictureSession?.value?.trim().length < 2 || displayPictureSession.value === ""){
+				newVal = "";
+			}
+			if(displayPictureSession.value !== ""){
+				const img = document.createElement("img");
+				
+				img.setAttribute("name","show-picture");
+				img.setAttribute("alt","This is a profile Picture");
+				
+				img.src = displayPictureSession?.value;
+				imgContainer.appendChild(img);
+				
+				const btnClose = document.createElement("button");
+
+				
+				btnClose.setAttribute("type","button");
+				btnClose.classList.add("remove");
+				btnClose.innerHTML = "&times;";
+			
+				imgContainer.appendChild(btnClose);
+				
+				btnClose.addEventListener("click",	(e)=>{
+					const imageFile = document.getElementById("image-file");
+					const showPicture = document.querySelector("[name='show-picture']");
+					
+					imageFile.value ="";
+					displayPictureSession.value = "";
+					showPicture.remove();
+					btnClose.remove();
+				})
+			} else {
+				return;
+			}
+		})
+	</script>
+</body>
+</html>

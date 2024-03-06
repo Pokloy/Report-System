@@ -1,0 +1,28 @@
+@charset "UTF-8";
+/** css for the  editing daily Report and Report today**/
+	.image {
+    		width: fit-content;
+    	}
+    
+    	span.delete {
+    		background-color: white;
+    		display: none;
+    		margin-left: -20px;
+    		position: absolute;
+    		cursor: pointer;
+    	}
+    	
+    	span.delete::before {
+    		content: '\274C';
+    	}
+    	
+    	
+   .listOfImages{
+	display:flex;
+	flex-direction: row;
+	width: 100%;
+	height:auto;
+	flex-wrap: wrap;
+}
+    	
+/**............END..... ..**/

@@ -1,0 +1,169 @@
+@charset "UTF-8";
+
+main {
+	max-width: 50rem;
+	height: 29.937rem;
+	margin: 4.69rem auto;
+	border: 1px solid black;
+	border-radius: .25rem;
+	border: 1px solid #CCC;
+	background: #FFF;
+}
+
+.header {
+	height: 2.5rem;
+	padding: 0rem 1.25rem;
+	border-bottom: 1px solid #004A80;
+}
+
+.form-toggle {
+	padding: 0;
+	margin:0;
+}
+
+
+
+
+.view-all__report-nav,.view-all__report-content{
+	margin: .62rem .62rem 0 .62rem;
+}
+
+.view-all__report-nav form label  {
+	font-size: 0.875rem;
+	text-align:center;
+	margin: .5rem;
+}
+
+.view-all__report-nav form select {
+
+	display: flex;
+	width: 12.5rem;
+	padding: 0.125rem 0.625rem;
+	align-items: center;
+	gap: 0.625rem;
+	
+	border: 0.5px solid #CCC;
+	background: #FFF;
+	box-shadow: 0px 0.5px 1px 0px rgba(0, 0, 0, 0.25);
+}
+
+.view-all__report-container {
+	border-radius: 0.25rem;
+	border: 3px solid #555;
+	margin: .62rem .62rem 2.5rem .62rem;
+	height: 65%;
+}
+
+.report-category {
+	border-bottom: 1px solid #CCC;
+}
+
+.report-header,.view-all__report-items {
+	display: flex;
+	justify-content: space-around;
+}
+
+
+.report-header__item {
+	color: #000;
+	text-align: center;
+
+	font-size: 0.875rem;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	font-variant: all-small-caps;
+	letter-spacing: 0.04375rem;
+}
+
+
+.report-header__item:nth-child(1),
+.report-target{
+	flex: .7 !important;
+}
+
+.report-header__item:nth-child(2),
+.report-date {
+	flex: .1;
+}
+
+.report-header__item:nth-child(3),
+.report-rate{
+	flex: .2;
+}
+
+.view-all__report-content {
+	height: 85%;
+	overflow-y: scroll;
+	
+}
+
+.view-all__report-item {
+	height: 1.5625rem;
+	text-align: center;
+}
+
+.report-target {
+	overflow: hidden;
+}
+
+
+input[name="view"] {
+white-space: wrap;
+}
+
+.page-controller {
+	max-width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+input[name="pageController"] {
+	padding: .235rem .75rem;
+	width: 6.875rem;
+	max-width: 6.875rem;
+	height: 1.563rem;
+	min-height: 1.563rem;
+	padding: 0 .625rem;
+	border-radius: 0.125rem;
+	background: linear-gradient(0deg, #CCCCCC, #CCCCCC),
+	linear-gradient(0deg, #FFFFFF, #FFFFFF);
+	border: 1px solid #CCCCCC;
+	box-shadow: 1px 1px 1px 0px #00000040;
+
+	font-size: .625rem;
+	font-weight: 400;
+	line-height: .75rem;
+	letter-spacing: 0.05em;
+		
+}
+
+input[name="pageController"]:disabled {
+	color: #555555;
+}
+
+input[name="pageController"]:not(:disabled),
+select[name="pageselect"] {
+	cursor: pointer;
+}
+
+
+select[name="pageselect"] {
+	width: 3.125rem;
+	max-width: 3.125rem;
+	height: 1.563rem;
+	min-height: 1.563rem;
+	padding: 0 .625rem;
+	border-radius: 0.125rem;
+	gap: .625rem;
+	font-size: .75rem;
+	
+}
+
+.page-controller form:nth-child(1){
+	margin-right: .75rem;
+}
+
+.page-controller form:last-child {
+	margin-left: .75rem;
+}

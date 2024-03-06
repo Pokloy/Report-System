@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!-- BootStrap設定 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+<link th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" rel="stylesheet"></link>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+
+<script th:src="@{/webjars/jquery/3.6.4/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+<!-- BootStrap設定 ここまで-->
+<title>ログイン</title>
+</head>
+<body>
+	<nav class="navbar">	
+		 <div id="navbar-label">Daily Report System</div>			
+	</nav>
+	
+	<div class="container login login-container ">
+		<div><p class="green-msg" th:text="${successMsg}"></p></div>
+		<div><p class="warning-err-msg" th:text="${errMsg}"></p></div>
+		<p  th:text="${#request.getAttribute('errMsg')}" class="text-danger">
+		</p>
+		<!-- 入力エラーメッセージ -->
+		<p id="errMsgUserId" class="text-danger"></p>
+		<p id="errMsgPassword" class="text-danger"></p>
+		
+		<form method="post" th:action="@{/login}" th:object="${loginWebDto}" class="form-login">
+			<div id="signin-box" >
+				<div id="sign-in" >Sign in</div>
+			<p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null" 
+				th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="text-danger">
+			
+			<!-- USER ID -->
+			<div class="form-group">
+				<input type="text" class="form-control"  placeholder="Enter username" th:field="*{username}" th:errorclass="is-invalid" />
+				<div class="invalid-feedback" th:errors="*{username}"></div>
+			</div>
+			<!--  password -->
+			<div class="form-group">
+				<input type="password" class="form-control" placeholder="Enter password" th:field="*{password}" th:errorclass="is-invalid"/>
+				<div class="invalid-feedback" th:errors="*{password}"></div>
+			</div>			
+				<div  id="loginBtn">
+					<a th:href="@{/register}">Forgot Password?</a>
+					<input type="submit" value="ログイン" class="btn btn-primary"/>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</body>
+</html>

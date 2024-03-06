@@ -1,0 +1,266 @@
+@charset "UTF-8";
+/** css for the  format of images in report evaluation and evaluation confirmation**/
+main {
+	max-width: 43.75rem;
+	min-height: 34.25rem,fit-content;
+	margin: 4.69rem auto;
+	border-radius: 0.25rem;
+	border: 1px solid #CCC;
+	background: #FFF;
+}
+
+.header {
+	border-bottom: 1px solid #004A80
+}
+
+.user-report__evaluation-container {
+	width: calc(100% - .62rem);
+	margin: .62rem auto;
+	display: flex;
+}
+
+.user-report__evaluation-item:nth-child(1),
+.user-report__evaluation-item:nth-child(2) {
+	flex: .494;
+	margin-right: .31rem;
+}
+
+.user-report__evaluation-item:nth-child(3) {
+	flex: .155;
+}
+
+.user-report__evaluation-item {
+	height: calc(1.5625rem + 6.25rem);
+}
+
+ label:not(.evaluator-report__evaluation-header label ) {
+	display: flex;
+	align-items: center;
+	padding: 0.15rem 0.625rem;
+	gap: 0.625rem;
+	border-top: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+	border-left: 1px solid #CCC;
+	background: #EAEDF5;
+	box-shadow: 0px 1px 1px 0px rgba(204, 204, 204, 0.25);
+}
+
+.user-report__evaluation-item div{
+	height: calc(100% - 1.5625rem);
+	display: flex;
+	padding: 0.3125rem 0.625rem;
+	align-items: flex-start;
+	gap: 0.625rem;
+	align-self: stretch;
+	border: 1px solid #CCC;
+	background: #F8F8F8;
+	white-space: pre-wrap;
+	
+}
+
+.user-report__evaluation-item div:not(div[data-rating="rate"]) {
+	overflow-y: scroll;
+}
+
+div[data-rating="rate"] {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+
+
+
+.evaluator-report__evaluation-container,
+.evaluator-report__evaluation-container__confirm {
+	width: calc(100% - .62rem);
+
+	margin: 1.25rem auto 0 auto;
+}
+.evaluator-report__evaluation-container {
+	min-height: 10.938rem;
+}
+
+
+.evaluator-report__evaluation-container__confirm {
+	min-height: 9.373rem;
+}
+
+.evaluator-report__evaluation-header {
+	display: flex;
+	align-items: center;
+	
+	width: fit-content;
+	max-width: fit-content;
+	padding: 0;
+
+}
+
+.evaluator-report__evaluation-header__evaluate {
+	height: 1.9rem;
+	min-height: 1.9rem;
+}
+
+.evaluator-report__evaluation-header__confirm {
+	height: 1.25rem;
+	min-height: 1.25rem;
+}
+
+
+.evaluator-report__evaluation-header select {
+	padding: 0.25rem .35rem;
+}
+
+.evaluator-report__sub--container--1 {
+	display: flex;
+	height: 100%;
+}
+
+.evaluator-report__sub--container--1 .form-group:nth-child(1) {
+	flex:1;
+	margin-right: .31rem;
+	
+}
+
+.rating-selection {
+	height: 4rem;
+	min-height: 4rem;
+	
+}
+
+.confirmed-leader__data {
+	border: 1px solid #CCC;
+	background: #F8F8F8;
+	height:7.5rem;
+}
+
+.confirmed-leader__data [data-rating="rate"] {
+	height: 6.5rem;
+
+
+}
+
+
+
+.report-images{
+	display:flex;
+	width: calc(100% - .62rem);
+	height: 6.875rem,fit-content;
+	flex-wrap: wrap;
+	margin: 0 auto;
+	border: 1px solid #CCC;
+	background: #F8F8F8;
+	box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.25) inset;
+	margin: .31rem auto 0 auto;
+}
+
+.image {
+	height: 6rem;
+	width: 6rem;
+	margin: .31rem;
+}
+
+img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	}
+
+textarea {
+	width: 100%;
+	resize: none;
+	padding: .31rem .62rem;
+}
+
+textarea[data-textarea="evaluate"] {
+	height: 9.375rem;
+}
+
+textarea[data-textarea="confirm"] {
+	height: 6.25rem;
+}
+
+select:not(.evaluator-report__evaluation-header select) {
+	height: 2.815rem;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+.add-image {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: .31rem;
+	height: 6.25rem;
+	
+	border-radius: 0.25rem;
+	border: 1px solid #CCC;
+	background: #FFF;
+}
+button[type="button"] {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+
+/** css for the  evaluator's uploaded images**/
+    
+    	span.delete {
+    		background-color: white;
+    		display: none;
+    		margin-left: -20px;
+    		position: absolute;
+    		cursor: pointer;
+    	}
+    	
+    	span.delete::before {
+    		content: '\274C';
+    	}
+/**............END..... ..**/
+
+.text-container div{
+	width: 100;
+	white-space: pre-line;
+	}
+	
+.row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: .94rem auto 1.12rem auto;
+	width: 35%;
+	
+}
+
+.row button {
+	width: 6.875rem;
+	height: 1.5625rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	
+}
+
+.row button:first-child {
+	border-radius: 0.125rem;
+	border: 1px solid #CCC;
+	background: #FFF;
+	box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+	font-size: 0.625rem;
+	letter-spacing: 0.03125rem;
+	text-transform: capitalize;
+}
+
+.row button:last-child {
+	border-radius: 0.125rem;
+	background: #00355B;
+	box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+	letter-spacing: 0.03125rem;
+	text-transform: capitalize;
+}
+
+	

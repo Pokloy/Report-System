@@ -1,0 +1,227 @@
+@charset "UTF-8";
+*{
+	padding: 0;
+	margin: 0;
+	border-box: box-sizing;
+}
+
+ 
+ body {
+           
+           font-weight:400;
+           	color: #555;
+           	height: 894px;
+           	
+    }
+  .general-container {
+    margin:0 auto;
+	width: 800px; 
+	height:704px;	 
+	gap: 10px;
+	padding:10px 10px;
+	border-style: solid;
+    border-color: #CCCCCC;	
+	border-width: 1.5px;
+	border-top:0;
+    background-color:white;
+    color: #555;
+	
+}
+.error-success-message {
+	font-size: 0.875rem;
+	font-weight: 400;
+	color: #52D452;
+	margin-left: 2rem;
+	}
+#first-div {
+	margin:0 auto;
+	margin-top:50px;	
+	padding:0 20px;
+	display:flex;
+	justify-content:start;
+	align-items:center;
+	font-family: 'Montserrat', sans-serif;
+    font-weight:400;
+    font-size:16px;
+    color: #555;
+    background-color:white;
+	width: 800px;
+	height:40px;
+	border-style: solid;
+    border-color: #CCCCCC;	
+	border-width: 1.5px;
+	border-bottom: 1px solid #004A80;
+	
+	
+}
+
+
+#second-div {
+	border-style: solid;
+  	border-color: #CCCCCC;	
+  	border-width: 1.5px;
+  	display:flex;
+  	justify-content:space-between;
+  	height:25px;
+  	padding:0 10px;
+  	align-items:center;
+  	font-size:12px;
+  	color: #555;
+  	border: 1px solid #CCC;
+	background: #EAEDF5;
+	box-shadow: 0px 1px 1px 0px rgba(204, 204, 204, 0.25);
+	border-bottom: 0;
+	}
+
+#second-div .today-report a{
+	color: #555;
+}
+
+#third-div {
+	border-style: solid;
+  	border-color: #CCCCCC;	
+  	border-width: 1px;
+  	display:flex;
+  	justify-content:space-between;
+  	height:35px;
+  	padding:0 10px;
+  	align-items:center;
+  	font-size:12px;
+  	color: #555;
+}
+
+
+
+.create-edit-btn {
+	color: #555;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 10px;
+	font-weight: 400;		
+	border: 1px solid rgba(0, 0, 0, 0.25);
+	display: flex;
+	width: 6.875rem;
+	height: 1.5625rem;
+	padding: 0rem 0.625rem;
+	justify-content: center;
+	align-items: center;
+	gap: 0.3125rem;
+	border-radius: 0.125rem;
+	border: 1px solid rgba(0, 0, 0, 0.25);
+	background: #FFF;
+	box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+
+	
+	}
+.create-edit-btn:disabled {
+	
+	background: rgba(0, 0, 0, 0.25);
+}
+
+#fourth-div {
+	display: flex;
+	padding: 0.3125rem 0.625rem;
+	align-items: center;
+	gap: 0.625rem;
+	align-self: stretch;
+	color: #555;
+	font-family: Montserrat;
+	font-size: 0.75rem;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	border-right: 1px solid #CCC;
+	border-left: 1px solid #CCC;
+	}
+#fifth-div {
+	border-style: solid;
+  	border-color: #CCCCCC;	
+  	border-width: 1px;
+  	height: 1.5575rem;
+  	padding:0 10px;
+  	font-size:12px;
+  	color: #555;
+  	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-top:0;
+	padding-bottom:0.6rem;
+
+}
+.evaluated {
+	color: #CCC;
+	font-size: 0.75rem;
+	font-weight: 400;
+	letter-spacing: 0.0375rem;
+}
+.fa-check {
+	color: #7D7;
+}
+#view-today-report a{
+		font-size:14px;
+}
+
+#weekly-report-label  {
+	border-style: solid;
+  	border-color: #CCCCCC;	
+  	border-width: 1.5px;
+  	height:25px;
+  	padding:0 10px;
+  	display:flex;
+  	align-items:center;
+  	font-size:12px;
+  	color: #555;
+  	border: 1px solid #CCC;
+	background: #EAEDF5;
+	box-shadow: 0px 1px 1px 0px rgba(204, 204, 204, 0.25);
+	border-bottom: 0;
+	margin-top:10px;
+}
+
+#weekly-report-div {
+	border-style: solid;
+  	border-color: #CCCCCC;	
+  	border-width: 1.5px;
+  	display:flex;
+  	justify-content:space-between;
+  	height:45px;
+  	padding:0 10px;
+  	align-items:center;
+  	font-size:12px;
+  	color: #555;
+}
+
+#view-weekly-report-btn {
+	font-size:10px;
+	border-radius: 2px;
+	border: 1px solid rgba(0, 0, 0, 0.25);
+	background: #FFF;
+	box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+	color: #555;
+	font-size: 0.625rem;
+	font-weight: 400;
+	letter-spacing: 0.03125rem;	
+	display: flex;
+	height: 1.5625rem;
+	padding: 0rem 0.625rem;
+	justify-content: center;
+	align-items: center;
+	gap: 0.3125rem;
+	}
+#link-like-button{
+	border: none;
+	background: none;
+	color: #555;
+}
+#link-like-button:hover {	
+        text-decoration:underline;
+    }
+
+#fourth-div a{
+
+	color: #555 !important;
+}
+
+#third-div a{
+
+	color: #555 !important;
+}

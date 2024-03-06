@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+<link th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" rel="stylesheet"></link>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+<link th:href="@{/css/admin/groupconfiguration.css}" rel="stylesheet"></link>
+<link th:href="@{/css/admin/adminheader.css}" rel="stylesheet"></link>
+<link th:href="@{/css/admin/common.css}" rel="stylesheet"></link>
+
+<script th:src="@{/webjars/jquery/3.6.4/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+<title>Group Configuration</title>
+</head>
+<body>
+<!-- group configuration page
+@author Christian
+20231019 -->
+	<div th:replace="layout/adminheader :: headerAll"></div> 
+	
+	<main>
+		<div class="upperbox">
+			<div class="first">
+				GROUP DETAILS
+			</div>
+			
+			<div class="second">
+				<span th:text=${groupName}></span>
+				<input type="hidden" th:value="${groupName}" name="groupName">
+			</div>
+			
+			<div class="third">
+				<button class="main" onclick="history.back()">
+					<svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none" class="arrow">
+					  <path d="M9.40001 3.60009H1.42037L4.47591 0.689745C4.51396 0.653514 4.54449 0.610145 4.56577 0.562113C4.58705 0.514081 4.59867 0.462328 4.59995 0.409809C4.60123 0.357289 4.59216 0.305031 4.57324 0.256019C4.55433 0.207006 4.52594 0.162199 4.48971 0.124156C4.45348 0.086113 4.41011 0.0555786 4.36208 0.0342963C4.31405 0.013014 4.2623 0.00140045 4.20978 0.00011903C4.15726 -0.00116239 4.105 0.0079133 4.05599 0.0268279C4.00697 0.0457424 3.96217 0.0741254 3.92412 0.110356L0.434593 3.43429C0.360083 3.50844 0.301005 3.59661 0.260773 3.69373C0.220541 3.79084 0.199953 3.89496 0.200197 4.00008C0.200197 4.21367 0.283596 4.41467 0.441593 4.57247L3.92432 7.8896C4.00172 7.9634 4.10092 8 4.20012 8C4.28011 8.00012 4.35829 7.97624 4.42456 7.93145C4.49083 7.88666 4.54215 7.82302 4.57187 7.74876C4.60159 7.6745 4.60835 7.59303 4.59128 7.51489C4.57421 7.43674 4.53409 7.36552 4.47611 7.31041L1.40777 4.40007H9.40001C9.5061 4.40007 9.60784 4.35793 9.68285 4.28292C9.75786 4.2079 9.80001 4.10616 9.80001 4.00008C9.80001 3.89399 9.75786 3.79225 9.68285 3.71724C9.60784 3.64223 9.5061 3.60009 9.40001 3.60009Z" fill="#555555"/>
+					</svg>
+					<span>BACK</span>
+				</button>
+				
+				<button>
+					<a th:href="@{/admin?page=1&freshVisit=true}" id="home">HOME</a>
+					<svg xmlns="http://www.w3.org/2000/svg" width="12" height="10" viewBox="0 0 12 10" fill="none" class="home">
+					  <path d="M10.2869 3.29762V0.778159H8.20335V1.69476L6.00031 0L0.0195312 4.60094L1.27256 6.22973L1.88608 5.75776V10H5.42595V6.89173H6.71441V10H10.1147V5.75776L10.7282 6.22973L11.9811 4.60097L10.2869 3.29762ZM9.41295 9.29831H7.41608V6.19004H4.72423V9.29831H2.58775V5.21795L6.00034 2.59284L9.41292 5.21795L9.41295 9.29831ZM10.5998 5.24573L6.00034 1.70738L1.40084 5.24573L1.00354 4.72928L6.00034 0.885299L8.90507 3.11988V1.47985H9.58524V3.64313L10.9971 4.72928L10.5998 5.24573Z" fill="#555555"/>
+					</svg>
+				</button>
+			</div>
+		</div>
+		
+		<!-- GROUP BANNER -->
+		<div class="img-container">
+			<img id="image-source" th:src="'data:image/*;base64,' + ${photo}" alt="Profile Picture" th:if="${!isDefault}" height="200">
+                   
+           	<img id="image-source" th:src="@{${photo}}" alt="Profile Picture" th:if="${isDefault}" height="200">
+		</div>
+		
+		<div class="midbox">
+			<div class="first-midbox">
+				LEADERS:
+			</div>
+			
+			<!-- ADD LEADER SECTION -->
+			<div class="second-midbox">
+				<form th:action="@{/admin/groupconfiguration}" method="POST" th:object="${userWebDto}" id="addleader">
+					<select name="leader" th:field="*{idPk}" onchange="updateModalContent(this)">
+						<option value="0" disabled selected>Select a leader to add</option>
+						<option th:each="leader : ${leaderList}"
+							th:if="${!leader.isPresentInGroup}"
+							th:value="${leader.idPk}"
+							th:text="${leader.deleteFlg} ? '' : ${leader.firstName} + ' ' + ${leader.lastName}">
+						</option>
+					</select>
+					<input type="hidden" id="hiddenInputId" name="leaderIdPk"/>
+					<input type="hidden" th:value="${groupIdPk}" name="groupIdPk">
+				</form>
+					
+				<button id="myBtn">+</button>
+			</div>
+		</div>
+		
+		<!-- LEADER LIST -->
+		<div class="midbox-2">
+			<div class="third-midbox">
+				<div class="item-list" th:each="groupMember : ${groupMembers}" th:if="${groupMember.role == 'LEADER'} AND ${!groupMember.guvDeleteFlg}">
+					<form th:action="@{/admin/groupconfiguration/editleader}" method="POST">
+						<input type="hidden" th:value="${groupMember.idPk}" name="leaderIdPk">
+						<button th:text="${groupMember.firstName + ' ' + groupMember.lastName}" class="btn-link"></button>
+					</form>
+					
+					<button class="archive" th:value="${groupMember.idPk}">
+						<svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 12 13" fill="none">
+							<path d="M9.17184 9.32842C9.09858 9.40168 8.99922 9.44284 8.89562 9.44284C8.79202 9.44284 8.69267 9.40168 8.61941 9.32842L3.51498 4.224C3.44173 4.15074 3.40057 4.05138 3.40057 3.94778C3.40057 3.84418 3.44173 3.74483 3.51498 3.67157C3.58824 3.59831 3.6876 3.55716 3.7912 3.55716C3.8948 3.55716 3.99415 3.59831 4.06741 3.67157L9.17184 8.776C9.24509 8.84925 9.28625 8.94861 9.28625 9.05221C9.28625 9.15581 9.24509 9.25517 9.17184 9.32842Z" fill="#A91B0D"/>
+							<path d="M9.17184 4.224L4.06741 9.32843C3.99415 9.40169 3.8948 9.44284 3.7912 9.44284C3.6876 9.44284 3.58824 9.40169 3.51498 9.32843C3.44173 9.25517 3.40057 9.15582 3.40057 9.05222C3.40057 8.94862 3.44173 8.84926 3.51498 8.776L8.61941 3.67158C8.69267 3.59832 8.79202 3.55716 8.89562 3.55716C8.99922 3.55716 9.09858 3.59832 9.17184 3.67158C9.24509 3.74483 9.28625 3.84419 9.28625 3.94779C9.28625 4.05139 9.24509 4.15075 9.17184 4.224Z" fill="#A91B0D"/>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
+		
+		<!-- MEMBER LISTS -->
+		<div class="midbox">
+			<div class="first-midbox">
+				MEMBERS:
+			</div>
+		</div>
+		
+		<div class="midbox-2">
+			<div class="third-midbox">
+				<div class="item-list" th:each="groupMember : ${groupMembers}" th:if="${groupMember.role == 'USER'}">
+					<span th:text="${groupMember.firstName}+ ' '+ ${groupMember.lastName}"></span>
+				</div>
+			</div>
+		</div>
+		
+		<!-- add leader modal -->
+		<div id="myModal" class="modal">
+			<div class="modal-content">
+				<button class="close">
+					<svg xmlns="http://www.w3.org/2000/svg" width="10" height="11" viewBox="0 0 10 11" fill="none">
+						<path d="M10 1.50714L8.99286 0.5L5 4.49286L1.00714 0.5L0 1.50714L3.99286 5.5L0 9.49286L1.00714 10.5L5 6.50714L8.99286 10.5L10 9.49286L6.00714 5.5L10 1.50714Z" fill="#52526B"/>
+					</svg>
+				</button>
+				
+				<div>
+					Are you sure you want to add leader:
+					<p></p>
+				</div>
+				
+				<div class="modal-btn">
+					<button class="close-btn">CANCEL</button>
+					<button name="savedaddleader" form="addleader">SUBMIT</button>
+				</div>
+			</div>
+		</div>
+		
+		<!-- archiving a leader modal -->
+		<th:block th:each="groupMember : ${groupMembers}" th:if="${groupMember.role == 'LEADER'} AND ${!groupMember.guvDeleteFlg}">
+			<div class="modal remove-modal">
+				<div class="modal-content">
+					<button class="close-remove">
+						<svg xmlns="http://www.w3.org/2000/svg" width="10" height="11" viewBox="0 0 10 11" fill="none">
+							<path d="M10 1.50714L8.99286 0.5L5 4.49286L1.00714 0.5L0 1.50714L3.99286 5.5L0 9.49286L1.00714 10.5L5 6.50714L8.99286 10.5L10 9.49286L6.00714 5.5L10 1.50714Z" fill="#52526B"/>
+						</svg>
+					</button>
+					
+					<div>
+						<span>Are you sure you want to <span th:text="${!groupMember.guvDeleteFlg} ? 'remove' : 'reactivate'" th:id="${!groupMember.guvDeleteFlg} ? 'red' : 'green'"></span> leader:</span>
+						<p th:text="${groupMember.firstName + ' ' + groupMember.lastName}"></p>
+					</div>
+					
+					<div class="modal-btn">
+						<button class="close-btn__remove">CANCEL</button>
+						<form th:action="@{/admin/groupconfiguration}" method="POST">
+							<button name="saveremove">SUBMIT</button>
+							<input type="hidden" th:value="${groupIdPk}" name="groupIdPk">
+							<input type="hidden" th:value="${groupMember.idPk}" name="leaderIdPk">
+							<input type="hidden" th:value="${groupName}" name="groupName">
+						</form>
+					</div>
+				</div>
+			</div>
+		</th:block>
+	</main>
+	
+	<script th:inline="javascript">
+		var modal = document.getElementById("myModal");
+		var btn = document.getElementById("myBtn");
+		var close = document.getElementsByClassName("close")[0];
+		var closeBtn = document.getElementsByClassName("close-btn")[0];
+		
+		// When the user clicks on <span> (x), close the modal
+		close.onclick = function() {
+			modal.style.display = "none";
+		}
+		
+		closeBtn.onclick = function() {
+			modal.style.display = "none";
+		}
+		
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+		
+		// Define leaderList globally
+    	var leaderList = /*[[ ${leaderList} ]]*/ [];
+		
+		function updateModalContent(selectElement) {
+	        // Get the selected leader's idPk
+	        var selectedLeaderId = selectElement.value;
+	        
+	        // Check if a leader is selected
+	        if (selectedLeaderId == null) {
+	            // Display an alert with an error message
+	            alert('Please select a leader.');
+	            console.log('Please select a leader.')
+	            //
+	            return; // Do not proceed if no leader is selected
+	        }
+	
+	        // Find the corresponding leader object in leaderList
+	        var selectedLeader = leaderList.find(function (leader) {
+				return leader.idPk == selectedLeaderId;
+	        });
+	
+	        // Check if selectedLeader is defined
+	        if (selectedLeader) {
+	            // Update the content of the modal with firstName and lastName
+	            var modalContent = document.querySelector('.modal-content');
+	            var modalText = modalContent.querySelector('p');
+	            modalText.innerText = selectedLeader.firstName + ' ' + selectedLeader.lastName;
+	            
+	            // Set the value of the hidden input
+	            var hiddenInput = document.querySelector('#hiddenInputId'); // replace with the actual ID of your hidden input
+	            hiddenInput.value = selectedLeader.idPk;
+	            
+	           // When the user clicks the button, open the modal 
+				btn.onclick = function() {	
+					modal.style.display = "block";
+				}
+	        } else {
+	            // Handle the case where selectedLeader is undefined
+	            console.error('Selected leader not found.');
+	        }
+    	}
+		
+    	/* for removing a leader in a group*/
+	    var archiveBtns = document.querySelectorAll('.archive');
+	    var removeModals = document.querySelectorAll('.remove-modal');
+	
+	    archiveBtns.forEach(function (archiveBtn, index) {
+	        archiveBtn.onclick = function () {
+	            // Check if the index is valid
+		        if (index < removeModals.length) {
+		            removeModals[index].style.display = "block";
+		        } else {
+		            console.error("Invalid index for removeModals");
+		        }
+	        }
+	    });
+	
+	    // Add event listeners for closing modals
+	    var closeRemoveBtns = document.querySelectorAll('.close-remove');
+	    var closeBtnRemoveBtns = document.querySelectorAll('.close-btn__remove');
+	
+	    closeRemoveBtns.forEach(function (closeRemoveBtn, index) {
+	        closeRemoveBtn.onclick = function () {
+	            removeModals[index].style.display = "none";
+	        }
+	    });
+	
+	    closeBtnRemoveBtns.forEach(function (closeBtnRemoveBtn, index) {
+	        closeBtnRemoveBtn.onclick = function () {
+				removeModals[index].style.display = "none";
+	        }
+	    });
+	</script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
+ <link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<link th:href="@{/css/leader/evaluatereport.css}" rel="stylesheet"></link>
+    <title>Evaluation Details</title>
+</head>
+
+<body>
+	<div th:replace="layout/userheader :: headerAll(imgVal=${profilePhoto})"></div>
+    <main >
+   
+            <form method="post" 
+            th:action="@{${edited? '/view/leader/final-evaluated' :
+		 '/view/leader/evaluate-report'}}"
+            th:object="${reportEvaluationWebDto}">
+            
+             <div class="header" th:replace="layout/userheader :: 
+		mainHeader(headerTitle=${'Confirmation: ' + completeName + ' ' + reportDate},backBtnName='backtoedit')"></div>
+				
+            
+	            <div class="user-report__evaluation-container"> 
+					 <div class="user-report__evaluation-item">
+	                    <label for="target" class="font-common--1
+				        font-size--common-3
+				        text-color--common__2">Target:</label>
+	                    <div th:text="*{target}" class="font-common--1
+				        font-size--common-3
+				        text-color--common__2"></div>
+	                </div>
+	                
+	                 <div class="user-report__evaluation-item">
+						    <label for="comments" class="font-common--1
+				        font-size--common-3
+				        text-color--common__2">Comments</label>
+	                		 <div th:text="*{comments}" class="font-common--1
+				        font-size--common-3
+				        text-color--common__2"></div>
+					 </div>
+					 
+					  <div class="user-report__evaluation-item">
+						    <label for="comments" class="font-common--1
+				        font-size--common-3
+				        text-color--common__2">Self Ratings:</label>
+	                		 <div  data-rating="rate">
+								 <p th:text="*{ratings}" class="font-common--1
+				        font-size--common-3
+				        text-color--common__2"></p>
+							 </div>
+					 </div>
+				</div>
+			
+				<div class="report-images" th:if="${!edited}">					
+					<div th:each="encodedImage : ${reportWebDto.encodedImagesOut}"
+					 th:if="${#strings.length(encodedImage) > 'data:image/jpeg;base64,'.length()}"
+					 class="image">
+			            <img th:src="'data:image/jpeg;base64,' + ${encodedImage}"  height="100">
+			        </div>						
+	           	 </div>	
+	           	 
+	           	 <div class="report-images" th:if="${edited}">					
+					<div th:each="encodedImage : ${reportWebDto.encodedImagesOut}" 
+					th:if="${#strings.length(encodedImage) > 'data:image/jpeg;base64,'.length()}"
+					class="image">
+			            <img th:src="'data:image/jpeg;base64,' + ${encodedImage}"  height="200">
+			        </div>				
+	           	 </div>	
+	           	 
+	           	 
+             
+		    <div class="evaluator-report__evaluation-container__confirm">
+				<div class="evaluator-report__evaluation-header 
+				evaluator-report__evaluation-header__confirm">
+			        <label class="font-common--1
+			        font-size--common-3
+			        text-color--common__2"> Evaluator:</label>
+			      
+						<p th:value="${evaluatorInfo.getIdPk}" 
+						th:text="${evaluatorInfo.firstName + ' '+evaluatorInfo.lastName}"
+						class="font-common--1
+			        font-size--common-3
+			        text-color--common__2"></p>
+				
+					
+				</div>
+			   <div class="evaluator-report__sub--container--1">
+				   
+					<div class="form-group" >
+				        <label for="evaluatorsComment" 
+				        class="font-common--1
+				        font-size--common-3
+				        text-color--common__2">Evaluation:</label>
+				      
+						<textarea 
+						data-textarea="confirm"
+						id="evaluatorsComment" 
+						name="evaluatorsComment"
+						class="confirmed-leader__data
+						font-common--1
+				        font-size--common-3
+				        text-color--common__2" 
+					     th:text="*{evaluatorsComment}"
+					     readonly>
+					     </textarea>
+					
+				        <p th:if="${#fields.hasErrors('evaluatorsComment')}" th:errors="*{evaluatorsComment}"></p>
+				    </div>
+			    
+				
+					<div class="confirmed-leader__data">
+						<label for="finalRatings" 
+						class="font-common--1
+				        font-size--common-3
+				        text-color--common__2">Final Rating:</label>
+				        
+		                <div data-rating="rate" >
+							<p th:text="*{finalRating}" 
+			                class="font-common--1
+					        font-size--common-3
+					        text-color--common__2"></p>
+				        
+						</div>
+					</div>
+				
+			   </div>
+               
+            </div>                 
+		         
+			    <div id="image-container" class="report-images" th:if="${!edited}">
+<!-- 			        Display the images and hidden file paths -->
+			        <div th:each="image : *{encodedImages}" class="image">
+				            <th:block th:if="${not #strings.isEmpty(image)}"> <!-- Check if the image data is not empty -->
+				                <img th:src="'data:image/jpeg;base64,' + ${image}"  height="100" />
+				            </th:block>
+				        </div>
+			    </div>       
+			     <div id="image-container" class="report-images" th:if="${edited}">
+<!-- 			        Display the images and hidden file paths -->
+			         <div th:each="image : *{encodedImages}"
+			         class="image">
+				            <th:block th:if="${not #strings.isEmpty(image)}"> <!-- Check if the image data is not empty -->
+				                <img th:src="'data:image/jpeg;base64,' + ${image}"  height="200" />
+				            </th:block>
+					     </div>
+
+			    </div>       
+			  
+          
+				  
+				  <div th:replace="layout/userheader :: rowBtnNavigation 
+			(backBtnName='cancel',
+			submitBtnName='submit',
+			backBtnText='Cancel',
+			submitBtnText='Submit')"></div>
+				  
+				<input type="hidden" name="target" th:value="*{target}">
+                <input type="hidden" name="comments" th:value="*{comments}">
+                <input type="hidden" name="ratings" th:value="*{ratings}">
+                <input type="hidden" name="finalRating" th:value="*{finalRating}">
+                 <input type="hidden"  name="reportDate"  th:value="*{reportDate}" />
+			    <input type="hidden" name=userIdPk th:value="*{userIdPk}" >
+			    
+            </form>
+           
+	</main>
+	
+	<script>
+	  
+	        const reportImages = document.querySelectorAll(".report-images");
+	      
+	 		document.addEventListener("DOMContentLoaded",(e)=>{
+				 checkReportImagesContainer();
+			 })
+			 
+			 function checkReportImagesContainer(){
+				 const xArr = [];
+				 const yArr = [];
+				reportImages[0].childNodes.forEach(val=>{
+					if(val.nodeName.toLowerCase() === 'div') {
+						xArr.push(val)
+					}
+				});
+				
+				reportImages[1].childNodes.forEach(val=>{
+					if(val.nodeName.toLowerCase() === 'div') {
+						
+						yArr.push(val)
+					}
+				});
+				
+				if(xArr.length ===0 ) {
+					reportImages[0].style.display = "none"
+				}
+				if(yArr.length ===0) {
+					reportImages[1].style.display = "none"
+				}
+		
+				
+				if(yArr.length > 0) {
+					reportImages[1].style.removeProperty("display");
+				}
+			 }
+    </script>
+
+	 
+</body>
+</html>

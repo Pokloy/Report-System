@@ -1,0 +1,277 @@
+@charset "UTF-8";
+
+main {
+	display: flex;
+	width: 34.375rem;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 0.25rem;
+	border: 1px solid #CCC;
+	background: #FFF;
+	margin: auto;
+	margin-top: 2.8125rem;
+	color: #555;
+	padding-bottom: 0.625rem;
+	margin-bottom: 1.25rem;
+}
+
+button {
+	border: 0.5px solid #CCC;
+	background: #FFF;
+	box-shadow: 0.5px 0.5px 1px 0px rgba(0, 0, 0, 0.25);
+}
+
+.upperbox {
+	display: flex;
+	height: 2.5rem;
+	padding: 0px 0.625rem 0px 1.25rem;
+	justify-content: space-between;
+	align-items: center;
+	align-self: stretch;
+	border-bottom: 1px solid #004A80;
+}
+
+.upperbox > .first {
+	font-size: 1rem;
+	letter-spacing: 0.05rem;
+}
+
+.upperbox > .second {
+	font-size: 0.875rem;
+}
+
+.upperbox > .third {
+	font-size: 0.625rem;
+}
+
+.upperbox > .third > button {
+	width: 4.375rem;
+	height: 1.563rem;
+	justify-content: center;
+	align-items: center;
+	gap: 0.3125rem;
+}
+
+.upperbox > .third > button:last-child {
+	margin-left: 5px;
+}
+
+.upperbox > .third > button > a#home {
+	text-decoration: none;
+	color: #555;
+}
+
+.img-container {
+	background-color: dimgrey;
+	color: white;
+	height: 9.375rem;
+	width: inherit;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.625rem;
+	align-self: stretch;
+	width: 100%;
+	overflow: visible;
+}
+
+img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	/*overflow: visible;*/
+}
+
+.midbox {
+	display: flex;
+	height: 1.875rem;
+	padding: 0.3125rem 0.3125rem 0.3125rem 0.625rem;
+	justify-content: space-between;
+	align-items: center;
+	flex-shrink: 0;
+	align-self: stretch;
+	border: 0.5px solid #CCC;
+	background: #FFF;
+	margin: 0.3125rem;
+	margin-bottom: 0;
+}
+
+.first-midbox {
+	color: #000;
+	font-size: 0.75rem;
+	letter-spacing: 0.038rem;
+}
+
+.second-midbox {
+	display: flex;
+	align-items: center;
+	gap: 0.3125rem;
+}
+
+.second-midbox > form > select {
+	display: flex;
+	width: 12.5rem;
+	height: 1rem;
+	padding: 0px 0.625rem;
+	align-items: center;
+	gap: 0.625rem;
+	font-size: 0.625rem;
+	outline: none;
+	border: 0.5px solid #CCC;
+	background: #FFF;
+	box-shadow: 0px 0.5px 1px 0px rgba(0, 0, 0, 0.25);
+}
+
+.second-midbox > form#addleader > select > option:disabled {
+	color: unset;
+	color: #CCC;
+}
+
+.second-midbox > button {
+	display: flex;
+	width: 2.5rem;
+	height: 1rem;
+	padding: 0px 0.625rem;
+	justify-content: center;
+	align-items: center;
+	gap: 0.3125rem;
+}
+
+.midbox-2 {
+	max-height: 7.5rem;
+	border: 0.5px solid #CCC;
+	border-top: none;
+	display: flex;
+	/*padding: 5px 5px 5px 10px;*/
+	justify-content: space-between;
+	align-items: center;
+	flex-shrink: 0;
+	align-self: stretch;
+	background: #FFF;
+	margin: 0 0.3125rem;
+	overflow: auto;
+}
+
+.third-midbox {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	flex: 1 0 0;
+	align-self: stretch;
+}
+
+.third-midbox > .item-list {
+	display: flex;
+	padding: 0.3125rem 0.625rem;
+	justify-content: space-between;
+	align-self: stretch;
+	font-size: 0.625rem;
+}
+
+.third-midbox > .item-list:hover {
+	background: #FBFBFB;
+}
+
+.third-midbox > .item-list > button.archive {
+	display: flex;
+	width: 4.3125rem;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 0.1875rem;
+	border: unset;
+	box-shadow: unset;
+}
+
+/* sample modal*/
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	border-radius: unset;
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	display: flex;
+	width: 400px;
+	padding: 20px 20px 15px 20px;
+	flex-direction: column;
+	align-items: center;
+	gap: 15px;
+	flex-shrink: 0;
+}
+
+.modal-content > div {
+	font-size: 12px;
+	display: flex;
+	padding: 0px 10px;
+	flex-direction: column;
+	align-items: center;
+	align-self: stretch;
+}
+
+.modal-content > div > span > span#red {
+	color: red;
+}
+
+.modal-content > div > span > span#green {
+	color: green;
+}
+
+.modal-content > div > p {
+	margin: 0;
+}
+
+.modal-content > button {
+	float: right;
+	width: 10px;
+	height: 10px;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	border: none;
+	box-shadow: unset;
+}
+
+.modal-content > .modal-btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+	align-self: stretch;
+	flex-direction: row;
+}
+
+.modal-content > .modal-btn > button,
+.modal-content > .modal-btn > form > button {
+	display: flex;
+	width: 110px;
+	justify-content: space-around;
+	height: 25px;
+	align-items: center;
+	font-size: 10px;
+}
+
+.modal-content > .modal-btn > form > button,
+.modal-content > .modal-btn > button:last-child {
+	background: #00355B !important; 
+	color: white !important;
+}
+
+.close:hover,
+.close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}

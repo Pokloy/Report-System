@@ -1,0 +1,209 @@
+ <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+   <!-- GOOGLE FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
+<!--CSS  LINK-->
+<link th:if="${role} == 'ADMIN'" th:href="@{/css/admin/adminheader.css}" rel="stylesheet"></link>
+<link th:href="@{/css/user/userProfile.css}" rel="stylesheet"></link>
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<!-- ICONS -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<head>
+    <title>Profile</title>
+</head>
+<body>
+	<th:block th:if="${role} != 'ADMIN'">
+		<div th:replace="layout/userheader :: headerAll (imgVal=${photo})"></div>
+	</th:block>
+
+	<th:block th:if="${role} == 'ADMIN'">
+		<div th:replace="layout/adminheader :: headerAll"></div>
+	</th:block>
+	
+	<div class="first-div borders">
+		<span th:text="PROFILE"></span>
+		<div id="icons-tab">
+			<form  method="post" th:action="@{/profile}" th:object ="${userProfileWebDto}">
+				<button type="submit" class="btn-home"  id="back" name="cancel">
+					<i class="fa fa-long-arrow-left"></i> BACK
+		        </button>
+		        <button class="btn-home" id="home" name="cancel" type="submit">
+		            HOME <i class="fa fa-home w3-tiny"></i>
+		        </button>
+    			<input name="mainurl" type="hidden" th:value="${mainurl}">
+    		</form>
+    	</div>
+    </div>
+    
+    <div class="general-container" >
+      
+       <p th:text="${successMsg}" class="text-success"></p>
+            <form th:action="@{/profile}" method="post" enctype="multipart/form-data" th:object="${userProfileWebDto}">
+              <div>
+				<div class="center parent">
+					<div id="svg_parent">	               
+	              		<img class="image-source img-fluid" 
+	              			th:src="@{${photo}}" 
+	              			alt="Profile Picture" 
+	              			width="200">
+	              			
+	              		<label class="custom-file-upload container" th:id="${role == 'USER'} ? 'user' : ''">	
+	 						 <input type="file" id="image" name="imageFile"  accept="image/jpeg, image/png" class="form-control">  				
+						  <!-- Background SVG -->					
+						    <svg class="background-svg" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
+						      <circle cx="7.5" cy="7.5" r="7.5" fill="black" fill-opacity="0.5"/>
+						    </svg>
+					  <!-- Foreground SVG -->						 
+						    <svg class="foreground-svg" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+							  <path d="M9.60714 3.96429C9.07143 3.42857 8.21429 3.42857 7.67857 3.96429L4.03571 7.60714C4 7.64286 3.96429 7.71429 3.92857 7.78571L3.57143 9.57143C3.53571 9.67857 3.57143 9.82143 3.67857 9.89286C3.75 9.96429 3.89286 10 4 10L5.78571 9.64286C5.85714 9.64286 5.92857 9.60714 5.96429 9.53572L9.60714 5.89286C10.1429 5.35714 10.1429 4.5 9.60714 3.96429ZM5.53571 8.96429L4.39286 9.17857L4.60714 8.03571L7.5 5.14286L8.42857 6.07143L5.53571 8.96429ZM9.10714 5.39286L8.92857 5.57143L8 4.64286L8.17857 4.46429C8.42857 4.21429 8.85714 4.21429 9.10714 4.46429C9.35714 4.71429 9.35714 5.14286 9.10714 5.39286ZM5.82143 4.53571C5.96429 4.67857 6.17857 4.67857 6.32143 4.53571C6.46429 4.39286 6.46429 4.17857 6.32143 4.03571L5.60714 3.32143C5.46429 3.17857 5.25 3.17857 5.10714 3.32143L3.21429 5.21429L2.39286 4.39286C2.25 4.25 2.03571 4.25 1.89286 4.39286L0.714286 5.57143V1.07143C0.714286 0.857143 0.857143 0.714286 1.07143 0.714286H7.5C7.71429 0.714286 7.85714 0.857143 7.85714 1.07143V2.5C7.85714 2.71429 8 2.85714 8.21429 2.85714C8.42857 2.85714 8.57143 2.71429 8.57143 2.5V1.07143C8.57143 0.464286 8.10714 0 7.5 0H1.07143C0.464286 0 0 0.464286 0 1.07143V7.5C0 8.10714 0.464286 8.57143 1.07143 8.57143H2.85714C3.07143 8.57143 3.21429 8.42857 3.21429 8.21429C3.21429 8 3.07143 7.85714 2.85714 7.85714H1.07143C0.857143 7.85714 0.714286 7.71429 0.714286 7.5V6.57143L2.14286 5.14286L2.96429 5.96429C3.10714 6.10714 3.32143 6.10714 3.46429 5.96429L5.35714 4.07143L5.82143 4.53571Z" fill="white"/>
+							  <path d="M2.14258 2.4999C2.14258 3.10704 2.60686 3.57132 3.21401 3.57132C3.82115 3.57132 4.28544 3.10704 4.28544 2.4999C4.28544 1.89275 3.82115 1.42847 3.21401 1.42847C2.60686 1.42847 2.14258 1.89275 2.14258 2.4999ZM3.57115 2.4999C3.57115 2.71418 3.42829 2.85704 3.21401 2.85704C2.99972 2.85704 2.85686 2.71418 2.85686 2.4999C2.85686 2.28561 2.99972 2.14275 3.21401 2.14275C3.42829 2.14275 3.57115 2.28561 3.57115 2.4999Z" fill="white"/>
+							</svg>
+						
+						</label>
+					</div>
+              			
+              		<input type="hidden" name="displayPicture" th:value="${photo}"> 
+              			<!-- <input type="file" id="image" name="imageFile" accept="image/*" class="form-control">-->
+					
+					<div class="center-d--flex__column"  >				
+						<p th:text="*{firstName + ' ' + lastName}"></p>
+						<th:block th:if="${role == 'USER'}">
+							<label for="lastReport">Last Report:</label>
+							<p id="lastReport" th:text="${formattedReportDate}"></p>	
+						</th:block>			
+					</div >					  				 			         		
+				</div>				  
+				</div>			
+            	 <div class="center" >
+                   <div class="grid-container">
+                     <div class="item1">              	 
+		                <p>First Name:</p>
+		                <input type="text" id="firstName"  name="firstName" th:value="*{firstName}">
+		                <div class="invalid-feedback" th:errors="*{firstName}"></div>
+                     </div> 
+                     
+                     <div class="item2">
+                     	<p>Last Name:</p>
+                    	<input type="text" id="lastName"  name="lastName" th:value="*{lastName}">
+ 						<div class="invalid-feedback" th:errors="*{lastName}"></div>                  
+                     </div> 
+                     
+                     <div class="item3">
+                        <p>Username:</p>
+                        <input type="text" id="username" name="username" th:value="*{username}">
+                        <div class="invalid-feedback" th:errors="*{username}"></div>
+                     </div> 
+                     
+                     <div class="item4">
+                     	<p>Email:</p>
+                    	<input type="email" id="mailAddress"  name="mailAddress" th:value="*{mailAddress}">	
+                    	<div class="invalid-feedback" th:errors="*{mailAddress}"></div>		
+                     </div> 
+                     
+                      <div class="item5">
+                      	<p>Password:</p>
+					    <input type="password" id="new-password" name="newPassword" class="form-control" th:value="*{newPassword}">	
+					    <p class="invalid-feedback" th:each="error : ${errorMessages}" th:text="${error}"></p>
+                     </div>
+                     
+                      <div class="item6" >
+                      	<p>Confirm Password:</p>
+	                    <input type="password" id="confirm-password" name="confirmUserPassword" th:value="*{confirmUserPassword}" oninput="checkPasswordMatch()" class="form-control">
+						<div id="password-match-feedback" style="color: green;"></div>
+	                    <div id="password-error" ></div>
+	                    <p th:text="${errorMsg}" class="invalid-feedback"></p>  
+                     </div>  
+						
+				    <div class="item7 centering-element--text-right__using-margin" th:if="${role == 'USER'}">
+                      	<label id="groupLabel" for="groupNo">Group:</label>
+                      	<p id="groupNo" th:text="${groupName}"></p>				
+                     </div>
+                    
+                                    
+                   </div> 
+                   </div> 		
+					 <div>
+						<input type="hidden" id="password"  name="password"  th:value="*{password}">					
+					</div>
+					 	<div class=" btn-container"> 
+						    <button 
+						    class="btn-reset 
+						    font-common--1 
+                			font-size--common-4
+                			letter-spacing--commont__1" 
+                			name="cancel" 
+                			data-button="cancel" 
+                			type="submit">CANCEL</button>    
+						    <button 
+						    class="btn-reset 
+						    font-common--1 
+	                		font-size--common-4
+	                		letter-spacing--commont__1
+	                		text-color--common__1" name="confirm"  type="submit">CONFIRM</button>          		                           			    	                
+	                        
+	               		 </div>
+                   <input name="mainurl" type="hidden" th:value="${mainurl}">
+            </form>
+    </div>
+    
+ 
+      
+      <script>
+        const image = document.querySelector("#image");
+        const imageSource = document.querySelector(".image-source");
+        const passwordField = document.getElementById("new-password");
+        const confirmPasswordField = document.getElementById("confirm-password");
+
+        
+        image.addEventListener("change", (e) => {
+            const file = e.target.files;
+            if (file.length > 0) {
+                const imageUrl = URL.createObjectURL(file[0]);
+                imageSource.src = imageUrl;
+            }
+        });
+
+        function checkPasswordMatch() {
+            const password = passwordField.value;
+            const confirmPassword = confirmPasswordField.value;
+            const matchFeedback = document.getElementById("password-match-feedback");
+
+            if (password === confirmPassword) {
+                matchFeedback.textContent = "Passwords match.";
+                matchFeedback.style.color = "green";
+            } 
+            else {
+                matchFeedback.textContent = "Passwords do not match.";
+                matchFeedback.style.color = "red";
+            }
+        }
+        
+        // Add an input event listener to the confirm password field
+        confirmPasswordField.addEventListener("input", function () {
+            const password = passwordField.value;
+            const confirmPassword = confirmPasswordField.value;
+
+            if (password === confirmPassword) {
+                // Passwords match, clear any error message
+                passwordError.textContent = "";
+            } else {
+                // Passwords do not match, display an error message
+                passwordError.textContent = "Passwords do not match.";
+            }
+        });
+    </script>
+</body>
+</html>

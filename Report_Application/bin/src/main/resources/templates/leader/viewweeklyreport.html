@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<link th:href="@{/css/leader/viewweeklyreport.css}" rel="stylesheet"></link>
+<title>View Weekly</title>
+</head>
+<body>
+	<div th:replace="layout/userheader :: headerAll(imgVal='replaceImage')"></div>
+	
+	<main>
+		
+		<div class="header 
+		flex-common--columns__space-between">
+			<p class="font-common--1 
+			font-common--2 
+			font-color--common__2
+			font-variant--common__1
+			font-size--common-1">WEEKLY REPORT</p>
+			<p 
+			class="font-common--1 
+			font-size--common-2 
+			text-color--common__4" th:text="${successMsg}"></p>
+			
+			<form th:action="@{/view/leader/}">
+			
+				<button type="submit" 
+				name="home"
+				class="btn-common--design">
+					<svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
+					  <path d="M9.40001 3.60009H1.42037L4.47591 0.689745C4.51396 0.653514 4.54449 0.610145 4.56577 0.562113C4.58705 0.514081 4.59867 0.462328 4.59995 0.409809C4.60123 0.357289 4.59216 0.305031 4.57324 0.256019C4.55433 0.207006 4.52594 0.162199 4.48971 0.124156C4.45348 0.086113 4.41011 0.0555786 4.36208 0.0342963C4.31405 0.013014 4.2623 0.00140045 4.20978 0.00011903C4.15726 -0.00116239 4.105 0.0079133 4.05599 0.0268279C4.00697 0.0457424 3.96217 0.0741254 3.92412 0.110356L0.434593 3.43429C0.360083 3.50844 0.301005 3.59661 0.260773 3.69373C0.220541 3.79084 0.199953 3.89496 0.200197 4.00008C0.200197 4.21367 0.283596 4.41467 0.441593 4.57247L3.92432 7.8896C4.00172 7.9634 4.10092 8 4.20012 8C4.28011 8.00012 4.35829 7.97624 4.42456 7.93145C4.49083 7.88666 4.54215 7.82302 4.57187 7.74876C4.60159 7.6745 4.60835 7.59303 4.59128 7.51489C4.57421 7.43674 4.53409 7.36552 4.47611 7.31041L1.40777 4.40007H9.40001C9.5061 4.40007 9.60784 4.35793 9.68285 4.28292C9.75786 4.2079 9.80001 4.10616 9.80001 4.00008C9.80001 3.89399 9.75786 3.79225 9.68285 3.71724C9.60784 3.64223 9.5061 3.60009 9.40001 3.60009Z" fill="#555555"/>
+					</svg>
+					Back
+					
+				</button>
+				
+					<button type="submit" 
+				name="home"
+				class="btn-common--design">
+					
+					Home
+					<svg xmlns="http://www.w3.org/2000/svg" width="12" height="10" viewBox="0 0 12 10" fill="none">
+					  <path d="M10.2869 3.29762V0.778159H8.20335V1.69476L6.00031 0L0.0195312 4.60094L1.27256 6.22973L1.88608 5.75776V10H5.42595V6.89173H6.71441V10H10.1147V5.75776L10.7282 6.22973L11.9811 4.60097L10.2869 3.29762ZM9.41295 9.29831H7.41608V6.19004H4.72423V9.29831H2.58775V5.21795L6.00034 2.59284L9.41292 5.21795L9.41295 9.29831ZM10.5998 5.24573L6.00034 1.70738L1.40084 5.24573L1.00354 4.72928L6.00034 0.885299L8.90507 3.11988V1.47985H9.58524V3.64313L10.9971 4.72928L10.5998 5.24573Z" fill="#555555"/>
+					</svg>
+					
+				</button>
+			</form> 
+		</div>
+		
+		<form 
+		th:action="@{/view/leader/generate-report/}"
+	  	method="post" class="main-form">
+	  	
+
+			  <select name="userIdPk" onchange="this.form.submit()">
+		  			
+		  		<option th:each="user : ${users}" 
+		  		th:value="${user.idPk}"  th:text="${user.firstName + ' '+ user.lastName}"
+		  		th:selected="${user.idPk == randomIdPk}"></option>	
+		  	</select>
+		  	<input type="hidden" th:value="${startDate}" name="startDate">
+		  	<input type="hidden" th:value="${endDate}" name="endDate">
+		  	<input type="hidden" th:value="${groupIdPk}" name="groupIdPk">
+		  	
+		  	<button type="submit" name="download"> Download</button>
+	
+	 	</form>
+	 	
+	 	
+	</main>
+
+	
+
+
+	<script>
+		
+		
+	</script>
+</body>
+</html>

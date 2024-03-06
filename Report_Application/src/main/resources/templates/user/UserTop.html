@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!-- <html xmlns:th="http://www.thymeleaf.org" -->
+<!--  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" -->
+<!--  layout:decorate="~{layout/layout}"> -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<meta charset="UTF-8">
+<!-- GOOGLE FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
+<!--css links  -->
+<link th:href="@{/css/user/top.css}" rel="stylesheet"></link>
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<!-- ICONS -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<title>UserTop</title>
+</head>
+<body>
+
+<div th:replace="layout/userheader :: headerAll (imgVal=${profilePhoto})"></div>
+
+<main>
+
+	<div id="first-div">
+		<div id="welcome" class="col-lg-4">
+			 <div>Welcome, <span th:text="${reportDetails3.firstName}"></span>!</div>  			
+		</div >		
+		  <div  th:if="${successMsg != null}" class="text-success error-success-message" th:text="${successMsg}"></div>
+          <div th:if="${errorMsg != null}" class="text-danger error-success-message" th:text="${errorMsg}"></div>		  
+	</div>
+
+	
+<div class="general-container">
+
+
+
+		<div id="second-div">
+    		<div class="today-report ">Today's Report:</div>
+    		 <div class="today-report">		
+		        <a  th:href="@{/view-reports}">View All Daily Reports</a>	      
+	        </div>
+    	</div>
+    	 
+    	<div id="third-div">
+  	    <div id="view-today-report">
+		   	 <a th:if="${reportDetails.target != null}"  th:href="@{/view-dailyReport/{reportDate}?cid=TOP(reportDate=${reportDetails.reportDate})}" th:text="${formattedReportDate} + ' Daily Report'">
+		     	 View Today's Report
+		    </a>
+		    <div th:unless="${reportDetails.target != null}">No daily evaluation yet.</div>  
+		</div>		    
+	    <div>
+		    <a th:if="${reportDetails.target != null}" 
+		    th:href="@{/view-dailyReport/edit/{reportDate}?cid=TOP(reportDate=${reportDetails.reportDate})}">
+		        <button  class=" rounded create-edit-btn"  th:disabled="${reportDetails.leaderComment != null}">EDIT REPORT</button> 
+		    </a>
+		    <a th:href="@{/view-reports}">
+		    </a>	    
+		    <form th:action="@{/create-report?cid=TOP}" method="post">
+		    	<button type="submit" name="create" th:unless="${reportDetails.target != null}"   class=" create-edit-btn">CREATE NEW</button>
+		    </form>
+		    
+	    </div>
+    	</div>
+    	 
+		<div id="fourth-div">	 		
+    		 <div  class="today-report">Yesterday's Report:</div>	
+    	</div> 
+    	<div id=fifth-div>
+    		<a  th:if="${reportDetails2 != null}" th:href="@{/view-dailyReport/{reportDate}?cid=TOP(reportDate=${reportDetails2.reportDate})}"  th:text="${formattedReportDateYesterday} + ' Daily Report'" >View Yesterday's Report</a>
+			<div th:unless="${reportDetails2 != null}">No daily evaluation yet.</div>	   
+			<div class="evaluated" th:if="${reportDetails2 != null && reportDetails2.leaderComment != null}" >EVALUATED <i class="fa fa-check"></i></div>		   
+    	</div>
+     	       
+    		
+		<div id="weekly-report-label">
+    		<div>Weekly report:</div> 		
+    	</div>
+    	  
+	  	<div id="weekly-report-div">    		
+			<div id="view-recent-weekly-report">		
+		   		<button id="link-like-button" onclick="togglePdfVisibility();">Weekly Reports</button>		
+			</div>					 	
+		    <div id="weekly-pdf-btn" >
+		      <button onclick="window.location.href='/view-weekly-report'"
+		            id="view-weekly-report-btn"
+		           >VIEW WEEKLY EVALUATION
+		    	</button>	
+		    </div>	   		  			   									
+	    </div>
+<!--
+   		 <div class="row">
+	      	<div >		
+				<a th:href="@{/create-report}" class="btn btn-secondary btn-block">Create Report</a><br>	      	      
+	        </div>      
+      	</div> 	 -->
+	<div class="row  mx-auto" id="pdf-container" style="display: none;">
+       <object th:data="@{/show-pdf}" type="application/pdf" width="100%" height="484px" id="pdf-object">			            
+       </object>
+	</div>
+
+	</div>
+</main>
+
+
+    
+    <script>
+        function togglePdfVisibility() {
+            var pdfContainer = document.getElementById('pdf-container');
+            pdfContainer.style.display = (pdfContainer.style.display === 'none') ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+@charset "UTF-8";
+
+main {
+	display: flex;
+	width: 34.375rem;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 0.25rem;
+	border: 1px solid #CCC;
+	background: #FFF;
+	margin: auto;
+	color: #555;
+	margin-top: 2.8125rem;
+}
+
+main > div.upperbox {
+	width: 100%;
+	/*height: 2.5rem;*/
+	border-bottom: 1px solid #004A80;
+}
+
+.upperbox > .first {
+	margin-left: 1.25rem;
+	display: inline-flex;
+	align-items: center;
+	align-self: stretch;
+	font-size: 1rem;
+	height: 2.5rem;
+}
+
+.upperbox > .second {
+	display: inline-flex;
+	/*justify-content: end;*/
+	float: right;
+	align-items: center;
+	gap: 0.3125rem;
+	align-self: stretch;
+	padding: 0.4688rem 0;
+}
+
+.upperbox > .second > button {
+	height: 1.5625rem;
+	width: 4.375rem;
+	font-size: 0.625rem;
+	border-radius: 0.125rem;
+	border: 1px solid #CCC;
+	background: #FFF;
+	box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+}
+
+.upperbox > .second > button:last-child {
+	margin-right: 0.625rem;
+}
+
+.upperbox > .second > button > a {
+	text-decoration: none;
+	color: #555;
+}
+
+main > form {
+	border: 1px solid #CCC;
+	margin: 0.625rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-self: stretch;
+}
+
+.midbox {
+	background: #F2F2F2;
+	display: flex;
+	height: 12.5rem;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.625rem;
+	align-self: stretch;
+	position: relative;
+}
+
+.midbox > .img-container {
+	display: flex;
+	height: 12.5rem;
+	/*padding-bottom: 20px;*/
+	flex-direction: column;
+	align-items: center;
+	gap: 0.625rem;
+	align-self: stretch;
+	width: 100%;
+	overflow: visible;
+}
+
+.midbox > button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.625rem;
+	right: 0.25rem;
+	bottom: 0.25rem;
+	border-radius: 50%;
+	border-style: none;
+	background-color: rgba(0, 0, 0, 0.5);
+	position: absolute;
+}
+
+img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	/*overflow: visible;*/
+}
+
+.remove {
+	height: 1.5rem; /*24px - 1.5rem*/
+	width: 1.5rem;
+	font-size: 0.9rem; /*14.4px - 0.9rem*/
+	border-radius: 50%;
+	border: none;
+	color: red;
+	position:absolute;
+	top:0;
+	right: 0;
+}
+
+.midbox > button > svg {
+	border-radius: 50%;
+	fill: rgba(0, 0, 0, 0.50);
+}
+
+.lowerbox {
+	background: white;
+	display: flex;
+	padding: 0.3125rem;
+	justify-content: space-between;
+	align-items: center;
+	align-self: stretch;
+	margin: auto;
+}
+
+.lowerbox > p {
+	margin: 0;
+	font-size: 0.75rem;
+	margin-right: 0.3125rem;
+}
+
+.lowerbox > input {
+	display: flex;
+	width: 12.5rem;
+	height: 1rem;
+	padding: 0px 0.625rem;
+	align-items: center;
+	gap: 0.625rem;
+	border: 0.5px solid #CCC;
+	background: #FFF;
+	box-shadow: 0.5px 0.5px 1px 0px rgba(0, 0, 0, 0.25);
+	font-size: 0.625rem;
+	outline: none;
+}
+
+.lowerbox > input::placeholder {
+	color: #CCC;
+}
+
+.invalid-feedback {
+	display: block;
+}
+
+.invalid-feedback > p {
+	font-size: 0.625rem;
+	color: red;
+	margin: 0;
+	margin-bottom: 0.625rem;
+}
+
+main > div.buttons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1.25rem;
+	align-self: stretch;
+	margin-bottom: 0.625rem;
+}
+
+main > div.buttons > button {
+	width: 6.875rem;
+	height: 1.5625rem;
+	font-size: 0.625rem;
+	border-radius: 0.125rem;
+	border: 1px solid #CCC;
+	background: #FFF;
+	box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+}
+
+main > div.buttons > button[name="back"] > a {
+	text-decoration: none;
+	color: #555;
+}
+
+main > div.buttons > button:last-child {
+	background: rgba(0, 53, 91, 1);
+	color: white;
+}

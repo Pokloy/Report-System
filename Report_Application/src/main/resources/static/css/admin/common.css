@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: 'Montserrat', sans-serif !important; 
+	font-weight: 400;
+}
+
+/*setting the base font-size for all html files*/
+html {
+	font-size: 16px !important;
+}
+
+body {
+	background: radial-gradient(67.57% 78.31% at 135.66% 0%, #FFFFFF 0%, #FFFFFF 0%, #EAEDF5 100%);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+main {
+	margin-top: 2.8125rem;
+}

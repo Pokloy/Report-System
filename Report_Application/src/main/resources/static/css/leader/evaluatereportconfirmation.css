@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+#rating {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+textarea {
+	border: 1px solid #CCC;
+background: #F8F8F8;
+}
+
+
+.evaluator-report__sub--container--1 .form-group:nth-child(2) div{
+	height: calc(100% - 1.5625rem);
+	border: 1px solid #CCC;
+background: #F8F8F8;
+}

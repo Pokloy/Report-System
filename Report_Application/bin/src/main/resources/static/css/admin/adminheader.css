@@ -1,0 +1,99 @@
+nav.admin {
+	background: radial-gradient(93.51% 189351.54% at 0% 50.01%, #004A80 0%, rgba(0, 74, 128, 0.5) 100%);
+	color: white;
+	max-height: 1.875rem; /*30px*/ /*1.875rem*/
+	max-width:100%;
+	margin: 0 auto;
+	align-items: center;
+	font-size: 0.875rem; /*14px*/ /*0.875rem*/
+	overflow: hidden;
+}
+
+ul.navi {
+	list-style-type: none;
+	margin: auto;
+	padding: 0;
+	overflow: hidden;
+	display: inline-block;
+	height: 1.875rem; /*30px*/ /*1.875rem*/
+	width: 100%;
+	text-align: center;
+	background-color: unset;
+}
+
+nav.admin > ul.navi > li {
+	margin: 0 auto;
+	display: inline-block;
+	padding: 0.4063rem 0.625rem; /*6.5px 10px*/ /*0.4063rem 0.625rem*/
+	height: 100%;
+	border-right: unset;
+	float: unset;
+}
+
+li a:hover:not(.active) {
+  background-color: unset;
+}
+
+#left {
+	float: left;
+	margin-left: 2.1875rem; /*35px*/ /*2.1875rem*/
+	padding-left: 0;
+}
+
+nav.admin > ul.navi > li:last-child {
+	padding: 0 0.625rem; /*0 10px*/ /* 0 0.625rem*/
+	float: right;
+	margin-right: 2.1875rem; /*35px*/ /*2.1875rem*/
+	padding-right: 0;
+}
+
+nav.admin > ul.navi > li > a {
+	color: white;
+}
+
+nav.admin > ul.navi > li > a:link, a:visited, a:hover, a:active {
+	text-decoration: none;
+	color: white;
+	max-height: 100%;
+	padding: unset;
+	background-color: none;
+}
+
+li > form {
+	display: inline;
+}
+
+li > form > button {
+	margin: 0.1563rem auto; /*2.5px auto*/ /*0.1563rem*/
+	padding: 0 0.625rem; /*0 10px*/ /*0 0.625rem*/
+	height: 1.5625rem; /*25px*/ /*1.5625rem*/
+	width: 6.875rem; /*110px*/ /*6.875rem*/
+	border-style: none;
+	color: white;
+	background-color: inherit;
+	display: inline;
+}
+
+.active-admin {
+	background: #004A80;
+}
+
+button[name="profile"] {
+	border-style: none;
+	height: 100%;
+	margin: 0 auto;
+	box-shadow: unset;
+	display: inline-flex;
+	align-items: center;
+}
+
+button[name="signout"] {
+	background-color: #004A80;
+}
+
+li > form > button > img {
+	width: 1.875rem;
+	height: 1.875rem;
+	border-radius: 50%;
+	object-fit: cover;
+}

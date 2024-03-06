@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!--CSS LINKS  -->
+<link th:href="@{/css/user/WeeklyPDF.css}" rel="stylesheet"></link>
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<!-- GOOGLE FONTS LINKS -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
+<!-- ICONS -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <title>Insert title here</title>
+</head>
+<body>
+		
+		<div th:replace="layout/userheader :: headerAll (imgVal=${profilePhoto})"></div>
+		   <div id="first-div">
+      	 	  <div id="create-label">
+	  			<div>Weekly Report</div>     	                            
+	          </div>
+	          <div class="create-report__nav">
+			    <a  href="/userTop">
+			       <i class="fa fa-long-arrow-left" ></i>			
+					<span>BACK</span>
+			    </a>				    	    
+			    <a href="/userTop" >
+			    	<span>
+			    		HOME
+			    	</span>
+			    	 <i class="fa fa-home w3-tiny"></i>     
+			    </a>
+			</div>	
+	      </div>
+		
+		<div class="general-container">
+			<form th:action="@{/download-pdf}" method="post">
+				
+				<embed th:src="@{/show-pdf}" >
+				
+                	<div class=" btn-container"> 
+                		<a class="cancel" href="/userTop" >
+					    	<span>
+					    		CANCEL
+					    	</span>    
+					    </a>             		                           			    	                
+                  		<input class="submit" type="submit" value="DOWNLOAD">        
+               		 </div>
+			</form>
+		</div>
+</body>
+</html>

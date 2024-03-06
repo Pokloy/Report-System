@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+		<link th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" rel="stylesheet"></link>
+		<script th:src="@{/webjars/jquery/1.12.4/jquery.min.js}"></script>
+		<script th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+	</head>
+	<body>
+		<nav th:fragment="headerAll" class="admin">
+			<ul class="navi">
+				<li id="left">Daily Report System</li> 
+
+				<li th:classappend="${#httpServletRequest.requestURI.endsWith('/admin') ? 'active-admin' : ''}">
+					<a th:href="@{/admin}">HOME</a>
+				</li>
+				
+				<li th:classappend="${#httpServletRequest.requestURI.endsWith('/admin/creategroup') ? 'active-admin' : ''}">
+					<a th:href="@{/admin/creategroup}">CREATE GROUP</a>
+				</li>
+				
+				<li th:classappend="${#httpServletRequest.requestURI.endsWith('/admin/createleader') ? 'active-admin' : ''}">
+					<a th:href="@{/admin/createleader}">CREATE LEADER</a>
+				</li>
+			    
+				<li th:classappend="${#httpServletRequest.requestURI.endsWith('/admin/createadmin') ? 'active-admin' : ''}">
+					<a th:href="@{/admin/createadmin}">CREATE ADMIN</a>
+				</li>
+
+				<li>
+					<form th:action="@{/profile}" method="POST">
+						<!--<a th:href="@{/profile}" th:classappend="${#httpServletRequest.requestURI.endsWith('/admin/profile') ? 'active' : ''}">PROFILE</a>-->
+						<button name="profile" th:classappend="${#httpServletRequest.requestURI.endsWith('/profile') ? 'active-admin' : ''}">
+							PROFILE <img th:src="${profilePhoto}" onerror="this.onerror=null; this.style.display='none';">
+						</button>
+						<button type="submit" name="signout">Sign Out</button>
+					</form>
+				</li>
+			</ul>
+		</nav>
+	</body>
+</html>

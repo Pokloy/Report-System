@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<!-- GOOGLE FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
+<!--CSS LINK  -->
+<link th:href="@{/css/user/viewReport.css}" rel="stylesheet"></link>
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<!-- ICONS -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <title>Report Details</title>
+</head>
+<body>
+	<div th:replace="layout/userheader :: headerAll"></div>	
+	<div class="first-div borders">
+	       <span  th:text="${'View Report:' + formattedReportDate}"></span>
+	       	<div id="icons-tab">
+			    <div id="back-div">			    
+				   <button  class="btn-home"  id="customBackButton">
+			            <i class="fa fa-long-arrow-left"></i> BACK
+			        </button>
+							       
+			    </div>
+			    <div id="home-div">
+			        <button class="btn-home" id="home" onclick="window.location.href='/userTop'">
+			            HOME <i class="fa fa-home w3-tiny"></i>
+			        </button>
+			    </div>
+			</div>
+	  </div>
+	  <main>
+		<div class="general-container  ">
+	 	<div  class=" grid-container">
+	 			  <div  class="text-container item1">
+	                  	<div class= "borders box">Target:</div>
+	                  	<div class= "borders label target scroll" id="target" th:text="${reportWebDto.target}" ></div>
+	              </div>
+	               <div  class="text-container item2">
+	                   <div class= "borders box comments">Actual:</div>
+	                   <div class= "borders label scroll"  id="selfComment" th:text="${reportWebDto.comments}" ></div>
+	              </div>
+	              <div class="item3 ">
+	              	 <p class="rating-label borders">Rating:</p>
+		             <p class="rating borders" id="selfRating"th:text="${reportWebDto.ratings}" ></p>          
+	              </div >
+	               	<div th:if="${reportWebDto.encodedImages != null and not reportWebDto.encodedImages.isEmpty()}"  th:unless="${#strings.isEmpty(reportWebDto.encodedImages)}" class="listOfImages images item4">
+					    <div th:each="encodedImage : ${reportWebDto.encodedImages}">
+					        <div th:if="${#strings.length(encodedImage) > 'data:image/jpeg;base64,'.length()}">
+					            <img th:src="'data:image/jpeg;base64,' + ${encodedImage}" alt="Image" height="100" width="100">
+					        </div>
+					    </div>
+						<input type="hidden" th:field="*{reportWebDto.encodedImages}" th:value="*{reportWebDto.encodedImages}">
+					</div > 
+	          </div>   
+	           <div  class="grid-container2">
+	 			  <div  class="text-container item5 ">
+	                  	<div class= "evaluation-label borders box">Evaluation:</div>
+	                  	<div class= "borders label evaluation scroll" id="target" th:text="${reportWebDto.evaluatorsComment}" ></div>
+	              </div>
+	              
+	              <div class="item6">
+	              	 <p class="rating-label borders">Final Rating:</p>
+		             <p class="rating borders" th:text="${reportWebDto.finalRating}" ></p>
+	              </div>
+	       
+				<!-- <div class="images listOfImages item7" th:if="${#strings.length(encodedImage) > 'data:image/jpeg;base64,'.length()}" th:each="encodedImage : ${reportWebDto.encodedImagesLeader}">
+					<img th:src="'data:image/jpeg;base64,' + ${encodedImage}" alt="Image" height="100">		
+	           </div>  -->
+	           
+	               	<div th:if="${reportWebDto.encodedImagesLeader != null and not reportWebDto.encodedImagesLeader.isEmpty()}"  th:unless="${#strings.isEmpty(reportWebDto.encodedImagesLeader)}" class="listOfImages images item7">
+					    <div th:each="encodedImage : ${reportWebDto.encodedImagesLeader}">
+					        <div th:if="${#strings.length(encodedImage) > 'data:image/jpeg;base64,'.length()}">
+					            <img th:src="'data:image/jpeg;base64,' + ${encodedImage}" alt="Image" height="100" width="100">
+					        </div>
+					    </div>		
+					</div >    			  	
+			</div>	
+		</div>	
+	</main>
+<script>
+			
+			 document.getElementById('customBackButton').addEventListener('click', function() {
+			      // Navigate back in the browser's history
+			      window.history.back();
+			    });
+</script> 
+
+	 
+</body>
+</html>

@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<!-- GOOGLE FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
+<!--CSS LINK  -->
+<link th:href="@{/css/user/viewReport.css}" rel="stylesheet"></link>
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<!-- ICONS -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+ <title>Report Details</title>
+</head>
+
+<body>
+
+    <div th:replace="layout/userheader :: headerAll (imgVal=${profilePhoto})"></div>
+
+    <main>
+        <div class="first-div borders">
+            <span th:text="${'View Report:' + formattedReportDate}"></span>
+            <div id="icons-tab">
+                <div id="back-div">
+                    <form method="post" th:action="@{/back-viewReports}">
+                        <input type="hidden" th:field="*{reportWebDto.finalRating}" th:value="*{reportWebDto.finalRating}">
+                        <button th:unless="${isFromTop}" type="submit" class="btn-home" id="back">
+                            <i class="fa fa-long-arrow-left"></i> BACK
+                        </button>
+                        <button th:if="${isFromTop}" type="button" class="btn-home" onclick="window.location.href='/userTop'" id="back">
+                            <i class="fa fa-long-arrow-left"></i> BACK
+                        </button>
+                    </form>
+                </div>
+                <div id="home-div">
+                    <button class="btn-home" id="home" onclick="window.location.href='/userTop'">
+                        HOME <i class="fa fa-home w3-tiny"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="general-container">
+            <div class="grid-container">
+                <div class="text-container item1">
+                    <div class="borders box">Target:</div>
+                    <p class="borders label target scroll" id="target" th:text="${reportWebDto.target}"></p>
+                </div>
+                <div class="text-container item2">
+                    <div class="borders box comments">Actual:</div>
+                    <p class="borders label scroll" id="selfComment" th:text="${reportWebDto.comments}"></p>
+                </div>
+                <div class="item3">
+                    <div class="rating-label borders">Rating:</div>
+                    <p class="rating borders" id="selfRating" th:text="${reportWebDto.ratings}"></p>
+                </div>
+
+                <div th:if="${reportWebDto.encodedImages != null and not reportWebDto.encodedImages.isEmpty()}"
+                    th:unless="${#strings.isEmpty(reportWebDto.encodedImages)}" class="listOfImages images item4">
+                    <div th:each="encodedImage : ${reportWebDto.encodedImages}">
+                        <div th:if="${#strings.length(encodedImage) > 'data:image/jpeg;base64,'.length()}"
+                            class="non-expandable">
+                            <img th:src="'data:image/jpeg;base64,' + ${encodedImage}" alt="Image" data-target="image">
+                        </div>
+                    </div>
+                    <input type="hidden" th:field="*{reportWebDto.encodedImages}" th:value="*{reportWebDto.encodedImages}">
+                </div>
+            </div>
+            <div class="grid-container2" th:if="${reportWebDto.finalRating != 0}">
+                <div class="text-container item5">
+                    <div class="evaluation-label borders box">Evaluation:</div>
+                    <div class="borders label evaluation scroll" id="target" th:text="${reportWebDto.evaluatorsComment}"></div>
+                </div>
+                <div class="item6">
+                    <div class="rating-label borders">Final Rating:</div>
+                    <p class="rating borders" th:text="${reportWebDto.finalRating}"></p>
+                </div>
+                <div th:if="${reportWebDto.encodedImagesLeader != null and not reportWebDto.encodedImagesLeader.isEmpty()}"
+                    th:unless="${#strings.isEmpty(reportWebDto.encodedImagesLeader)}" class="listOfImages images item7">
+                    <div th:each="encodedImage : ${reportWebDto.encodedImagesLeader}">
+                        <div th:if="${#strings.length(encodedImage) > 'data:image/jpeg;base64,'.length()}"
+                            class="non-expandable">
+                            <img th:src="'data:image/jpeg;base64,' + ${encodedImage}" alt="Image" data-target="image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-container">
+                <a class="cancel" href="/userTop">
+                    <span>CANCEL</span>
+                </a>
+                <a class="submit" th:if="${reportWebDto.finalRating == 0}"
+                    th:href="@{/view-dailyReport/edit/{reportDate}__${isFromTop ? '?cid=TOP-VIEW' : ''}__(reportDate=${reportWebDto.reportDate})}"
+                    th:value="${reportIdPk}">EDIT</a>
+                <button th:if="${reportWebDto.finalRating == 0}" type="button" class="cancel" id="deleteBtn" data-bs-toggle="modal" data-bs-target="#deleteModal">DELETE</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="deleteModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form th:action="@{/delete-report}" method="post" th:object="${reportWebDto}">
+                        <p>Are you sure you want to delete this report?</p>
+                        <div class="modal_button">
+                            <button class="submit" type="submit">Yes</button>
+                            <div class="btn cancel close" data-bs-dismiss="modal">Close</div>
+                            <input type="hidden" name="reportDate" th:value="${reportDate}">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script th:inline="javascript">
+        const targetImages = document.querySelectorAll("[data-target='image']");
+
+        var originPage = null;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Save the current page as the origin when the page loads
+            originPage = window.location.href;
+        });
+
+        // Add click event to the custom back button
+        //document.getElementById('customBackButton').addEventListener('click', function() {
+        // If there is an origin page URL, navigate to it; otherwise, do nothing
+        //if (originPage) {
+        //window.location.href = originPage;
+        //}
+        //});
+
+        // Function to navigate to a new page
+        function navigateTo(url) {
+            // Update the originPage variable
+            originPage = window.location.href;
+
+            // Navigate to the new page
+            window.location.href = url;
+        }
+
+        let expandImageState = false;
+        targetImages.forEach((val) => {
+            val.addEventListener("click", (e) => {
+                expandImageState = expandImageState ? false : true;
+
+                const targetImageParent = e.target.parentElement;
+                targetImageParent.className = "";
+
+                targetImageParent.classList.toggle(`${expandImageState ? "expandable" : "non-expandable"}`)
+
+
+            })
+
+        })
+    </script>
+</body>
+
+</html>

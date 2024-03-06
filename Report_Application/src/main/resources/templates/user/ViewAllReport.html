@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<!--GOOGLE FONTS  -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,200&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
+<!--BOOTSTRAP  -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!--CSS  -->
+<link th:href="@{/css/user/viewAllReports.css}" rel="stylesheet"></link>
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<!-- ICONS -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>View All Reports</title>
+</head>
+</head>
+
+<body>
+
+	
+	<div th:replace="layout/userheader :: headerAll (imgVal=${profilePhoto})"></div>
+	<main>
+	
+	<div id="first-div">
+			<div id="view-daily-report-label">
+				<p >View All Daily Report</p>
+				 <p th:if="${successMsg != null}" class="text-success error-success-message" th:text="${successMsg}"></p>	
+			</div>
+			<div id="icons-tab">
+			    <div id="back-div">
+			        <button class="btn-home"  id="back" onclick="window.location.href='/userTop'">
+			            <i class="fa fa-long-arrow-left"></i> BACK
+			        </button>
+			    </div>
+			    <div id="home-div">
+			        <button class="btn-home" id="home" onclick="window.location.href='/userTop'">
+			            HOME <i class="fa fa-home w3-tiny"></i>
+			        </button>
+			    </div>
+			</div>			
+		</div>
+		
+	
+	<div class="general-container">
+
+		
+	<div id="second-div">
+	      <div id="select-form">
+	      	<div>
+	      	<form th:action="@{/view-reports}" method="get" th:object="${reportWebDto}">
+	         
+	           <select  th:field="*{status}" id="status" onchange="this.form.submit()">
+	               <option value="all" >All</option>
+	               <option value="1">Evaluated</option>
+	               <option value="0">Not yet evaluated</option>
+	           </select>      
+	       </form>
+	      	</div>
+	      </div>	       
+	      <div class="create-report-btn">
+	      <form th:action="@{/create-report}" method="POST">
+	      
+	      	<button type="submit" class="create-report-btn" name="create"> Create New.. </button>
+	      </form>
+	 
+	  	  </div>	     
+ 		</div> 
+   			
+   			
+		 <div id="third-div">	    
+			 <div id="report-tabs">
+		        <div th:each="report, iterStat : ${reportList}" class="daily-report-item">  
+					<div class="report-item-container">
+						<!-- <a th:if="${reportWebDto.status == '0'}" th:href="@{/view-dailyReport/edit/{reportDate}(reportDate=${report.reportDate})}" th:value="${report.userIdPk}" class="btn rounded button btn-light ">Edit</a> -->
+							<div>
+							<form th:action="@{/view-dailyReport/edit/{reportDate}(reportDate=${report.reportDate})}" method="get">			    
+							    <input type="hidden" th:name="isFromViewReports" th:value="${reportWebDto.isFromViewReports}" />
+							    <a id="daily-reports" th:text="${report.formattedReportDate + ' - Daily Report'}" th:href="@{/view-dailyReport/{reportDate}(reportDate=${report.reportDate})}" th:value="${report.idPk}"></a>
+							</form> 
+							</div>	
+							<div id="evaluated"><div class="evaluated" th:if="${report.status == '1'}" >EVALUATED <i class="fa fa-check"></i></div></div>  		         
+					</div>			
+		        </div>
+	   		 </div>		
+		  </div> 
+		  
+		  
+		  <div id="next-previous-div">
+			<div><button class="button" onclick="showPreviousTab()">PREV</button></div>
+			<div id="select"><select class="button-select" id="pageSelector" onchange="changePage()"></select></div>
+			<div><button class="button" onclick="showNextTab()">NEXT</button></div>    	
+		  </div>
+			
+			
+	</div>
+</main>
+
+<!-- 	<!-- Scripts for Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/ // This is used to avoid issues with inline scripts
+    // JavaScript for handling tab navigation
+    var currentTab = 0;
+    var reportsPerPage = 30;
+    var totalReports = /*[[${#lists.size(reportList)}]]*/ ${#lists.size(reportList)};
+    var totalTabs = Math.ceil(totalReports / reportsPerPage);
+
+    function showTab(tabIndex) {
+        var tabs = document.getElementsByClassName("daily-report-item");
+        var startIndex = tabIndex * reportsPerPage;
+        var endIndex = Math.min(startIndex + reportsPerPage, totalReports);
+
+        for (var i = 0; i < tabs.length; i++) {
+            tabs[i].style.display = (i >= startIndex && i < endIndex) ? "block" : "none";
+        }
+    }
+
+    function showPreviousTab() {
+        if (currentTab > 0) {
+            currentTab--;
+            showTab(currentTab);
+            updatePageSelector();
+        }
+    }
+
+    function showNextTab() {
+        if (currentTab < totalTabs - 1) {
+            currentTab++;
+            showTab(currentTab);
+            updatePageSelector();
+        }
+    }
+
+    function changePage() {
+        var selector = document.getElementById("pageSelector");
+        currentTab = parseInt(selector.value) - 1;
+        showTab(currentTab);
+    }
+
+    function updatePageSelector() {
+        var selector = document.getElementById("pageSelector");
+        selector.innerHTML = ""; // Clear existing options
+
+        for (var i = 1; i <= totalTabs; i++) {
+            var option = document.createElement("option");
+            option.value = i;
+            option.text = i;
+            selector.add(option);
+        }
+
+        selector.value = currentTab + 1; // Set the selected value to the current page
+    }
+
+    // Show the initial tab on page load
+    showTab(currentTab);
+    updatePageSelector();
+    /*]]>*/
+</script>
+
+
+
+</body>
+</html>

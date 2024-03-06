@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<link th:href="@{/css/leader/createuser.css}" rel="stylesheet"></link>
+<title>Create User</title>
+
+</head>
+<body>
+<!--create user html
+author Karl James Arboiz
+10/03/2023-->
+
+	<div th:object="${userCreationWebDto}">
+		<div th:replace="layout/userheader :: headerAll(imgVal=*{profilePhoto})"></div>
+	</div>
+	
+	<main>
+
+		<form th:action="@{*{edited? '/view/leader/groupconfiguration' :
+		 '/view/leader/'}}" enctype="multipart/form-data"
+		 method="post" th:object="${userCreationWebDto}"  >
+		 
+				 <div th:replace="layout/userheader :: 
+				mainHeader(headerTitle=*{edited ? 'Edit User': 
+				'Create User'},backBtnName=*{edited ? 'backtoconfig': 'home'})"></div>
+		 
+				<div class="main-container">
+					<div class="profile" th:if="*{!edited}">
+							<div class="img-container">
+								
+							</div>
+							
+							<button type="button" name="profile-button">
+									<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+										<path d="M9.60714 3.96429C9.07143 3.42857 8.21429 3.42857 7.67857 3.96429L4.03571 7.60714C4 7.64286 3.96429 7.71429 3.92857 7.78571L3.57143 9.57143C3.53571 9.67857 3.57143 9.82143 3.67857 9.89286C3.75 9.96429 3.89286 10 4 10L5.78571 9.64286C5.85714 9.64286 5.92857 9.60714 5.96429 9.53572L9.60714 5.89286C10.1429 5.35714 10.1429 4.5 9.60714 3.96429ZM5.53571 8.96429L4.39286 9.17857L4.60714 8.03571L7.5 5.14286L8.42857 6.07143L5.53571 8.96429ZM9.10714 5.39286L8.92857 5.57143L8 4.64286L8.17857 4.46429C8.42857 4.21429 8.85714 4.21429 9.10714 4.46429C9.35714 4.71429 9.35714 5.14286 9.10714 5.39286ZM5.82143 4.53571C5.96429 4.67857 6.17857 4.67857 6.32143 4.53571C6.46429 4.39286 6.46429 4.17857 6.32143 4.03571L5.60714 3.32143C5.46429 3.17857 5.25 3.17857 5.10714 3.32143L3.21429 5.21429L2.39286 4.39286C2.25 4.25 2.03571 4.25 1.89286 4.39286L0.714286 5.57143V1.07143C0.714286 0.857143 0.857143 0.714286 1.07143 0.714286H7.5C7.71429 0.714286 7.85714 0.857143 7.85714 1.07143V2.5C7.85714 2.71429 8 2.85714 8.21429 2.85714C8.42857 2.85714 8.57143 2.71429 8.57143 2.5V1.07143C8.57143 0.464286 8.10714 0 7.5 0H1.07143C0.464286 0 0 0.464286 0 1.07143V7.5C0 8.10714 0.464286 8.57143 1.07143 8.57143H2.85714C3.07143 8.57143 3.21429 8.42857 3.21429 8.21429C3.21429 8 3.07143 7.85714 2.85714 7.85714H1.07143C0.857143 7.85714 0.714286 7.71429 0.714286 7.5V6.57143L2.14286 5.14286L2.96429 5.96429C3.10714 6.10714 3.32143 6.10714 3.46429 5.96429L5.35714 4.07143L5.82143 4.53571Z" fill="white"/>
+										<path d="M2.14258 2.4999C2.14258 3.10704 2.60686 3.57132 3.21401 3.57132C3.82115 3.57132 4.28544 3.10704 4.28544 2.4999C4.28544 1.89275 3.82115 1.42847 3.21401 1.42847C2.60686 1.42847 2.14258 1.89275 2.14258 2.4999ZM3.57115 2.4999C3.57115 2.71418 3.42829 2.85704 3.21401 2.85704C2.99972 2.85704 2.85686 2.71418 2.85686 2.4999C2.85686 2.28561 2.99972 2.14275 3.21401 2.14275C3.42829 2.14275 3.57115 2.28561 3.57115 2.4999Z" fill="white"/>
+									</svg>
+							</button>
+							
+							<input type="hidden"  th:value="*{displayPicture}"  name="displayPicture">
+							<input type="file" class="form-control" 
+							id="image-file" th:src="*{imageFile}" 
+							th:field="*{imageFile}" name="display-picture" accept="image/png, image/jpeg" hidden>
+							<div th:if="*{errorListStorage != null}">
+								<p th:text="*{#objects.nullSafe(errorListStorage['display-picture'], '')}" class="error-message"></p>
+								<p th:text="*{#objects.nullSafe(errorListStorage['img-type'], '')}" class="error-message"></p>
+							</div>
+					</div>
+						
+					<div class="profile" th:if="*{edited}">
+						<div class="img-container">
+						
+						 </div>
+						 
+						 <button type="button" name="profile-button">
+									<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+										<path d="M9.60714 3.96429C9.07143 3.42857 8.21429 3.42857 7.67857 3.96429L4.03571 7.60714C4 7.64286 3.96429 7.71429 3.92857 7.78571L3.57143 9.57143C3.53571 9.67857 3.57143 9.82143 3.67857 9.89286C3.75 9.96429 3.89286 10 4 10L5.78571 9.64286C5.85714 9.64286 5.92857 9.60714 5.96429 9.53572L9.60714 5.89286C10.1429 5.35714 10.1429 4.5 9.60714 3.96429ZM5.53571 8.96429L4.39286 9.17857L4.60714 8.03571L7.5 5.14286L8.42857 6.07143L5.53571 8.96429ZM9.10714 5.39286L8.92857 5.57143L8 4.64286L8.17857 4.46429C8.42857 4.21429 8.85714 4.21429 9.10714 4.46429C9.35714 4.71429 9.35714 5.14286 9.10714 5.39286ZM5.82143 4.53571C5.96429 4.67857 6.17857 4.67857 6.32143 4.53571C6.46429 4.39286 6.46429 4.17857 6.32143 4.03571L5.60714 3.32143C5.46429 3.17857 5.25 3.17857 5.10714 3.32143L3.21429 5.21429L2.39286 4.39286C2.25 4.25 2.03571 4.25 1.89286 4.39286L0.714286 5.57143V1.07143C0.714286 0.857143 0.857143 0.714286 1.07143 0.714286H7.5C7.71429 0.714286 7.85714 0.857143 7.85714 1.07143V2.5C7.85714 2.71429 8 2.85714 8.21429 2.85714C8.42857 2.85714 8.57143 2.71429 8.57143 2.5V1.07143C8.57143 0.464286 8.10714 0 7.5 0H1.07143C0.464286 0 0 0.464286 0 1.07143V7.5C0 8.10714 0.464286 8.57143 1.07143 8.57143H2.85714C3.07143 8.57143 3.21429 8.42857 3.21429 8.21429C3.21429 8 3.07143 7.85714 2.85714 7.85714H1.07143C0.857143 7.85714 0.714286 7.71429 0.714286 7.5V6.57143L2.14286 5.14286L2.96429 5.96429C3.10714 6.10714 3.32143 6.10714 3.46429 5.96429L5.35714 4.07143L5.82143 4.53571Z" fill="white"/>
+										<path d="M2.14258 2.4999C2.14258 3.10704 2.60686 3.57132 3.21401 3.57132C3.82115 3.57132 4.28544 3.10704 4.28544 2.4999C4.28544 1.89275 3.82115 1.42847 3.21401 1.42847C2.60686 1.42847 2.14258 1.89275 2.14258 2.4999ZM3.57115 2.4999C3.57115 2.71418 3.42829 2.85704 3.21401 2.85704C2.99972 2.85704 2.85686 2.71418 2.85686 2.4999C2.85686 2.28561 2.99972 2.14275 3.21401 2.14275C3.42829 2.14275 3.57115 2.28561 3.57115 2.4999Z" fill="white"/>
+									</svg>
+						</button>
+						<input type="file" class="form-control" id="image-file" th:src="*{imageFile}" th:field="*{imageFile}" name="display-picture" 
+						accept="image/*" hidden>
+						<div th:if="*{errorListStorage != null}">
+							<p th:text="*{#objects.nullSafe(errorListStorage['display-picture'], '')}" class="error-message"></p>
+							<p th:text="*{#objects.nullSafe(errorListStorage['img-type'], '')}" class="error-message"></p>
+						</div>
+					</div>
+					
+					<div class="input-fields">
+						<div class="form-group">
+							<label for="first-name">First Name:</label>
+							<input type="text" class="form-control" id="first-name" 
+							th:field="*{firstName}" name="first-name">
+							<p th:errors="*{firstName}" class="error-message"></p>
+						</div>
+						
+						<div class="form-group">
+							<label for="last-name">Last Name:</label>
+							<input type="text" class="form-control" id="last-name"
+							 th:field="*{lastName}" name="last-name" >
+							<p th:errors="*{lastName}" class="error-message"></p>
+						</div>
+						
+						<div class="form-group">
+							<label for="username">Username:</label>
+							<input type="text" class="form-control" id="username" 
+							th:field="*{username}" name="username" >
+							<p th:errors="*{username}" class="error-message"></p>
+							<div th:if="*{errorListStorage != null}">
+								<p th:text="*{#objects.nullSafe(errorListStorage['username'], '')}" class="error-message"></p>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="email">Email:</label>
+							<input type="text" class="form-control" 
+							id="email" th:field="*{mailAddress}" name="email" >
+							<p th:errors="*{mailAddress}" class="error-message"></p>
+							<div th:if="*{errorListStorage != null}">
+								<p th:text="*{#objects.nullSafe(errorListStorage['email'], '')}" class="error-message"></p>
+							</div>
+							
+						</div>
+						
+						<div class="form-group" th:if="*{!edited}">
+							<label for="password">Password:</label>
+							<input type="password" class="form-control" id="password"
+							 th:field="*{password}" name="password" th:value="*{password}">
+							<p th:errors="*{password}" class="error-message"></p>
+							
+							<div th:if="*{errorListStorage != null}">
+								 <p th:text="*{#objects.nullSafe(errorListStorage['password'], '')}" class="error-message"></p>
+							</div>
+						</div>
+						
+						<div class="form-group" th:if="*{!edited}">
+							<label for="confirm-password">Confirm Password:</label>
+							<input type="password" class="form-control" id="confirm-password"
+							 name="confirm-password" th:field="*{confirmPassword}" >
+							<p th:errors="*{confirmPassword}" class="error-message"></p>
+
+						</div>
+						
+						
+						<div class="mb-3 form-group" th:if="*{edited}" >
+								<label for="password">Password:</label>
+								<input type="password" class="value" 
+								 id="new__password" name="newPassword" 
+								 th:field="*{newUserPassword}">
+								 <p th:errors="*{newUserPassword}" class="error-message"></p>
+								 <div th:if="*{errorListStorage != null}">
+									<p th:text="*{#objects.nullSafe(errorListStorage['password1'], '')}" class="error-message"></p>
+									<p th:text="*{#objects.nullSafe(errorListStorage['password2'], '')}" class="error-message"></p>
+									<p th:text="*{#objects.nullSafe(errorListStorage['password3'], '')}" class="error-message"></p>
+								</div>
+						</div>
+							
+						<div class="mb-3 form-group" th:if="*{edited}">
+							<label for="confirm-password">Confirm Password:</label>
+							<input type="password" class="value" 
+							id="confirm-new__password"
+							 name="confirmNewPassword"
+							th:field="*{confirmNewUserPassword}" >
+							
+						</div>
+						
+						
+						
+		    		   	<div class="form-group special-input" th:if="*{!edited}">
+					     	<label for="group">Group</label>
+						    <select id="group" class="font-common--1 
+						          text-color--common__5" name="group"
+						    th:field="*{groupIdPk}" >
+						    	<option value="0" class="font-common--1 
+						          text-color--common__5">No Group</option>
+						        <option th:each="group : *{groups}"
+						         th:value="${group.idPk}"
+						          th:text="${group.groupName}"
+						          class="font-common--1 
+						          text-color--common__5"></option>
+								
+						    </select>
+						    
+		     			</div>
+		     			
+		     			<div class="form-group special-input" th:if="*{edited}">
+					     	<label for="group"  class="font-common--1 
+						          text-color--common__5">Group</label>
+					     	<p th:text="*{groupName}" class="font-common--1 
+						          text-color--common__5 font-size--common-3"></p>
+						    <input type="hidden" class="font-common--1 
+						          text-color--common__5 font-size--common-3" id="group"
+							 th:field="*{groupName}" name="group" readonly >
+						    
+		     			</div>
+						
+						<input type="hidden" th:if="*{edited}" th:value="*{password}" th:field="*{password}">
+						<input type="hidden" th:if="*{edited}" th:value="*{confirmPassword}" th:field="*{confirmPassword}">
+						<input type="hidden" th:if="*{edited}" th:value="*{displayPicture}" th:field="*{displayPicture}">
+						<input type="hidden" th:if="*{edited}" th:value="*{idPk}" th:field="*{idPk}">
+						<input type="hidden" th:if="*{edited}" th:value="*{groupIdPk}" th:field="*{groupIdPk}">
+						<input type="hidden" th:if="*{edited}" th:value="*{edited}" name="edited">
+						
+				 	</div>
+					
+				</div>
+					
+					<div th:replace="layout/userheader :: rowBtnNavigation 
+			(backBtnName=*{edited ? 'backtoconfig': 'home'},
+			submitBtnName=*{edited ? 'confirmedit': 'confirm'},
+			backBtnText='Cancel',
+			submitBtnText='Submit')"></div>
+		 
+    		
+		  			
+		    </form>
+        
+  			
+	</main>
+	
+	<!-- Bootstrap Scripts -->
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	
+		<script type="text/javascript">
+			const displayPictureFile = document.querySelector("#image-file");
+			const profileButton = document.querySelector("button[name='profile-button']");
+			const editPasswordBtn = document.querySelector(".edit-password__btn");	
+		
+			const curPasswordContainer = document.querySelector("#cur-password__container");
+			const newPasswordInput = document.querySelector("#new__password");
+			const confirmNewPasswordInput = document.querySelector("#confirm-new__password");
+			
+			const imgContainer = document.querySelector(".img-container");
+			
+			const displayPictureSession = document.querySelector("input[name='displayPicture']");
+			
+			profileButton.addEventListener("click",function(){
+				displayPictureFile.click();
+			})
+			displayPictureFile.addEventListener('change',function(e){
+				
+				const file = e.target.files;
+				
+				if(file.length>0){
+					
+					imgContainer.innerHTML = "";
+					const imgUrl = URL.createObjectURL(file[0]);
+					
+					const btnClose = document.createElement("button");
+					
+					
+					const img = document.createElement("img");
+					
+					img.setAttribute("name","show-picture");
+					img.setAttribute("alt","This is a profile Picture");
+					
+					btnClose.setAttribute("type","button");
+					btnClose.classList.add("remove");
+					btnClose.innerHTML = "&times;";
+					
+					imgContainer.appendChild(img);
+				
+					imgContainer.appendChild(btnClose);
+					img.src = imgUrl;
+					img.alt = "This is your Profile Picture";
+					
+					btnClose.addEventListener("click",	(e)=>{
+						const imageFile = document.getElementById("image-file");
+						const showPicture = document.querySelector("[name='show-picture']");
+						
+						imageFile.value ="";
+						displayPictureSession.value = "";
+						showPicture.remove();
+						btnClose.remove();
+					})
+					
+					
+				}
+			})
+			
+			window.addEventListener("load",()=>{
+		
+				const img = document.createElement("img");
+					
+				img.setAttribute("name","show-picture");
+				img.setAttribute("alt","This is a profile Picture");
+				
+				img.src = displayPictureSession?.value;
+				imgContainer.appendChild(img);
+				
+				const btnClose = document.createElement("button");
+
+				
+				btnClose.setAttribute("type","button");
+				btnClose.classList.add("remove");
+				btnClose.innerHTML = "&times;";
+			
+				imgContainer.appendChild(btnClose);
+				
+				btnClose.addEventListener("click",	(e)=>{
+					const imageFile = document.getElementById("image-file");
+					const showPicture = document.querySelector("[name='show-picture']");
+					
+					imageFile.value ="";
+					displayPictureSession.value = "";
+					showPicture.remove();
+					btnClose.remove();
+				})
+			})
+			
+			
+	
+		</script>
+
+</body>
+</html>

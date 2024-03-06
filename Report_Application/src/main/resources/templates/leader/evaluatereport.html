@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<link th:href="@{/css/leader/evaluatereport.css}" rel="stylesheet"></link>
+<meta charset="UTF-8">
+<title>Evaluate Report</title>
+</head>
+<body>
+	<div th:replace="layout/userheader :: headerAll(imgVal=${profilePhoto})"></div>
+	<main >
+			
+	    <form  th:action="@{${edited ? '/view/leader/final-evaluated' :  '/view/leader/evaluate-report'}}" 
+		 enctype="multipart/form-data" method="post" 
+		 th:object="${reportEvaluationWebDto}">
+	         
+	         <div class="header" th:replace="layout/userheader :: 
+		mainHeader(headerTitle=${edited ?'Edit Evaluated Report: ' + completeName + ' ' +  evaluateReportDate: 
+		'Evaluate Report: ' + completeName + ' ' +  evaluateReportDate},backBtnName='home')"></div>
+	         
+	         <div class="user-report__evaluation-container" th:if="${!edited}">    
+              	<div class="user-report__evaluation-item">
+					  <label for="target" class="font-common--1
+			        font-size--common-3
+			        text-color--common__2">Target:</label>
+                	<div id="target" 
+                	class="
+                	font-size--common-3
+                	font-common--1 
+                	text-color--common__2" th:text="*{reportDetails.target}"></div>
+				 </div>
+				 
+				 <div class="user-report__evaluation-item">
+					    <label for="comments" class="font-common--1
+				        font-size--common-3
+				        text-color--common__2">Self Comments:
+				        </label>
+                		<div id="comments"
+                		class="
+	                	font-size--common-3
+	                	font-common--1 
+	                	text-color--common__2"  
+	                	th:text="*{reportDetails.selfComment}"></div>
+				 </div>
+				 
+				 <div class="user-report__evaluation-item">
+					<label for="ratings" class="font-common--1
+			        font-size--common-3
+			        text-color--common__2">Self Rating:
+			        </label>
+            		
+            		<div data-rating="rate">
+						<p class="
+                	font-size--common-3
+                	font-common--1 
+                	text-color--common__2"
+                	th:text="*{reportDetails.selfRating}"></p>
+					</div>
+            		<input type="hidden" name="ratings" th:value="*{reportDetails.selfRating}">
+				 </div>
+      
+            </div> 
+           
+             <div class="user-report__evaluation-container" th:if="${edited}">    
+              	<div class="user-report__evaluation-item">
+					  <label for="target" class="font-common--1reportEvaluationWebDto
+			        font-size--common-3
+			        text-color--common__2">Target:</label>
+                	<div id="target"th:text="*{target}" 
+                	class="
+                	font-size--common-3
+                	font-common--1 
+                	text-color--common__2"></div>
+				 </div>
+				 
+				 <div class="user-report__evaluation-item">
+					    <label for="comments" class="font-common--1
+			        font-size--common-3
+			        text-color--common__2">Self Comments:</label>
+                		<div id="comments"  th:text="*{comments}"
+                		class="
+                	font-size--common-3
+                	font-common--1 
+                	text-color--common__2"	></div>
+				 </div>
+				 
+				 <div class="user-report__evaluation-item">
+					<label for="ratings" class="font-common--1
+			        font-size--common-3
+			        text-color--common__2">
+			        Self Rating:</label>
+			        
+	            	<div id="ratings" 
+	            	class="font-size--common-3
+                	font-common--1 
+                	text-color--common__2" 
+                	th:text="*{ratings}" data-rating="rate" ></div>
+	            	<input type="hidden" name="ratings" th:value="*{ratings}">
+				 </div>
+      
+            </div>  
+            
+            
+             <!--<div class="report-images" th:if="${!edited}">
+				<div th:each="encodedImage : *{images}" th:if="${#strings.length(encodedImage) > 'data:image/jpeg;base64,'.length()}">
+		            <img th:src="'data:image/jpeg;base64,' + ${encodedImage}"  height="100">
+		        </div>						
+           	</div>-->
+           	
+            <div  class="report-images" th:if="${edited}">
+				<div th:each="encodedImage :*{encodedImagesOut}"th:if="${#strings.length(encodedImage) > 'data:image/jpeg;base64,'.length()}"
+				class="image">
+			       <img th:src="'data:image/jpeg;base64,' + ${encodedImage}"  height="100">
+			       <input type="hidden" th:value="${encodedImage}" name="encodedImagesOut">
+			     </div>							
+           	</div>		   
+           	
+           
+             <div  class="report-images" th:if="${!edited}">
+				<div th:each="encodedImage : ${reportWebDto.encodedImagesOut}" th:if="${#strings.length(encodedImage) > 'data:image/jpeg;base64,'.length()}"
+				class="image">
+		            <img th:src="'data:image/jpeg;base64,' + ${encodedImage}"  height="100">
+		        </div>						
+           	</div>	
+           
+                        
+            <div class="evaluator-report__evaluation-container">
+				<div class="evaluator-report__evaluation-header
+				evaluator-report__evaluation-header__evaluate">
+			        <label class="font-common--1
+			        font-size--common-3
+			        text-color--common__2"> Evaluator:</label>
+			        <select disabled>
+						<option th:value="${evaluatorInfo.getIdPk}" 
+						th:text="${evaluatorInfo.firstName + ' '+evaluatorInfo.lastName}"
+						class="font-common--1
+			        font-size--common-3
+			        text-color--common__2"></option>
+					</select>
+					
+				</div>
+			   <div class="evaluator-report__sub--container--1">
+				   
+					<div class="form-group" >
+				        <label for="evaluatorsComment" 
+				        class="font-common--1
+				        font-size--common-3
+				        text-color--common__2">Evaluation:</label>
+				      	<div>
+						<textarea data-textarea="evaluate" id="evaluatorsComment" name="evaluatorsComment" 
+				        th:field="*{evaluatorsComment}"
+				        class="font-common--1
+			        font-size--common-3
+			        text-color--common__2" ></textarea>
+						  </div>
+				        <p 
+				        class="font-common--1
+			        font-size--common-3
+			        text-color--common__6"
+				        th:if="${#fields.hasErrors('evaluatorsComment')}" th:errors="*{evaluatorsComment}"></p>
+				    </div>
+			    
+				    <div>
+						<div class="rating-selection">
+							<label for="finalRatings" class="font-common--1
+			        font-size--common-3
+			        text-color--common__2">Final Rating:</label>
+			                  <select id="numberSelect" name="finalRating" th:field="*{finalRating}" class="form-control">
+							        <option value="1">1</option>
+							        <option value="2">2</option>
+							        <option value="3">3</option>
+							        <option value="4">4</option>
+							        <option value="5">5</option>
+							   </select>
+						</div>
+						
+						<div class="add-image">
+							<button type="button" class="btn-reset">
+								<svg xmlns="http://www.w3.org/2000/svg" width="36" height="35" viewBox="0 0 36 35" fill="none">
+								  <path d="M35.5 20H20.5V35H15.5V20H0.5V15H15.5V0H20.5V15H35.5V20Z" fill="#CCCCCC"/>
+								</svg>
+								
+								<p class="font-common--1
+						        font-size--common-3
+						        text-color--common__2">Add Image</p>
+							</button>
+						</div>
+					</div>			
+			   </div>
+               
+            </div>                                
+	     
+				<div class="report-images image-container" th:if="${!edited}" >
+					
+					<div th:each="encodedImage : ${reportWebDto.encodedImages}" 
+					th:if="${#strings.length(encodedImage) > 'data:image/jpeg;base64,'.length()}"
+					class="image">
+				            <img th:src="'data:image/jpeg;base64,' + ${encodedImage}" alt="Image" height="100">
+				        </div>	
+				</div>
+				
+				<div  class="report-images image-container listOfImages" th:if="${edited}">
+			        <div th:each="encodedImageLeader : *{encodedImages}" 
+			        th:if="${#strings.length(encodedImageLeader) > 'data:image/jpeg;base64,'.length()}"
+			        class="image">
+			       
+			            <img th:src="'data:image/jpeg;base64,' + ${encodedImageLeader}" 
+			            alt="Image" >
+			        </div>
+		   						
+	           	</div>	
+          			
+	   
+				<div th:replace="layout/userheader :: rowBtnNavigation 
+				(backBtnName='home',
+				submitBtnName='confirm',
+				backBtnText='Cancel',
+				submitBtnText='Confirm')"></div>
+			
+	     	<input type="hidden" th:value="*{reportDate}" name="reportDate">
+	     	<input type="hidden" th:value="*{userIdPk}" name="userIdPk">
+	     	<input type="hidden" th:value ="*{target}" name="target" th:if="${edited}">
+	      	<input type="hidden" th:value ="*{comments}" name="comments" th:if="${edited}">
+	     	<input type="hidden" th:value ="*{reportDetails.target}" name="target" th:if="${!edited}">
+	      	<input type="hidden" th:value ="*{reportDetails.selfComment}" name="comments" th:if="${!edited}">
+	      	<input class="form-control" type="file" id="image"  th:field="*{images}" accept="image/jpeg, image/png" multiple hidden>
+	     	     
+	    </form>
+</main>
+
+		 <!-- SCRIPT FOR DISPLAYING THE IMAGE -->
+    <script>
+	         const image = document.querySelector("#image");
+	         const imageContainer = document.querySelector(".image-container");
+	         const fileTriggerButton = document.querySelector("button[type='button']")
+	         const reportImages = document.querySelectorAll(".report-images");
+	      
+	         var allImage = document.querySelectorAll('img[alt="Image"]');
+	         let storedFiles = [];
+        
+	         for(let imagesss of allImage){
+		        const deleteElement = document.createElement('span');
+		        deleteElement.setAttribute('class', 'delete');
+		        imagesss.parentElement.appendChild(deleteElement); 
+            	imagesss.parentElement.addEventListener('mouseover', function() {
+            	deleteElement.style.display = 'inline-block';
+            });   
+            imagesss.parentElement.addEventListener('mouseleave', function() {
+            	deleteElement.style.display = 'none';
+            });
+            deleteElement.addEventListener('click', function(e) {      	
+            	imagesss.parentElement.remove();
+            	const imageId = imagesss.src; 
+		        // Remove 'data:' + 'image/jpeg' + ';base64,' from imageId
+		        const cleanImageId = imageId.replace(/^data:image\/\w+;base64,/, '');
+		        console.log(cleanImageId);  	  
+         	   // Create a hidden input element
+         	    const hiddenInput = document.createElement('input');
+         	    hiddenInput.type = 'hidden';
+         	    hiddenInput.name = 'deletedImages';
+         	    hiddenInput.value = cleanImageId;
+	         	const parentForm = document.querySelector('form[enctype="multipart/form-data"]');
+         	    parentForm.appendChild(hiddenInput);
+            	
+            	checkReportImagesContainer();
+            	
+            })
+        }
+            fileTriggerButton.addEventListener("click",function(e){
+				image.click();
+			})
+	         image.addEventListener("change", (e) => {
+	             const files = e.target.files;
+	             for (let i = 0; i < files.length; i++) {
+	             	const div = document.createElement('div');
+	             	div.setAttribute('class', 'image');
+	             	imageContainer.appendChild(div);
+	                 const file = files[i];
+	                 const imageUrl = URL.createObjectURL(file);
+	                 const imageElement = document.createElement("img");          
+	                 imageElement.src = imageUrl;
+	        
+	                 div.appendChild(imageElement);
+	                 
+	                 const deleteElement = document.createElement('span');
+	                 deleteElement.setAttribute('class', 'delete');
+	         
+	                 div.appendChild(deleteElement);
+	                       
+	                 div.addEventListener('mouseover', function() {
+	                 	deleteElement.style.display = 'inline-block';
+	                 });
+	                 
+	                 div.addEventListener('mouseleave', function() {
+	                 	deleteElement.style.display = 'none';
+	                 });
+	                 
+	                 imageContainer.appendChild(div);
+	                 checkReportImagesContainer();
+	                 deleteElement.addEventListener('click', function() {
+	                     
+	                 	let nodes = Array.prototype.slice.call(document.getElementsByClassName('image'));
+	                 	
+	                 	let indexOfImg = nodes.indexOf(div);
+	                 
+	                 	const dt = new DataTransfer();
+	                 	
+	                 	const ambot = Array.from(image.files);
+	                 	ambot.splice(indexOfImg, 1);
+	                 	storedFiles.splice(indexOfImg, 1);
+	                 	
+	                 	for (let j = 0; j < ambot.length; j++) {
+	                 		console.log(ambot[j])
+	                 		dt.items.add(ambot[j]);
+	                 	}
+	             	
+	                 	image.files = dt.files;            	
+	                 	div.remove();
+	                 	
+	                 checkReportImagesContainer();
+	                 })
+	             }
+	         });
+	         
+	 		image.addEventListener('change', function(e) {
+	 			const files = e.target.files;
+	 			const filesArr = Array.prototype.slice.call(files);
+	 			
+	 			const dt = new DataTransfer();
+	 			
+	 			filesArr.forEach(function(f) {
+	 				storedFiles.push(f);
+	 			});	
+	 			
+	 			storedFiles.forEach(function(f) {
+	 				dt.items.add(f);
+	 			});		
+	 			image.files = dt.files;
+	 		});    
+	 		
+	 		document.addEventListener("DOMContentLoaded",(e)=>{
+				 checkReportImagesContainer();
+		
+			 })
+			 
+			 function checkReportImagesContainer(){
+				 const xArr = [];
+				 const yArr = [];
+				reportImages[0].childNodes.forEach(val=>{
+					if(val.nodeName.toLowerCase() === 'div') {
+						xArr.push(val)
+					}
+				});
+				
+				reportImages[1].childNodes.forEach(val=>{
+					if(val.nodeName.toLowerCase() === 'div') {
+						
+						yArr.push(val)
+					}
+				});
+				
+				if(xArr.length ===0 ) {
+					reportImages[0].style.display = "none"
+				}
+				if(yArr.length ===0) {
+					reportImages[1].style.display = "none"
+				}
+		
+				
+				if(yArr.length > 0) {
+					reportImages[1].style.removeProperty("display");
+				}
+			 }
+    </script>
+   
+    	
+
+</body>
+</html>

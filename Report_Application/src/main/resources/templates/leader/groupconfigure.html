@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<head>
+<meta charset="UTF-8">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" /> -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link th:href="@{/css/common.css}" rel="stylesheet"></link>
+<link th:href="@{/css/leader/groupconfigure.css}" rel="stylesheet"></link>
+<title>Leader Top</title>
+
+</head>
+<body>
+
+<!-- html for confirming transfer of user
+	//author Karl James
+	//October 11, 2023 -->
+	
+		<div th:replace="layout/userheader :: headerAll(imgVal=${profilePhoto})"></div>
+
+	<main th:object="${userCreationWebDto}">
+		<form method="post" 
+		th:action="@{/view/leader/groupconfiguration}" >
+		<div th:replace="layout/userheader :: 
+		mainHeader(headerTitle='Configure Group',backBtnName='home')"></div>
+		
+		</form>
+
+			<div class="col-lg-3 img-container">
+				
+				<input type="hidden" th:value="${image}" name="default-picture">
+			</div>
+		
+			<div class="group-name__displayed"> 
+				<p th:text="${group.groupName}" 
+				class="font-common--1 
+				font-size--common-2
+				text-transform--common__1"></p>
+				
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+					<path fill-rule="evenodd" clip-rule="evenodd" d="M13.5897 3.36149C12.2038 4.74733 8.9511 7.99942 8.1578 8.79011C7.98793 8.95976 7.78579 9.09363 7.56331 9.18383C6.9271 9.44783 5.37504 10.0567 4.91875 10.0873C4.78424 10.0963 4.64935 10.0765 4.52314 10.0291C4.39693 9.98175 4.28232 9.90792 4.187 9.81259C4.09167 9.71727 4.01784 9.60265 3.97046 9.47644C3.92308 9.35023 3.90324 9.21535 3.91229 9.08084C3.94292 8.62454 4.55175 7.07379 4.81119 6.44019C4.9018 6.2153 5.03673 6.01127 5.20817 5.84048L10.6381 0.409901C10.9012 0.147264 11.2578 -0.000244141 11.6296 -0.000244141C12.0013 -0.000244141 12.3579 0.147264 12.621 0.409901L13.5897 1.37855C13.8523 1.64167 13.9998 1.99825 13.9998 2.37002C13.9998 2.74179 13.8523 3.09837 13.5897 3.36149ZM4.89202 9.10757C5.33789 9.05151 6.64094 8.50786 7.1885 8.28037C7.29257 8.23946 7.38709 8.17755 7.46618 8.0985L7.46684 8.09785C9.27848 6.28976 11.0889 4.48044 12.8981 2.66987C12.9375 2.63052 12.9688 2.58378 12.9901 2.53233C13.0114 2.48088 13.0224 2.42572 13.0224 2.37002C13.0224 2.31432 13.0114 2.25917 12.9901 2.20771C12.9688 2.15626 12.9375 2.10952 12.8981 2.07017L11.9294 1.10152C11.8901 1.0621 11.8433 1.03082 11.7919 1.00949C11.7404 0.988151 11.6853 0.977168 11.6296 0.977168C11.5739 0.977168 11.5187 0.988151 11.4673 1.00949C11.4158 1.03082 11.3691 1.0621 11.3297 1.10152L5.89913 6.5321C5.82094 6.60987 5.75949 6.70282 5.71857 6.80522L5.71726 6.80783C5.49238 7.35669 4.94808 8.66105 4.89202 9.10757Z" fill="#555555"/>
+					<path fill-rule="evenodd" clip-rule="evenodd" d="M12.2989 3.96132C12.3443 4.00673 12.3803 4.06064 12.4049 4.11997C12.4295 4.17931 12.4421 4.2429 12.4421 4.30712C12.4421 4.37135 12.4295 4.43494 12.4049 4.49427C12.3803 4.55361 12.3443 4.60752 12.2989 4.65293C12.2535 4.69834 12.1995 4.73437 12.1402 4.75894C12.0809 4.78352 12.0173 4.79617 11.9531 4.79617C11.8888 4.79617 11.8252 4.78352 11.7659 4.75894C11.7066 4.73437 11.6527 4.69834 11.6073 4.65293L9.34728 2.39296C9.25557 2.30124 9.20404 2.17685 9.20404 2.04715C9.20404 1.91745 9.25557 1.79306 9.34728 1.70134C9.439 1.60963 9.56339 1.55811 9.69309 1.55811C9.82279 1.55811 9.94718 1.60963 10.0389 1.70134L12.2989 3.96132ZM8.30888 7.9513C8.35425 7.99667 8.39024 8.05053 8.41479 8.10981C8.43935 8.16909 8.45199 8.23262 8.45199 8.29678C8.45199 8.36095 8.43935 8.42448 8.41479 8.48376C8.39024 8.54304 8.35425 8.5969 8.30888 8.64227C8.26351 8.68764 8.20965 8.72362 8.15037 8.74818C8.0911 8.77273 8.02756 8.78537 7.9634 8.78537C7.89924 8.78537 7.83571 8.77273 7.77643 8.74818C7.71715 8.72362 7.66329 8.68764 7.61792 8.64227L5.35795 6.38229C5.31258 6.33693 5.27659 6.28306 5.25204 6.22379C5.22748 6.16451 5.21484 6.10097 5.21484 6.03681C5.21484 5.97265 5.22748 5.90912 5.25204 5.84984C5.27659 5.79056 5.31258 5.7367 5.35795 5.69133C5.40332 5.64596 5.45718 5.60997 5.51646 5.58542C5.57573 5.56087 5.63927 5.54823 5.70343 5.54823C5.76759 5.54823 5.83112 5.56087 5.8904 5.58542C5.94968 5.60997 6.00354 5.64596 6.04891 5.69133L8.30888 7.9513Z" fill="#555555"/>
+					<path fill-rule="evenodd" clip-rule="evenodd" d="M4.72593 1.28906C4.85559 1.28906 4.97994 1.34057 5.07163 1.43225C5.16331 1.52394 5.21482 1.64829 5.21482 1.77795C5.21482 1.90761 5.16331 2.03196 5.07163 2.12365C4.97994 2.21533 4.85559 2.26684 4.72593 2.26684H2.44445C2.05546 2.26684 1.68241 2.42136 1.40736 2.69642C1.1323 2.97147 0.977778 3.34452 0.977778 3.73351V11.5557C0.977778 11.9447 1.1323 12.3178 1.40736 12.5928C1.68241 12.8679 2.05546 13.0224 2.44445 13.0224H10.9185C11.3075 13.0224 11.6806 12.8679 11.9556 12.5928C12.2307 12.3178 12.3852 11.9447 12.3852 11.5557V9.27425C12.3852 9.14459 12.4367 9.02024 12.5284 8.92856C12.6201 8.83687 12.7444 8.78536 12.8741 8.78536C13.0037 8.78536 13.1281 8.83687 13.2198 8.92856C13.3115 9.02024 13.363 9.14459 13.363 9.27425V11.5557C13.3626 12.2039 13.105 12.8255 12.6466 13.2838C12.1883 13.7422 11.5667 13.9998 10.9185 14.0002H2.44445C1.79624 13.9998 1.17469 13.7422 0.716343 13.2838C0.257996 12.8255 0.000345431 12.2039 0 11.5557V3.73351C0 3.0852 0.257539 2.46345 0.715962 2.00502C1.17438 1.5466 1.79614 1.28906 2.44445 1.28906H4.72593Z" fill="#555555"/>
+				</svg>
+			</div>
+		
+		<div class="content-section group-content__section">
+			
+			<div class="group-details__section content-section__1">
+				
+					<aside>
+					  <div class="content-section__1-header">
+					    <div 
+					    class="font-size--common-2
+					    font-commont--1
+					    font-variant--common__1">ROLE</div>
+					    <div class="font-size--common-2
+					    font-commont--1
+					    font-variant--common__1">USERS</div>
+					   
+					  </div> 
+					 
+					 <div th:each="groupMember : ${groupListOfMembers}"  class="content-section__1-item">
+					    
+					    <div 
+					    class="font-size--common-3
+					    font-commont--1
+					    role-indicator" th:text="${groupMember.role == 'USER' ? 'Member':'Leader'}"></div>
+					    
+					    
+					    <div
+					    class="font-size--common-3
+					    font-commont--1"  th:text="${groupMember.firstName} + ' '+${groupMember.lastName}"></div>
+					    
+					    <div th:if="${groupMember.role == 'USER'}">
+							
+							<button 
+							class="btn-info 
+							dropdown-toggle 
+							font-size--common-3
+					    	font-commont--1"
+								type="button">...</button>
+								
+								<form method="post" 
+							  th:action="@{/view/leader/groupconfiguration}" 
+							  data-dropdown="dropdown-menu" >
+								<input type="hidden" th:value="${groupIdPk}" name="groupIdPk">
+								<input type="hidden" th:value="${groupMember.idPk}" name="idPk">
+								<button class="btn btn-reset" type="submit"
+								name="edit">
+									Edit user
+								</bdutton>
+								
+								<button class="btn btn-reset" type="submit" name="removeuser">
+									Remove		
+								</button>
+								
+								<button class="btn btn-reset" type="submit" name="deleteuser">
+									Delete
+								</button>
+							  </form>
+						</div>
+						
+					  </div>
+				</aside>
+		
+				
+			</div>
+			
+			<div class="configuration-section content-section__2">
+				
+				<div class="group-configuration__btns">
+					<div class="configuration-btn 
+				flex-common--columns__space-center
+				font-common--1
+				font-common--3
+				font-variant--common__1
+				text-color--common__2" data-name="add-user" 
+				>Add User</div>
+				
+			
+				<div class="configuration-btn 
+				flex-common--columns__space-center
+				font-common--1
+				font-common--3
+				font-variant--common__1
+				text-color--common__2" data-name="transfer-user"
+				>Transfer User</div>
+				
+				<div class="configuration-btn 
+				flex-common--columns__space-center
+				font-common--1
+				font-common--3
+				font-variant--common__1
+				text-color--common__2" data-name="group-name">
+					Change Group Name</div>
+				
+				<div class="configuration-btn 
+				flex-common--columns__space-center
+				font-common--1
+				font-common--3
+				font-variant--common__1
+				text-color--common__2"
+				data-name="change-photo">Change Photo</div>
+					
+				</div>
+	
+				<div class="group-configuration__container">
+
+						<div 
+						data-configtarget="add-user__option"
+						data-common="configuration-option">
+							
+							<form method="post" th:action="@{/view/leader/groupconfiguration/}">
+								<label for="userIdPk"
+								class="font-size--common-3
+								text-color--common__2
+								font-common--1"
+								>Choose user to add:</label>
+								
+								<select class="custom-select" th:value="${userIdPk}"
+								name="userIdPk"
+								 id="leader" data-name="leader">
+								  <option value="0"></option>
+								  <option th:each="unassignedMember : ${unassignedMemberList}" th:value="${unassignedMember.idPk}" th:text="${unassignedMember.firstName}+' '+ ${unassignedMember.lastName}"></option>
+								</select>
+								<input type="hidden" th:value="${groupIdPk}" name="groupIdPk">
+								
+								<div class="form-group">
+									<button type="submit" class="config-btn__leader font-common--1"
+								name="addmember" data-name="member">
+								Add</button>
+								</div>
+								
+							</form>
+							
+						</div> 
+					
+						<div 
+						data-configtarget="transfer-user__option"
+						data-common="configuration-option">
+							
+							<form method="post" 
+							th:action="@{/view/leader/groupconfiguration/}">
+								<div>
+									<label for="memberid"
+								class="font-size--common-3
+								text-color--common__2
+								font-common--1">Choose a member:</label>
+								<select class="custom-select" name="memberid">
+								  <option value="0"></option>
+								  <option th:each="member : ${memberList}" 
+								  th:value="${member.idPk}" 
+								  th:text="${member.firstName}+' '+ ${member.lastName}">
+								  </option>
+								</select>
+								</div>
+								
+								<div>
+										<label for="memberid"
+								class="font-size--common-3
+								text-color--common__2
+								font-common--1">Choose a group:</label>
+								<select class="custom-select" name="groupid">
+								  <option vlue="0"></option>
+								  <option th:each="group : ${groupList}" th:value="${group.idPk}" th:text="${group.groupName}"></option>
+								</select>
+								</div>
+							
+								<input type="hidden" th:value="${groupIdPk}" name="groupIdPk">
+								<div class="form-group">
+									<button type="submit" name="transferuser">
+									Transfer</button>
+								</div>
+							</form>
+				
+						</div>
+					
+						<div 
+						data-configtarget="group-name__option"
+						data-common="configuration-option">
+							<form method="post" th:action="@{/view/leader/groupconfiguration/}">
+								<div>	
+									<label for="group-name"
+								class="font-size--common-3
+								text-color--common__2
+								font-common--1">Change group name:</label>
+								<input type="text" th:name="groupNameNew"
+								name="group-name"></div>
+								<input type="hidden" th:value="${groupIdPk}" name="groupIdPk">
+								<div class="form-group">
+										<button type="submit"
+										name="updatename">
+										Change</button>
+								</div>
+							</form>
+		
+						</div>
+					
+					<div
+					data-configtarget="change-photo__option"
+					data-common="configuration-option">
+						<form method="post" th:action="@{/view/leader/groupconfiguration}"
+						enctype="multipart/form-data">
+							<div class="group-img__container"></div>
+							
+							<input type="file" value="File Photo" accept="image/jpeg, image/png" name="updatePhoto"
+							id="image-file">
+							
+							<input type="hidden" th:value="${groupIdPk}" name="groupIdPk">
+							<div class="form-group">
+								<button type="submit" 
+							name="updatephoto" disabled>
+							SAVE</button>
+							</div>
+						</form>
+					</div>
+					
+				</div>
+	
+			</div>
+		
+		</div>
+		
+		
+	</main>
+	
+	
+	
+	<!-- Script for manipulating the group list and member list -->
+	<script>
+	
+		const configurationSection = document.querySelector(".configuration-section");
+		const configurationOptions = document.querySelectorAll("[data-common='configuration-option']");
+		const updatePhotoBtn = document.querySelector('button[name="updatephoto"]');
+		const imageInput = document.querySelector('input[type="file"]');
+		const image = document.querySelector('img');
+		
+		const imgContainer = document.querySelector(".img-container");
+
+		const groupImgContainer = document.querySelector(".group-img__container");
+		const displayPictureSession = document.querySelector("input[name='displayPicture']");
+		const defaultPicture = document.querySelector("input[name='default-picture']");
+		const dropDownMenus = document.querySelectorAll("[data-dropdown='dropdown-menu']");
+		const dropdownToggle = document.querySelectorAll(".dropdown-toggle");
+		
+		
+		configurationOptions.forEach(val=>val.classList.add("configuration-option__hidden"));
+		
+		configurationSection.addEventListener("click",(e)=>{
+			const targetConfigBtn = e.target.closest(".configuration-btn");
+			
+			if(!targetConfigBtn) return;
+			
+			const targetDataName = targetConfigBtn.dataset.name;
+			
+			configurationOptions.forEach(val=>val.classList.add("configuration-option__hidden"));
+			document.querySelector(`[data-configtarget="${targetDataName}__option"]`).classList.toggle("configuration-option__hidden");
+			
+		});
+		
+		imageInput.addEventListener("change",(e)=>{
+			const file = e.target.files;
+			
+			if(file.length > 0) {
+				const fileNameConverted = URL.createObjectURL(file[0]);
+	
+				const imgUrl = URL.createObjectURL(file[0]);
+				
+				const btnClose = document.createElement("input");
+				const showPicture = document.querySelector("img[name='show-picture']");
+			
+				
+				btnClose.setAttribute("type","button");
+				btnClose.value = "x";
+				btnClose.setAttribute("data-removebtn","remove");
+				
+				
+				
+			
+				imgContainer.appendChild(btnClose);
+				
+				showPicture.src = imgUrl;
+			
+				
+				updatePhotoBtn.disabled = false;
+				
+				btnClose.addEventListener("click",	(e)=>{
+					const imageFile = document.getElementById("image-file");
+					const groupPicture = document.querySelector("[name='group-picture']");
+					
+					imageFile.value ="";
+					showPicture.src = defaultPicture.value;
+					btnClose.remove();
+				})
+			}
+		})
+				
+		window.addEventListener("load",()=>{
+			if(defaultPicture.value !== ""){
+				const img = document.createElement("img");
+				img.setAttribute("name","show-picture");
+				img.setAttribute("alt","This is the group profile Picture");
+				img.setAttribute("src",defaultPicture.value);
+			
+				imgContainer.appendChild(img);
+			}
+			
+		})
+		
+		
+		dropDownMenus.forEach(val=>val.style.display = "none");
+	
+		dropDownMenus.forEach((val,i)=>{
+			val.setAttribute("data-targetindex",i);
+		});
+		dropdownToggle.forEach((val,i)=>{
+			val.setAttribute("data-index",i);
+		});
+		
+		dropdownToggle.forEach(val=>{
+			
+			val.addEventListener("click",(e)=>{
+				
+				const dataIndex = e.target.dataset.index;
+					const displayStatus = document.querySelector(`[data-targetindex='${dataIndex}']`).style.display;
+				dropDownMenus.forEach(val=>val.style.display = "none");
+			
+				
+				
+				document.querySelector(`[data-targetindex='${dataIndex}']`).style.display = displayStatus === 'none' ? 'block' : 'none';
+				
+				
+				
+			})
+		})
+		
+		document.addEventListener("click",(e)=>{
+			const target = e.target.dataset.index
+			const secondaryTarget = e.target.closest(".configuration-btn");
+		
+			if(secondaryTarget) {
+				return;
+			}
+			if(!target) {
+				dropDownMenus.forEach(val=>val.style.display = "none");
+			}
+		})
+		
+		
+		
+	</script>
+
+</body>
+</html>
